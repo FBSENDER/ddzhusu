@@ -1,6 +1,0 @@
-#source 'https://rubygems.org'
-source 'http://ruby.taobao.org'
-gem 'rails', '4.2.4'
-gem 'sqlite3'
-gem 'mysql2'
-gem 'haml-rails', '~> 0.9'
