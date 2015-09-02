@@ -1,0 +1,40 @@
+- title "#{@num.name}次 - #{@info.first["stationName"]}到#{@info.last["stationName"]}火车 - 滴滴住宿"
+- keywords "#{@num.name},#{@num.name}次"
+- head_desc "#{@num.name}次列车时刻表查询，票价查询，余票查询，滴滴住宿尽力为您提供这些信息。"
+
+%header
+  %p= "滴滴住宿，尽力为您提供#{@num.name}次列车时刻表查询，票价查询，余票查询信息~"
+%section
+  %h1= "#{@num.name}"
+  %p= "关于#{@num.name}次列车的余票信息查询工作，遥遥无期~"
+  - if @num.train_type=="G"
+    %p  本次列车为G字头列车，高铁。城际高速铁路。2009年12月26日，武广高速铁路正式通车运行，新车次采用G+4位数字，意为“城际高铁”，设计时速350公里/小时，最高时速 380公里/小时，首发区段为武汉到广州，城际高速铁路使得武汉站到广州北站最快只需2小时47分钟。
+  - if @num.train_type == 'C'
+    %p 本次列车为C字头列车，城际动车组列车。2008年8月1日，京津城际铁路正式对公众运行，新启用车次为C+4位数字，意为城际列车，最高时速可达350公里。铁路系统标准念法为"城X次"。
+  - if @num.train_type == 'D'
+    %p 本次列车为D字头列车，最高时速250公里。以CRH1、CRH2、CRH5型为主，最高时速可达250公里。其中广深线城际列车全部使用此车。按车次划分，D1-D4000为跨局列车，D4501-D7300为管内列车。北京局D4501～D4580次，沈阳局D5001～D5050次，西安局D5051～D5100次，上海局D5401～D5700次，济南局D6001～D6500次，广铁集团D7001～D7300次。
+  - if @num.train_type == 'T'
+    %p 本次列车为T字头列车，特别快速旅客列车,简称特快,字母T是"特"字汉语拼音的简写.这样的列车在行程中一般只经停省会城市或当地的大型城市。
+  - if @num.train_type == 'K'
+    %p 本次列车为K字头列车，快速旅客列车,简称快速,字母K是"快"字汉语拼音的简写.这样的列车在行程中一般只经停地级行政中心或重要的县级行政中心。
+  - if @num.train_type == 'Z'
+    %p 本次列车为Z字头列车，直达特别快速旅客列车,简称直特,字母Z是"直"字的汉语拼音简写.这样的列车在行程中一站不停或者经停必须站但不办理客运业务,这类列车的车底都是25T,全部都是空调列车.所有的直特列车都是跨局(不是在一个铁路局内)运营列车。
+  - if @num.train_type == 'P'
+    %p 本次列车为普快，开头的四位数车次列车:跨三个或以上铁路局的直通普通快速旅客列车,简称普快或直快.这样的列车一般经停一些主要车站.空调列车较多.这类列车运营距离一般都很长,而经停车站较多.所以速度一般不会太快,而且乘车的人一般 都较多.短途旅行的旅客不建议乘坐此类列车。
+%section 
+  %h2= "#{@num.name}经过的车站与时刻表"
+  %p= "#{@num.name}次列车共经过#{@info.size}个车站，#{@info.map{|data| data["stationName"]}.join('，')}，下面是其到达每一个车站的具体时间。"
+  - @info.each_with_index do |data, index|
+    %div
+      %h3= data["stationName"]
+      %p= "站次：#{index + 1}，到达时间：#{data["arrivalTime"]}，发车时间：#{data["departTime"]}，停留时间：#{data["stopTime"]}"
+%section
+  %h2 热门火车车次信息
+  - @related.each do |data|
+    %a{href: "/train/numbers/#{data.name}/"}= data.name
+%section
+  %h2 热门出行火车车次信息
+  - @related_urls.each do |url|
+    %a{href: "/train/timetable/#{url.values.first}/"}= url.keys.first
+%footer
+  %p 更多更详细的火车车次信息查询，百度一下，你准知道~

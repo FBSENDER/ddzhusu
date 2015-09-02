@@ -1,0 +1,6 @@
+- title "全国火车时刻表 - 滴滴住宿"
+- keywords "滴滴住宿，全国火车时刻表"
+- head_desc "滴滴住宿的全国火车时刻表，各位大侠请慢点抓取。"
+%h1 全国火车时刻表
+- @numbers.each do |num|
+  %a{href: "/train/numbers/#{num.name}/"}= "#{num.name}"

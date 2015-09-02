@@ -1,0 +1,8 @@
+- title "全国火车票查询 - 滴滴住宿"
+- keywords "滴滴住宿，全国火车票查询"
+- head_desc "滴滴住宿的全国火车时刻表，各位大侠请慢点抓取。"
+%h1 全国火车票查询
+- @related_urls.each do |url|
+  %a{href: "/train/timetable/#{url.values.first}/"}= url.keys.first
+- if @next_page != -1
+  %a{href: "/train/timetable/?page=#{@next_page}"}= "第#{@next_page}页"

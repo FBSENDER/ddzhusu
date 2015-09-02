@@ -1,0 +1,8 @@
+- title "站点地图 - 滴滴住宿"
+- keywords "滴滴住宿"
+- head_desc "滴滴住宿的站点地图，各位大侠请慢点抓取。"
+%h1 站点地图
+%a{href: "http://www.huoche.com"} 火车网 
+%a{href: "/train/numbers/"} 全国火车时刻表
+- @places.each do |place|
+  %a{href: "/fish/#{place.en_name}/"}= "#{place.name}民宿"
