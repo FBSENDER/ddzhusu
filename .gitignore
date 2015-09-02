@@ -17,3 +17,6 @@
 
 *.swp
 *.yml
+Capfile
+/config/deploy/
+/config/deploy.rb
