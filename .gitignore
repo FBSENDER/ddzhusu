@@ -20,3 +20,5 @@
 Capfile
 /config/deploy/
 /config/deploy.rb
+Gemfile.lock
+Gemfile
