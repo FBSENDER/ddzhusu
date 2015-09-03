@@ -1,0 +1,2 @@
+class DongcheController < ApplicationController
+end

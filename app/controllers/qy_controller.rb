@@ -1,0 +1,2 @@
+class QyController < ApplicationController
+end

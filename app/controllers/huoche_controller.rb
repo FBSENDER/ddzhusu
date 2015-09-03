@@ -1,0 +1,2 @@
+class HuocheController < ApplicationController
+end
