@@ -1,7 +1,6 @@
 require 'db_models'
 class GaotieController < ApplicationController
   def shike
-    p params
     @from = TrainStation.where(pinyin: params[:from]).take
     @to = TrainStation.where(pinyin: params[:to]).take 
     if @from.nil? || @to.nil?
