@@ -3,9 +3,9 @@
 - head_desc "#{@from.name}到#{@to.name}高铁动车时刻表、火车票、车次等相关查询，滴滴住宿尽力为您提供这些信息。"
 
 %header
-  %p= "滴滴住宿，尽力为您提供#{@from.name}到#{@to.name}高铁动车时刻表、火车票、车次等相关信息~"
+  %p= "滴滴高铁，尽力为您提供#{@from.name}到#{@to.name}高铁动车时刻表、火车票、车次等相关信息~"
 %section
-  %h1= "#{@from.name}到#{@to.name}高铁"
+  %h1= "#{@from.name}到#{@to.name}高铁时刻表"
   %p= "关于#{@from.name}到#{@to.name}火车车次列余票信息查询工作，遥遥无期~"
 %section 
   %h2= "#{@from.name}至#{@to.name}动车时刻表"
@@ -16,9 +16,6 @@
       - JSON.parse(num.infos).each_with_index do |data, index|
         %p= "站次：#{index + 1}，到达时间：#{data["arrivalTime"]}，发车时间：#{data["departTime"]}，停留时间：#{data["stopTime"]}"
 %section
-  %h2 热门出行高铁动车组车次信息
-  - @related_urls.each do |url|
-    %a{href: "/train/timetable/#{url.values.first}/gaotie.html"}= url.keys.first
 %section
   %h2= "#{@from.name}到#{@to.name}火车时刻表"
   %a{href: "/train/timetable/#{@from.pinyin}-#{@to.pinyin}/"}= "#{@from.name}到#{@to.name}火车"

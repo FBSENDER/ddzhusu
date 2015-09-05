@@ -1,6 +1,7 @@
 Ddzhusu::Application.routes.draw do
+  root 'home#index'
   # 旧有路由，常规目录结构
-  root 'fish#sitemap'
+  #root 'fish#sitemap'
   get '/fish/:en_name/', to: 'fish#place'
   get '/fish/', to: 'fish#sitemap'
   get '/train/numbers/', to: 'train#numbers_sitemap'
