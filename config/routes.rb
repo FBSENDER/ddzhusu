@@ -9,6 +9,7 @@ Ddzhusu::Application.routes.draw do
   get '/train/timetable/', to: 'train#timetable_sitemap'
   get '/train/timetable/:from_to/', to: 'train#timetable'
   get '/train/timetable/:from_to/gaotie.html', to: 'train#timetable_gaotie'
+  get '/train/stations/:station/', to: 'train#stations'
   # 新启用路由规则，测试一级目录的seo优势，放在二级域名下，防止一级域名受牵连
   # 高铁gaotie
   get '/gaotieindex.html', to: 'gaotie#index'

@@ -75,6 +75,16 @@ class TrainController < ApplicationController
     @related_urls = numbers.map{|n| n.from_to.split(',').map{|f| get_timetable_url(f)}}.flatten
   end
 
+  def stations
+    pinyin = params[:station]
+    @station = TrainStation.get(pinyin) 
+    @station_name = @station.name
+    not_found if @station.nil?
+    @date = Date.today
+    @train_numbers = @station.train_numbers_info
+    @related_train_numbers = @station.related_train_numbers_info
+  end
+
   private
   def get_timetable_url(from_to, tag = '火车')
     data = from_to.split('to').map(&:strip)

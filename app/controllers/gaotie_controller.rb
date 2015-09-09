@@ -1,15 +1,17 @@
 require 'db_models'
 class GaotieController < ApplicationController
   def shike
-    @from = TrainStation.where(pinyin: params[:from]).take
-    @to = TrainStation.where(pinyin: params[:to]).take 
-    if @from.nil? || @to.nil?
-      not_found
-    end
-    @numbers = TrainNumber.where("from_to like ? ", "% #{@from.id}to#{@to.id} %").take(20)
-    if @numbers.size.zero?
-      not_found
-    end
+    @line = GaotieLine.where("from_name = ? and to_name = ?", params[:from], params[:to]).take
+    not_found if @line.nil?
+    @line_detail = GaotieLineDetail.where(line_id: @line.id).take
+    not_found if @line_detail.nil?
+    @from_to = "#{@line.from_name}到#{@line.to_name}"
+    @gaotie_info = JSON.parse(@line_detail.gaotie_json)
+    @gaotie_list = @gaotie_info["train_list"]
+    @normal_info = JSON.parse(@line_detail.normal_json)
+    @normal_list = @normal_info["train_list"]
+    @date = Date.today + 2
+    @stations = JSON.parse(@line_detail.pass_stations)
   end
   def checi
   end
