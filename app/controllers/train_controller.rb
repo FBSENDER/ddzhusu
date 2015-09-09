@@ -76,13 +76,6 @@ class TrainController < ApplicationController
   end
 
   def stations
-    pinyin = params[:station]
-    @station = TrainStation.get(pinyin) 
-    @station_name = @station.name
-    not_found if @station.nil?
-    @date = Date.today
-    @train_numbers = @station.train_numbers_info
-    @related_train_numbers = @station.related_train_numbers_info
   end
 
   private
