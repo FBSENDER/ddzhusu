@@ -1,0 +1,149 @@
+- title "#{@from_to}怎么走_滴滴地图"
+- keywords "#{@from_to},#{@from_to}火车,#{@from_to}机票,#{@from_to}汽车,#{@from_to}自驾路线,#{@from_to}怎么走,#{@from_to}怎么坐车"
+- head_desc @desc
+
+.container
+  .row
+    .col-md-8.col-lg-8.col-sm-12
+      %h1.hidden= @from_to
+
+      - if @train.size.zero?
+        %section#train
+          %h2.page-header= "乘火车从#{@from_to}"
+          .alert.alert-warning
+            %p= "未查询到#{@from_to}火车/高铁/动车直达车次，请您选择其它方式出行。"
+      - else
+        %section#train
+          %h2.page-header= "乘火车从#{@from_to}"
+          .alert.alert-info
+            %p= "共查询到#{@from_to}火车#{@train.size}次，其中<strong>高铁</strong>/<strong>动车</strong>组列车#{@train.select{|t| ['G','D','C'].include? t['trainNumber'][0]}.count}次。".html_safe
+          %table.table.table-bordered
+            %thead
+              %tr.info
+                %th.text-center 车次
+                %th.text-center 时间
+                %th.text-center 车站
+                %th.text-center 票价
+              %tbody
+                - @train.each do |train|
+                  %tr.text-center
+                    %td
+                      %a{href:"http://www.ddzhusu.com/train/numbers/#{train['trainNumber']}/", title:"#{train['trainNumber']}次"}= train["trainNumber"]
+                      %br
+                      %br
+                      %strong= get_train_type(train['trainNumber'])
+                    %td
+                      %span= train["from"]["time"]
+                      %br
+                      %span= train["to"]["time"]
+                      %br
+                      %span= train["duration"] 
+                    %td
+                      = train["from"]["name"]
+                      %br
+                      = '至'
+                      %br
+                      = train["to"]["name"]
+
+                    %td= train["seatList"].map{|seat| "#{seat['seatTypeName']} #{seat['price']}"}.join('<br/>').html_safe
+    
+      - if @flight.size.zero?
+        %sectioni#flight
+          %h2.page-header= "坐飞机从#{@from_to}"
+          .alert.alert-warning
+            %p= "未查询到#{@from_to}机票信息，可能是该条航线尚未开通，请您选择其它方式出行。"
+      - else
+        %section#flight
+          %h2.page-header= "坐飞机从#{@from_to}"
+          .alert.alert-info
+            %p= "以下是#{@from_to}飞机航班信息。"
+          %table.table.table-bordered
+            %thead
+              %tr.info
+                %th.text-center 航班
+                %th.text-center 机场
+                %th.text-center 时间
+            %tbody
+              - @flight.each do |f|
+                %tr.text-center
+                  %td
+                    %span= f["line_number"]
+                    %br
+                    %br
+                    - unless f["flight_model"].nil?
+                      %span= "型号：#{f["flight_model"]}"
+                  %td
+                    %span{style:"color:blue;"}= f["from_airport"]
+                    %br
+                    = '至'
+                    %br
+                    %span{style:"color:orange;"}= f["to_airport"]
+                  %td
+                    %span= f["depart_time"]
+                    %br
+                    %br
+                    %span= f["arrival_time"]
+    
+      - if @bus.size.zero?
+        %section#bus
+          %h2.page-header= "#{@from_to}怎么乘车？"
+          .alert.alert-warning
+            %p= "未查询到#{@from_to}汽车票信息，您可以再百度一下或者选择其它方式出行。"
+      - else
+        %section#bus
+          %h2.page-header= "#{@from_to}怎么乘车？"
+          .alert.alert-info
+            %p= "以下是#{@from_to}汽车票信息。"
+          %table.table.table-bordered
+            %thead
+              %tr.info
+                %th.text-center 车型与车次
+                %th.text-center 发车时间
+                %th.text-center 车站
+                %th.text-center 汽车票价格
+            %tbody
+              - @bus.each do |bs|
+                %tr.text-center
+                  %td= bs["bus_model"]
+                  %td= bs["depart_time"]
+                  %td
+                    %span{style:"color:blue;"}= bs["from_station"]
+                    %br
+                    = '至'
+                    %br
+                    %span{style:"color:orange;"}= bs["to_station"]
+                  %td
+                    %span= bs["price"]
+    
+      - if @car_route.size.zero?
+        %section#car
+          %h2.page-header= "#{@from_to} 自驾游"
+          .alert.alert-warning
+            %p= "未查询到#{@from_to}自驾线路，出发地点与目的地点不够明确，您可以在百度地图上输入明确的信息以得到结果，或者使用手机导航。"
+      - else
+        %section#car
+          %h2.page-header= "#{@from_to} 自驾游"
+          .alert.alert-info
+            %p= "#{@from_to}驾车距离#{(@car_route['distance'].to_i / 1000).ceil}公里，预计耗时#{(@car_route['duration'].to_i / 3600).ceil}小时。请按以下路线行驶："
+          .alert.alert-info
+            %p
+              - @car_route["instruction"].each_with_index do |it, index|
+                = "#{index + 1}. #{it}"
+                %br 
+
+    .col-md-4.col-lg-4.col-sm-12
+      - unless @line.suggestions_keywords.empty?
+        %section
+          %h3.page-header 推荐搜索
+          .alert.alert-info
+            %p
+              - @line.suggestions_keywords.split(',').each do |word|
+                %span= word
+
+      - unless @line.related_keywords.empty?
+        %section
+          %h3.page-header 看看别人都在搜什么？
+          .alert.alert-info
+            %p
+              - @line.related_keywords.split(',').each do |word|
+                %span= word

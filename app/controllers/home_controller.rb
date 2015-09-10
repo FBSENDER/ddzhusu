@@ -10,6 +10,10 @@ class HomeController < ApplicationController
     render :text => 'hello world!'
   end
 
+  def map
+    render :text => 'hello world!'
+  end
+
   def www
     @places = Place.all.to_a
     render 'fish/sitemap'

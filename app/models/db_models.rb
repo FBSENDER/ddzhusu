@@ -20,3 +20,10 @@ end
 class GaotieLineDetail < ActiveRecord::Base
   self.table_name = 'huoche_gaotie_line_details'
 end
+
+class MapLine < ActiveRecord::Base
+  self.table_name = 'huoche_map_lines'
+end
+class MapLineDetail < ActiveRecord::Base
+  self.table_name = 'huoche_map_line_details'
+end
