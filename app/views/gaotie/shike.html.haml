@@ -2,77 +2,75 @@
 - keywords "#{@from_to}高铁，#{@from_to}高铁时刻表"
 - head_desc "#{@from_to}高铁动车时刻表、火车票、车次、经过哪些车站等相关查询，滴滴高铁尽力为您提供这些信息。"
 
-.container
+%section.container
   .row
-    .col-md-8.col-lg-8.col-sm-12
-      %section
-        %h1.page-header #{@from_to}高铁
-        .alert.alert-info.hidden-sm.hidden-xs
-          %p= "#{@from_to}的高铁时刻表（含动车与城际高速），共#{@gaotie_list.size}次。票价#{@gaotie_info['min_price']}起，最短用时#{@gaotie_info['duration']}，#{@from_to}距离#{@gaotie_info['distance']}。"
-        %table.table.table-bordered
-          %tr.info
-            %th.text-center 车次
-            %th.text-center 时刻
-            %th.text-center 车站
-            %th.text-center 票价
-          - @gaotie_list.each do |shike|
-            %tr.text-center
-              %td
-                %a{href:"http://www.ddzhusu.com/train/numbers/#{shike['checi']}/"}= shike['checi']
-                %br
-                %br
-                %strong= get_train_type(shike['checi'][0]) 
-              %td
-                %span= shike['depart_time']
-                %br
-                %span= shike['arrival_time']
-                %br
-                %span= shike['duration'] 
-              %td
-                = shike['start_name']
-                %br
-                = '-'
-                %br
-                = shike['end_name']
-              %td= shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe
-        - if @gaotie_list.size.zero?
-          %p.alert.alert-warning
-            %strong 并没有~
+    %article.col-md-8.col-lg-8.col-sm-12
+      %h1.page-header #{@from_to}高铁
+      .alert.alert-info.hidden-sm.hidden-xs
+        %p= "#{@from_to}的高铁时刻表（含动车与城际高速），共#{@gaotie_list.size}次。票价#{@gaotie_info['min_price']}起，最短用时#{@gaotie_info['duration']}，#{@from_to}距离#{@gaotie_info['distance']}。"
+      %table.table.table-bordered
+        %tr.info
+          %th.text-center 车次
+          %th.text-center 时刻
+          %th.text-center 车站
+          %th.text-center 票价
+        - @gaotie_list.each do |shike|
+          %tr.text-center
+            %td
+              %a{href:"http://www.ddzhusu.com/train/numbers/#{shike['checi']}/"}= shike['checi']
+              %br
+              %br
+              %strong= get_train_type(shike['checi'][0]) 
+            %td
+              %span= shike['depart_time']
+              %br
+              %span= shike['arrival_time']
+              %br
+              %span= shike['duration'] 
+            %td
+              = shike['start_name']
+              %br
+              = '-'
+              %br
+              = shike['end_name']
+            %td= shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe
+      - if @gaotie_list.size.zero?
+        %p.alert.alert-warning
+          %strong 并没有~
 
-      %section
-        .alert.alert-info.hidden-sm.hidden-xs
-          %p= "#{@from_to}的非高铁列车时刻表（含直达、空调快速、特快、普快、临客），共#{@normal_list.size}次。最便宜的票#{@normal_info['min_price']}，耗时#{@normal_info['duration']}，距离#{@normal_info['distance']}。"
-        %table.table.table-bordered
-          %tr.info
-            %th.text-center 车次
-            %th.text-center 时刻表
-            %th.text-center 车站
-            %th.text-center 余票
-          - @normal_list.each do |shike|
-            %tr.text-center
-              %td
-                %a{href:"http://www.ddzhusu.com/train/numbers/#{shike['checi']}/"}= shike['checi']
-                %br
-                %br
-                %strong= get_train_type(shike['checi'][0]) 
-              %td
-                %span= shike['depart_time']
-                %br
-                %span= shike['arrival_time']
-                %br
-                %span= shike['duration']
-              %td
-                = shike['start_name']
-                %br
-                = '-'
-                %br
-                = shike['end_name']
-              %td= shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe
-        - if @normal_list.size.zero?
-          %p.alert.alert-warning
-            %strong 并没有~
+      .alert.alert-info.hidden-sm.hidden-xs
+        %p= "#{@from_to}的非高铁列车时刻表（含直达、空调快速、特快、普快、临客），共#{@normal_list.size}次。最便宜的票#{@normal_info['min_price']}，耗时#{@normal_info['duration']}，距离#{@normal_info['distance']}。"
+      %table.table.table-bordered
+        %tr.info
+          %th.text-center 车次
+          %th.text-center 时刻表
+          %th.text-center 车站
+          %th.text-center 余票
+        - @normal_list.each do |shike|
+          %tr.text-center
+            %td
+              %a{href:"http://www.ddzhusu.com/train/numbers/#{shike['checi']}/"}= shike['checi']
+              %br
+              %br
+              %strong= get_train_type(shike['checi'][0]) 
+            %td
+              %span= shike['depart_time']
+              %br
+              %span= shike['arrival_time']
+              %br
+              %span= shike['duration']
+            %td
+              = shike['start_name']
+              %br
+              = '-'
+              %br
+              = shike['end_name']
+            %td= shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe
+      - if @normal_list.size.zero?
+        %p.alert.alert-warning
+          %strong 并没有~
 
-    .col-md-4.col-lg-4.col-sm-12
+    %aside.col-md-4.col-lg-4.col-sm-12
       %h2.page-header #{@from_to}高铁票预售期
       .alert.alert-info
         %p= "高铁票今日（#{@date}）可购至："
@@ -126,11 +124,11 @@
         .alert.alert-info
           %p
             - @line.suggestions_keywords.split(',').each do |word|
-              %span= word
+              %b= word
 
       - unless @line.related_keywords.empty?
         %h3.page-header 看看别人都在搜什么？
         .alert.alert-info
           %p
             - @line.related_keywords.split(',').each do |word|
-              %span= word
+              %b= word
