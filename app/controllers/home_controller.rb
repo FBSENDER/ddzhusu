@@ -1,5 +1,6 @@
 require 'db_models'
 class HomeController < ApplicationController
+  layout :set_layout_for_diff_hosts
   def index
     host = request.host
     product = host.split('.').first
@@ -7,20 +8,33 @@ class HomeController < ApplicationController
   end
 
   def gaotie
-    render :text => 'hello world!'
+    @lines = GaotieLine.select(:from_name, :to_name).to_a
+    render 'gaotie/index'
   end
 
   def dongche
-    render :text => 'hello world!'
+    @lines = GaotieLine.select(:from_name, :to_name).to_a
+    render 'dongche/index'
   end
 
   def map
-    render :text => 'hello world!'
+    @lines = MapLine.select(:from_name, :to_name).to_a
+    render 'map/index'
   end
 
   def www
     @places = Place.all.to_a
     render 'fish/sitemap'
+  end
+
+  private
+  def set_layout_for_diff_hosts
+    case request.host
+    when "gaotie.ddzhusu.com" then "gaotie"
+    when "map.ddzhusu.com" then "map"
+    when "dongche.ddzhusu.com" then "dongche"
+    else "application"
+    end
   end
 
 end

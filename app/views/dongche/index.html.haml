@@ -1,0 +1,12 @@
+- title "全国热门动车时刻表_滴滴动车"
+- keywords "动车,动车时刻表"
+- head_desc "精选全国共#{@lines.size}条动车线路，提供票价查询，途经车站查询，时刻表查询等功能，滴滴动车。"
+
+.container
+  .row
+    .col-md-12.col-lg-12.col-sm-12
+      %section
+        %h1.page-header 全国热门动车时刻表
+        %p
+          - @lines.each do |line|
+            %a{href:"http://dongche.ddzhusu.com/dc-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}动车时刻表

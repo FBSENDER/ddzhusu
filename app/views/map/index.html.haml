@@ -1,0 +1,12 @@
+- title "全国热门出行线路_滴滴地图"
+- keywords "地图,出行,乘车,旅行"
+- head_desc "精选全国共#{@lines.size}条热门出行线路，提供乘火车、乘飞机、乘长途汽车、自驾游等信息，滴滴地图。"
+
+.container
+  .row
+    .col-md-12.col-lg-12.col-sm-12
+      %section
+        %h1.page-header 全国热门出行线路
+        %p
+          - @lines.each do |line|
+            %a{href:"http://map.ddzhusu.com/mpl-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}怎么走
