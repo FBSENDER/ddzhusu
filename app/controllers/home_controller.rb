@@ -10,6 +10,10 @@ class HomeController < ApplicationController
     render :text => 'hello world!'
   end
 
+  def dongche
+    render :text => 'hello world!'
+  end
+
   def map
     render :text => 'hello world!'
   end
