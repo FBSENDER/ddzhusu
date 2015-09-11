@@ -1,0 +1,71 @@
+- title "#{@from_to}怎么走_滴滴地图"
+- keywords "#{@from_to},#{@from_to}公交,#{@from_to}公交线路,#{@from_to}地铁,#{@from_to}自驾路线,#{@from_to}怎么走,#{@from_to}怎么坐车,#{@from_to}距离,#{@from_to}有多远"
+- head_desc @desc
+
+%section.container
+  .row
+    %article.col-md-8.col-lg-8.col-sm-12
+      %h1.page-header #{@from_to}怎么走？
+      %p.alert.alert-info 建议下载个地图相关的APP，现在使用手机导航又准确又方便。在使用电脑？建议使用百度地图，自动定位当前城市，公交、地铁、驾车、步行线路一目了然。当然，简单浏览一下从#{@from_name}，到#{@to_name}的出行方案，滴滴地图也可以为您提供这些信息（#{@from_to}怎么走最方便，得多久，如何乘车，打车费用多少等），具体路线如下：
+      - unless @bus_info.size.zero?
+        %h2.page-header= "#{@from_to}公交线路"
+        -@bus_info.each_with_index do |route, index|
+          %p
+            %span 线路-#{index + 1}
+            %u 路程：#{distance_desc(route["distance"].to_i)} 需要时间：#{duration_desc(route["duration"].to_i)}
+          %ul
+            %li 
+              从
+              %strong= @from_name
+              出发
+            - route["instruction"].each do |step|
+              %li= step
+            %li
+              抵达
+              %strong= @to_name
+      - unless @car_info.size.zero?
+        %h2.page-header= "#{@from_to}驾车线路"
+        -@car_info.each_with_index do |route, index|
+          %p
+            %span 方案-#{index + 1}
+            %u 路程：#{distance_desc(route["distance"].to_i)} 需要时间：#{duration_desc(route["duration"].to_i)}
+          %ul
+            - route["instruction"].each do |step|
+              %li= step
+            %li 到#{@to_name}
+      - unless @foot_info.size.zero?
+        %h2.page-header= "#{@from_to}步行线路"
+        -@foot_info.each_with_index do |route, index|
+          %p
+            %u 路程：#{distance_desc(route["distance"].to_i)} 需要时间：#{duration_desc(route["duration"].to_i)}
+          %ul
+            - route["instruction"].each do |step|
+              %li= step
+    %aside.col-md-4.col-lg-4.col-sm-12
+      - unless @from_lines.size.zero?
+        %h3.page-header 从#{@from_name}出发的热门导航
+        %p
+          - @from_lines.each do |line|
+            %a{href:"http://map.ddzhusu.com/mp-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"}= route_desc(line.from_name, line.to_name)
+            %br
+
+      - unless @to_lines.size.zero?
+        %h3.page-header 到#{@from_name}的出行方案
+        %p
+          - @to_lines.each do |line|
+            %a{href:"http://map.ddzhusu.com/mp-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"}= route_desc(line.from_name, line.to_name)
+            %br
+
+      - unless @guide.suggestions_keywords.empty?
+        %h3.page-header 推荐搜索
+        .alert.alert-info
+          %p
+            - @guide.suggestions_keywords.split(',').each do |word|
+              %b= word
+
+      - unless @guide.related_keywords.empty?
+        %h3.page-header 看看别人都在搜什么？
+        .alert.alert-info
+          %p
+            - @guide.related_keywords.split(',').each do |word|
+              %b= word

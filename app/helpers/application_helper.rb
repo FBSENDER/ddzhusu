@@ -20,4 +20,31 @@ module ApplicationHelper
     else '普快'
     end
   end
+  def distance_desc(distance)
+    if distance < 1000
+      "#{distance}米"
+    elsif distance >= 1000 && distance < 5000
+      "#{distance * 1.0 / 1000}公里"
+    else
+      "大约#{(distance * 1.0 / 1000).ceil}公里"
+    end
+  end
+
+  def duration_desc(duration)
+    if duration < 3600
+      "大约#{duration / 60}分钟"
+    elsif duration % 3600 <= 600
+      "大约#{duration / 3600}小时"
+    else
+      "大约#{duration / 3600}小时#{(duration / 60) - ((duration / 3600) * 60)}分钟"
+    end
+  end
+  def route_desc(from, to)
+    templates = [
+      "$1到$2怎么走？","$1到$2怎么走最快？","$1到$2怎么走最方便？",
+      "$1到$2的乘车方案？","$1到$2多少公里？","$1到$2得公交车有哪些？",
+      "$1到$2怎么直达？"
+    ]
+    templates.sample.sub('$1',from).sub('$2',to)
+  end
 end

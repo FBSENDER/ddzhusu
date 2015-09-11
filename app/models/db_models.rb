@@ -27,3 +27,10 @@ end
 class MapLineDetail < ActiveRecord::Base
   self.table_name = 'huoche_map_line_details'
 end
+
+class MapGuide < ActiveRecord::Base
+  self.table_name = 'huoche_map_guides'
+end
+class MapGuideDetail < ActiveRecord::Base
+  self.table_name = 'huoche_map_guide_details'
+end

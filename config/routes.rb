@@ -37,7 +37,7 @@ Ddzhusu::Application.routes.draw do
   get '/bsm-:metro/', to: 'bus#metro' # 地铁
   # 地图 map
   get '/mapindex.html', to: 'map#index'
-  get '/mp-:from-:to/', to: 'map#suggest' # 从A到B怎么走
+  get '/mp-:from-:to/', to: 'map#guide' # 从A到B怎么走
   get '/mpl-:from-:to/', to: 'map#line' # A到B 跨省的长距离路线
   get '/mpp-:poi/', to: 'map#poi' # 到A怎么去
   # 企业 qy

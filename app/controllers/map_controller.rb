@@ -1,5 +1,20 @@
 require 'db_models'
 class MapController < ApplicationController
+  def guide
+    @from_name = params[:from]
+    @to_name = params[:to]
+    @from_to = "#{@from_name}到#{@to_name}"
+    @guide = MapGuide.where(from_name: @from_name, to_name: @to_name).take
+    not_found if @guide.nil?
+    @guide_detail = MapGuideDetail.where(guide_id: @guide.id).take
+    @bus_info = JSON.parse(@guide_detail.by_bus)
+    @car_info = JSON.parse(@guide_detail.by_car)
+    @foot_info = JSON.parse(@guide_detail.on_foot)
+    @from_lines = MapGuide.where(from_name: @from_name).select(:from_name,:to_name).to_a.sample(10)
+    @to_lines = MapGuide.where(to_name: @to_name).select(:from_name,:to_name).to_a.sample(10)
+    not_found if @guide_detail.nil?
+  end
+
   def line
     @from_name = params[:from]
     @to_name = params[:to]
@@ -13,7 +28,6 @@ class MapController < ApplicationController
     @bus = JSON.parse(@line_detail.by_bus)
     @car_route = JSON.parse(@line_detail.by_car)
     @desc = page_desc(@from_to, @flight, @train, @bus, @car_route)
-    @lines = []
   end
 
   private 
