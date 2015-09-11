@@ -8,5 +8,7 @@
       %section
         %h1.page-header 全国热门出行线路
         %p
+          - @guides.each do |line|
+            %a{href:"http://map.ddzhusu.com/mp-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}怎么走
           - @lines.each do |line|
             %a{href:"http://map.ddzhusu.com/mpl-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}怎么走

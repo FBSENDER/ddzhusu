@@ -19,6 +19,7 @@ class HomeController < ApplicationController
 
   def map
     @lines = MapLine.select(:from_name, :to_name).to_a
+    @guides = MapGuide.select(:from_name, :to_name).take(10)
     render 'map/index'
   end
 
