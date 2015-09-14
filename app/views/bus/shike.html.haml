@@ -1,0 +1,42 @@
+- title "#{@line.title.empty? ? "#{@from_to}长途汽车_#{@from_to}巴士" : @line.title }_滴滴公交"
+- keywords "#{@from_to}汽车，#{@from_to}长途汽车，#{@from_to}巴士"
+- head_desc "#{@from_to}长途汽车时刻表、汽车票、车次、经过哪些汽车站站等相关查询，滴滴公交尽力为您提供这些信息。"
+
+%section.container
+  .row
+    %article.col-md-8.col-lg-8.col-sm-12
+      %h1.page-header #{@from_to}汽车时刻表
+      %table.table.table-bordered
+        %tr.info
+          %th.text-center 发车时刻
+          %th.text-center 始发站
+          %th.text-center 终点站
+          %th.text-center 客车型号
+          %th.text-center 票价
+        - @bus_info.each do |shike|
+          %tr.text-center
+            %td
+              %span= shike['depart_time']
+            %td
+              %span= shike['from_station']
+            %td
+              %span= shike['to_station']
+            %td
+              %span= shike['bus_model']
+            %td
+              %span= shike['price']
+
+    %aside.col-md-4.col-lg-4.col-sm-12
+      - unless @line.suggestions_keywords.empty?
+        %h3.page-header 推荐搜索
+        .alert.alert-info
+          %p
+            - @line.suggestions_keywords.split(',').each do |word|
+              %b= word
+
+      - unless @line.related_keywords.empty?
+        %h3.page-header 看看别人都在搜什么？
+        .alert.alert-info
+          %p
+            - @line.related_keywords.split(',').each do |word|
+              %b= word

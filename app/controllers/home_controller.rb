@@ -17,10 +17,20 @@ class HomeController < ApplicationController
     render 'dongche/index'
   end
 
+  def huoche
+    @lines = GaotieLine.select(:from_name, :to_name).to_a
+    render 'huoche/index'
+  end
+
   def map
     @lines = MapLine.select(:from_name, :to_name).to_a
     @guides = MapGuide.select(:from_name, :to_name).take(10)
     render 'map/index'
+  end
+
+  def bus
+    @lines = BusLine.select(:from_name, :to_name).to_a
+    render 'bus/index'
   end
 
   def www

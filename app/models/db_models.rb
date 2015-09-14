@@ -34,3 +34,10 @@ end
 class MapGuideDetail < ActiveRecord::Base
   self.table_name = 'huoche_map_guide_details'
 end
+
+class BusLine < ActiveRecord::Base
+  self.table_name = 'huoche_bus_lines'
+end
+class BusLineDetail < ActiveRecord::Base
+  self.table_name = 'huoche_bus_line_details'
+end
