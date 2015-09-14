@@ -32,6 +32,7 @@ Ddzhusu::Application.routes.draw do
   get '/fjs-:station/', to: 'flight#station'
   # 公交 bus
   get '/busindex.html', to: 'bus#index'
+  get '/bs-:from-:to/', to: 'bus#shike'
   get '/bsc-:city/', to: 'bus#city'
   get '/bsl-:line/', to: 'bus#line' # xx路公交
   get '/bsm-:metro/', to: 'bus#metro' # 地铁
