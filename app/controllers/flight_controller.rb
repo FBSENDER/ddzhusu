@@ -1,2 +1,13 @@
+require 'db_models'
 class FlightController < ApplicationController
+  def shike
+    @from_name = params[:from]
+    @to_name = params[:to]
+    @line = FlightLine.where("from_name = ? and to_name = ?", params[:from], params[:to]).take
+    not_found if @line.nil?
+    @line_detail = FlightLineDetail.where(line_id: @line.id).take
+    not_found if @line_detail.nil?
+    @from_to = "#{@line.from_name}到#{@line.to_name}"
+    @flight_info = JSON.parse(@line_detail.flight_json)
+  end
 end

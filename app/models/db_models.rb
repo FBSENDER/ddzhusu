@@ -41,3 +41,10 @@ end
 class BusLineDetail < ActiveRecord::Base
   self.table_name = 'huoche_bus_line_details'
 end
+
+class FlightLine < ActiveRecord::Base
+  self.table_name = 'huoche_flight_lines'
+end
+class FlightLineDetail < ActiveRecord::Base
+  self.table_name = 'huoche_flight_line_details'
+end

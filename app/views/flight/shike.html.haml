@@ -1,0 +1,47 @@
+- title "#{@line.title.empty? ? "#{@from_to}航班时刻表" : @line.title }_滴滴航班"
+- keywords "#{@from_to}机票，#{@from_to}飞机，#{@from_to}航班，#{@from_to}飞机时刻表"
+- head_desc "#{@from_to}航班时刻表，航班机型、时刻、起飞时间、飞抵的机场，滴滴航班交尽力为您提供这些信息。"
+
+%section.container
+  .row
+    %article.col-md-8.col-lg-8.col-sm-12
+      %h1.page-header #{@from_to}航班时刻表
+      %table.table.table-bordered
+        %tr.info
+          %th.text-center 起飞/到达
+          %th.text-center 航班号/飞机机型
+          %th.text-center 出发城市/飞机场
+          %th.text-center 到达城市/飞机场
+        - @flight_info.each do |shike|
+          %tr.text-center
+            %td
+              %span= shike['depart_time']
+              %br
+              %span= shike['arrival_time']
+            %td
+              %span= shike['line_number']
+              %br
+              %span= shike['flight_model']
+            %td
+              %span= @from_name
+              %br
+              %span= shike['from_station']
+            %td
+              %span= @to_name
+              %br
+              %span= shike['to_station']
+
+    %aside.col-md-4.col-lg-4.col-sm-12
+      - unless @line.suggestions_keywords.empty?
+        %h3.page-header 推荐搜索
+        .alert.alert-info
+          %p
+            - @line.suggestions_keywords.split(',').each do |word|
+              %b= word
+
+      - unless @line.related_keywords.empty?
+        %h3.page-header 看看别人都在搜什么？
+        .alert.alert-info
+          %p
+            - @line.related_keywords.split(',').each do |word|
+              %b= word

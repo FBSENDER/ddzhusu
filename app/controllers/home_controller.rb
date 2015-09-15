@@ -33,6 +33,11 @@ class HomeController < ApplicationController
     render 'bus/index'
   end
 
+  def flight
+    @lines = FlightLine.select(:from_name, :to_name).to_a
+    render 'flight/index'
+  end
+
   def www
     @places = Place.all.to_a
     render 'fish/sitemap'

@@ -1,0 +1,12 @@
+- title "全国热门飞机时刻表_滴滴航班"
+- keywords "飞机时刻表，航班查询，航班"
+- head_desc "精选全国共#{@lines.size}条航班，提供时刻表查询等功能，滴滴航班。"
+
+.container
+  .row
+    .col-md-12.col-lg-12.col-sm-12
+      %section
+        %h1.page-header 全国热门航班
+        %p
+          - @lines.each do |line|
+            %a{href:"http://flight.ddzhusu.com/ft-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}航班

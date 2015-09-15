@@ -28,8 +28,8 @@ Ddzhusu::Application.routes.draw do
   get '/hcs-:station/', to: 'huoche#station'
   # 飞机 flight
   get '/flightindex.html', to: 'flight#index'
-  get '/fj-:from-:to/', to: 'flight#shike'
-  get '/fjs-:station/', to: 'flight#station'
+  get '/ft-:from-:to/', to: 'flight#shike'
+  get '/fts-:station/', to: 'flight#station'
   # 公交 bus
   get '/busindex.html', to: 'bus#index'
   get '/bs-:from-:to/', to: 'bus#shike'
