@@ -1,6 +1,15 @@
 require 'db_models'
 class HomeController < ApplicationController
   layout :set_layout_for_diff_hosts
+
+  @@train_lines = GaotieLine.select(:from_name, :to_name).to_a
+  @@map_lines = MapLine.select(:from_name, :to_name).to_a
+  @@map_guides = MapGuide.select(:from_name, :to_name).take(10)
+  @@places = Place.all.to_a
+  @@bus_lines = BusLine.select(:from_name, :to_name).to_a
+  @@flight_lines = FlightLine.select(:from_name, :to_name).to_a
+  @@hotels = Hoteln.select(:hotel_name).to_a
+
   def index
     host = request.host
     product = host.split('.').first
@@ -8,52 +17,55 @@ class HomeController < ApplicationController
   end
 
   def gaotie
-    @lines = GaotieLine.select(:from_name, :to_name).to_a
+    @lines = @@train_lines
     render 'gaotie/index'
   end
 
   def dongche
-    @lines = GaotieLine.select(:from_name, :to_name).to_a
+    @lines = @@train_lines
     render 'dongche/index'
   end
 
   def huoche
-    @lines = GaotieLine.select(:from_name, :to_name).to_a
+    @lines = @@train_lines
     render 'huoche/index'
   end
 
   def map
-    @lines = MapLine.select(:from_name, :to_name).to_a
-    @guides = MapGuide.select(:from_name, :to_name).take(10)
+    @lines = @@map_lines
+    @guides = @@map_guides
     render 'map/index'
   end
 
   def bus
-    @lines = BusLine.select(:from_name, :to_name).to_a
+    @lines = @@bus_lines
     render 'bus/index'
   end
 
   def flight
-    @lines = FlightLine.select(:from_name, :to_name).to_a
+    @lines = @@flight_lines
     render 'flight/index'
   end
 
   def hotel
-    @hotels = Hoteln.select(:hotel_name).to_a
+    @hotels = @@hotels
     render 'hotel/index'
   end
 
   def www
-    @places = Place.all.to_a
+    @places = @@places
     render 'fish/sitemap'
   end
 
-  private
   def set_layout_for_diff_hosts
     case request.host
     when "gaotie.ddzhusu.com" then "gaotie"
     when "map.ddzhusu.com" then "map"
     when "dongche.ddzhusu.com" then "dongche"
+    when "huoche.ddzhusu.com" then "huoche"
+    when "bus.ddzhusu.com" then "bus"
+    when "flight.ddzhusu.com" then "flight"
+    when "hotel.ddzhusu.com" then "hotel"
     else "application"
     end
   end
