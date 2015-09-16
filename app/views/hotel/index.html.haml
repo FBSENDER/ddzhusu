@@ -1,12 +1,12 @@
-- title "全国热门高铁时刻表_滴滴高铁"
-- keywords "高铁，高铁时刻表"
-- head_desc "精选全国共#{@lines.size}条高铁线路，提供票价查询，途经车站查询，时刻表查询等功能，滴滴高铁。"
+- title "酒店信息查询_滴滴酒店"
+- keywords "酒店电话，酒店地址，酒店预订，酒店查询，酒店"
+- head_desc "滴滴酒店，目前提供全国#{@hotels.size}家酒店信息查询服务，包括酒店电话、地址、设施、简介等，欢迎大家使用。"
 
 .container
   .row
     .col-md-12.col-lg-12.col-sm-12
       %section
-        %h1.page-header 全国热门高铁时刻表
+        %h1.page-header 酒店信息查询 地址 电话
         %p
-          - @lines.each do |line|
-            %a{href:"http://gaotie.ddzhusu.com/gt-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}高铁时刻表
+          - @hotels.each do |hotel|
+            %a{href:"http://hotel.ddzhusu.com/ht-#{URI.encode(hotel.hotel_name)}/"}= hotel.hotel_name
