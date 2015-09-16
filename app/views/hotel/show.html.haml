@@ -1,0 +1,47 @@
+- title "#{@hotel.title.empty? ? @hotel_name : @hotel.title }_滴滴酒店"
+- keywords "#{@hotel_name}，#{@hotel_name}预订，#{@hotel_name}地址，#{@hotel_name}电话，#{@hotel_name}图片"
+- head_desc "#{@desc["instruction"][0,80]}...滴滴酒店为您提供#{@hotel_name}地址、电话查询、预订等服务。"
+
+%section.container
+  .row
+    %article.col-md-8.col-lg-8.col-sm-12
+      %h1.page-header.hidden #{@hotel_name}
+      %h2.page-header #{@hotel_name}地址
+      %p.alert.alert-warning 
+        %b 地址/位置
+        ：
+        #{@desc["address"]}
+      
+      %h2.page-header #{@hotel_name}电话
+      %p.alert.alert-success 
+        %b 电话
+        ：
+        #{@desc["tel"]}
+      
+      %h2.page-header #{@hotel_name}简介
+      %p.alert.alert-info
+        %b #{@hotel_name}
+        简介：
+        = @desc["instruction"]
+      %p.alert.alert-info
+        酒店设施：
+        = @desc["service"]
+      - unless @comments.size.zero? 
+        %h2.page-header 用户评论
+        - @comments.each do |comment|
+          %p= comment
+
+    %aside.col-md-4.col-lg-4.col-sm-12
+      - unless @hotel.suggestions_keywords.empty?
+        %h3.page-header 推荐搜索
+        .alert.alert-info
+          %p
+            - @hotel.suggestions_keywords.split(',').each do |word|
+              %b= word
+
+      - unless @hotel.related_keywords.empty?
+        %h3.page-header 看看别人都在搜什么？
+        .alert.alert-info
+          %p
+            - @hotel.related_keywords.split(',').each do |word|
+              %b= word

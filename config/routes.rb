@@ -46,7 +46,7 @@ Ddzhusu::Application.routes.draw do
   get '/qy-:name/', to: 'qy#show' #企业信息说明
   # 酒店 hotel
   get '/hotelindex.html', to: 'hotel#index'
-  get '/ht-:hotel_id/', to: 'hotel#show' # 单体酒店
+  get '/ht-:hotel_name/', to: 'hotel#show' # 单体酒店
   get '/htc-:city/', to: 'hotel#city' # 城市列表页
   get '/htc-:city-:brand/', to: 'hotel#city_brand' # 城市品牌
   get '/htp-:poi/', to: 'hotel#poi' # 城市地标

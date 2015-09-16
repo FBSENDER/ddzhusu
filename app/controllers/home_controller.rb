@@ -38,6 +38,11 @@ class HomeController < ApplicationController
     render 'flight/index'
   end
 
+  def hotel
+    @hotels = Hoteln.select(:hotel_name).to_a
+    render 'hotel/index'
+  end
+
   def www
     @places = Place.all.to_a
     render 'fish/sitemap'
