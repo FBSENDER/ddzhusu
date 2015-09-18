@@ -1,0 +1,6 @@
+- unless model.related_keywords.empty?
+  %h3.page-header 看看别人都在搜什么？
+  .alert.alert-info
+    %p
+      - model.related_keywords.split(',').each do |word|
+        %b= word

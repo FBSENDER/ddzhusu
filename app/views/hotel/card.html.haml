@@ -1,0 +1,29 @@
+- title "#{@card.title.empty? ? "#{@card_name}酒店会员卡" : @hotel.title }_折扣优惠办理_滴滴酒店"
+- keywords "#{@card_name}会员卡，#{@card_name}酒店会员卡，#{@card_name}宾馆会员卡，#{@card_name}会员卡打几折"
+- head_desc "#{@card_name}酒店会员卡折扣信息：#{@discount[0,25]}...如何办理？#{@handle[0,25]}...滴滴酒店查询助手。"
+
+%section.container
+  .row
+    %article.col-md-8.col-lg-8.col-sm-12
+      %h1.page-header.hidden #{@card_name}会员卡
+      %h2.page-header #{@card_name}会员卡折扣与优惠信息
+      %p.alert.alert-warning 
+        %b #{@card_name}会员卡打几折
+        ？
+        - @discount.split('|').each do |text|
+          = text
+          %br
+      
+      %h2.page-header #{@card_name}会员卡如何办理呢？
+      %p.alert.alert-success 
+        %b #{@card_name}酒店会员卡办理流程
+        ：
+        - @handle.split('|').each do |text|
+          = text
+          %br
+      
+    %aside.col-md-4.col-lg-4.col-sm-12
+      = render partial: "layouts/right_suggestions", locals: {model: @card}
+      = render partial: "layouts/right_related_keywords", locals: {model: @card}
+      
+= render partial: "layouts/taobao_products", locals: {model: @products}

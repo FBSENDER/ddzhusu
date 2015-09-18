@@ -1,0 +1,13 @@
+- if @products.size > 0
+  %section.container
+    .row
+      %h3.page-header 酒店会员卡租售 酒店会员代订
+      - @products.each_with_index do |product,index|
+        -if index != 0 && index % 4 == 0
+          .clearfix.hidden-sm.hidden-xs
+        .col-md-3.col-sm-6.col-xs-12
+          %div.thumbnail
+            %img{src: "#{product["pic_url"]}", alt: "#{product['title']}"}
+            %p.text-right 近30天销量：#{product["volume"]}
+            %p 
+              %a{href:"#{product["item_url"]}", rel:"nofollow", title:"#{product['title']}"}= product["title"]

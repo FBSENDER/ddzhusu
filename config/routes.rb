@@ -51,4 +51,5 @@ Ddzhusu::Application.routes.draw do
   get '/htc-:city-:brand/', to: 'hotel#city_brand' # 城市品牌
   get '/htp-:poi/', to: 'hotel#poi' # 城市地标
   get '/htb-:brand/', to: 'hotel#brand' # 差异化的品牌列表页
+  get '/card-:card_name/', to: 'hotel#card' #品牌酒店会员卡
 end

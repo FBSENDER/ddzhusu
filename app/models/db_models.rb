@@ -55,3 +55,10 @@ end
 class HotelnDetail < ActiveRecord::Base
   self.table_name = 'huoche_hotel_details'
 end
+
+class Card < ActiveRecord::Base
+  self.table_name = 'huoche_hotel_cards'
+end
+class CardDetail < ActiveRecord::Base
+  self.table_name = 'huoche_hotel_card_details'
+end

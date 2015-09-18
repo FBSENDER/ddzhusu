@@ -1,0 +1,6 @@
+- unless model.suggestions_keywords.empty?
+  %h3.page-header 推荐搜索
+  .alert.alert-info
+    %p
+      - model.suggestions_keywords.split(',').each do |word|
+        %b= word
