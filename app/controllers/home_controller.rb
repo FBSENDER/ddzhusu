@@ -66,6 +66,8 @@ class HomeController < ApplicationController
     when "bus.ddzhusu.com" then "bus"
     when "flight.ddzhusu.com" then "flight"
     when "hotel.ddzhusu.com" then "hotel"
+    when "www.1024yy.wang" then "movie"
+    when "www.2026cup.com" then "soccer"
     else "application"
     end
   end
