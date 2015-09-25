@@ -56,16 +56,6 @@
             %a{href:"http://map.ddzhusu.com/mp-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"}= route_desc(line.from_name, line.to_name)
             %br
 
-      - unless @guide.suggestions_keywords.empty?
-        %h3.page-header 推荐搜索
-        .alert.alert-info
-          %p
-            - @guide.suggestions_keywords.split(',').each do |word|
-              %b= word
-
-      - unless @guide.related_keywords.empty?
-        %h3.page-header 看看别人都在搜什么？
-        .alert.alert-info
-          %p
-            - @guide.related_keywords.split(',').each do |word|
-              %b= word
+      = render partial: "layouts/right_suggestions", locals: {model: @guide}
+      = render partial: "layouts/right_related_keywords", locals: {model: @guide}
+      = render partial: "layouts/links", locals: {links: @links}

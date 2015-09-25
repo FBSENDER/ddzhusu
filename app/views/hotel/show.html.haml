@@ -32,16 +32,7 @@
           %p= comment
 
     %aside.col-md-4.col-lg-4.col-sm-12
-      - unless @hotel.suggestions_keywords.empty?
-        %h3.page-header 推荐搜索
-        .alert.alert-info
-          %p
-            - @hotel.suggestions_keywords.split(',').each do |word|
-              %b= word
+      = render partial: "layouts/right_suggestions", locals: {model: @hotel}
+      = render partial: "layouts/right_related_keywords", locals: {model: @hotel}
+      = render partial: "layouts/links", locals: {links: @links}
 
-      - unless @hotel.related_keywords.empty?
-        %h3.page-header 看看别人都在搜什么？
-        .alert.alert-info
-          %p
-            - @hotel.related_keywords.split(',').each do |word|
-              %b= word

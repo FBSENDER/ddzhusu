@@ -1,0 +1,7 @@
+- unless links.size.zero?
+  %h3.page-header 大家在看的网页
+  .alert.alert-info
+    %p
+      - links.each do |link|
+        %a{href:"#{link[0]}"}= link[1]
+        %br

@@ -12,6 +12,7 @@ class MapController < ApplicationController
     @foot_info = JSON.parse(@guide_detail.on_foot)
     @from_lines = MapGuide.where(from_name: @from_name).select(:from_name,:to_name).to_a.sample(10)
     @to_lines = MapGuide.where(to_name: @to_name).select(:from_name,:to_name).to_a.sample(10)
+    @links = JSON.parse(@guide_detail.links_json)
     not_found if @guide_detail.nil?
   end
 
@@ -28,6 +29,7 @@ class MapController < ApplicationController
     @bus = JSON.parse(@line_detail.by_bus)
     @car_route = JSON.parse(@line_detail.by_car)
     @desc = page_desc(@from_to, @flight, @train, @bus, @car_route)
+    @links = JSON.parse(@guide_detail.links_json)
   end
 
   private 

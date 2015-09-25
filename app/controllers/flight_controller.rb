@@ -9,5 +9,6 @@ class FlightController < ApplicationController
     not_found if @line_detail.nil?
     @from_to = "#{@line.from_name}到#{@line.to_name}"
     @flight_info = JSON.parse(@line_detail.flight_json)
+    @links = JSON.parse(@line_detail.links_json)
   end
 end

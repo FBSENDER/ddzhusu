@@ -7,5 +7,6 @@ class BusController < ApplicationController
     not_found if @line_detail.nil?
     @from_to = "#{@line.from_name}到#{@line.to_name}"
     @bus_info = JSON.parse(@line_detail.bus_json)
+    @links = JSON.parse(@line_detail.links_json)
   end
 end

@@ -12,5 +12,6 @@ class HuocheController < ApplicationController
     @normal_list = @normal_info["train_list"]
     @date = Date.today + 2
     @stations = JSON.parse(@line_detail.pass_stations)
+    @links = JSON.parse(@line_detail.links_json)
   end
 end

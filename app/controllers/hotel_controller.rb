@@ -8,6 +8,7 @@ class HotelController < ApplicationController
     not_found if @hotel_detail.nil?
     @desc = JSON.parse(@hotel_detail.desc_json)
     @comments = JSON.parse(@hotel_detail.comment_json)
+    @links = JSON.parse(@hotel_detail.links_json)
   end
 
   def card
@@ -19,5 +20,6 @@ class HotelController < ApplicationController
     @discount = @card_detail.discount_text
     @handle = @card_detail.handle_text
     @products = JSON.parse(@card_detail.products_json)
+    @links = JSON.parse(@card_detail.links_json)
   end
 end

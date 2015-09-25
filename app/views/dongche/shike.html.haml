@@ -119,16 +119,7 @@
           %strong 关于改签 
           办理“变更到站”业务时，请不晚于开车前48小时。如果已经取票，需携带购票有效证件原件和火车票，在火车发车前，前去始发地火车站窗口，按照铁路局相关规定办理。
           
-      - unless @line.suggestions_keywords.empty?
-        %h3.page-header 推荐搜索
-        .alert.alert-info
-          %p
-            - @line.suggestions_keywords.split(',').each do |word|
-              %b= word
-
-      - unless @line.related_keywords.empty?
-        %h3.page-header 看看别人都在搜什么？
-        .alert.alert-info
-          %p
-            - @line.related_keywords.split(',').each do |word|
-              %b= word
+    %aside.col-md-4.col-lg-4.col-sm-12
+      = render partial: "layouts/right_suggestions", locals: {model: @line}
+      = render partial: "layouts/right_related_keywords", locals: {model: @line}
+      = render partial: "layouts/links", locals: {links: @links}
