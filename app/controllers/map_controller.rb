@@ -29,7 +29,7 @@ class MapController < ApplicationController
     @bus = JSON.parse(@line_detail.by_bus)
     @car_route = JSON.parse(@line_detail.by_car)
     @desc = page_desc(@from_to, @flight, @train, @bus, @car_route)
-    @links = JSON.parse(@guide_detail.links_json)
+    @links = JSON.parse(@link_detail.links_json)
   end
 
   private 
