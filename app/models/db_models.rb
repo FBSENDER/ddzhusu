@@ -62,3 +62,10 @@ end
 class CardDetail < ActiveRecord::Base
   self.table_name = 'huoche_hotel_card_details'
 end
+
+class Gcw < ActiveRecord::Base
+  self.table_name = 'gcw_videos'
+end
+class GcwDetail < ActiveRecord::Base
+  self.table_name = 'gcw_video_details'
+end

@@ -1,0 +1,32 @@
+- title "#{@video.title.empty? ? "#{@video_name}广场舞_正面背面示范_分解动作_教学_视频下载" : @video.title }"
+- keywords "#{@video_name}，#{@video_name}广场舞，广场舞#{@video_name}，#{@video.suggestions_keywords.split(',').join('，')}"
+- head_desc "最新#{@video_name}广场舞视频合集，包含广场舞#{@video_name}正面与背面示范、分解动作，#{@video_name}舞蹈教学，提供#{@video_name}广场舞视频下载。"
+
+%section.container
+  .row
+    %article.col-md-8.col-lg-8.col-sm-12
+      %h1.page-header.hidden #{@video_name}广场舞      
+      - @videos.each_with_index do |video, index|
+        %h2.page-header #{video["title"]}
+        %div{id: "ykplayer#{index}", style: "width:100%;height:100%;"}
+        %p.alert.alert-info
+          %b 视频信息：
+          %br
+          发布于#{video["published"]}
+          %br
+          已播放#{video["view_count"]}次
+          %br
+          - if video["comments"]
+            精彩评论：#{video["comments"]}
+
+    %aside.col-md-4.col-lg-4.col-sm-12
+      = render partial: "layouts/right_suggestions", locals: {model: @video}
+      = render partial: "layouts/right_related_keywords", locals: {model: @video}
+      = render partial: "layouts/links", locals: {links: @links}
+
+- @tbk_title = '优质产品推荐'
+= render partial: "layouts/taobao_products"
+
+%script{type: "text/javascript", src: "http://player.youku.com/jsapi"}
+  - @videos.each_with_index do |video, index|
+    player#{index} = new YKU.Player('ykplayer#{index}',{styleid: '0',client_id: '82ca06da2497bd12',vid:'#{video["id"]}',id:'yk#{index}', autoplay: 'true', show_related: 'true'});
