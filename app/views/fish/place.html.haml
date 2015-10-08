@@ -1,35 +1,30 @@
-- title "#{@place.name}民宿与住宿预订 - 滴滴住宿"
-- keywords "#{@place.name}民宿,#{@place.name}住宿"
-- head_desc "关于#{@place.name}民宿的优质库存信息，爱旅游求品质的小伙伴们来看呀。"
+- title "#{@place.name}民宿预订_滴滴住宿"
+- keywords "#{@place.name}民宿，#{@place.name}住宿，#{@place.name}住宿预订，#{@place.name}民宿预订"
+- head_desc "滴滴住宿为您搜索#{@place.name}民宿酒店价格查询及预订信息。通过对#{@place.name}民宿酒店宾馆价格、位置、设施、品牌、星级及用户真实点评为你推荐高性价比民宿库存、在线预订#{@place.name}民宿，价格优惠实时折扣."
 
-%header
-  %p 滴滴住宿，预订便宜的民宿与设计酒店~
-%section
-  %h1= "#{@place.name}民宿与住宿预订"
-  %p= "关于#{@place.name}的诸多介绍，正在完善中~"
-%section 
-  %h2 住宿列表
-  - @hotels.each do |hotel|
+%section.container
+  %article.row
+    %h1.hidden= "#{@place.name}民宿预订"
+    %h2.page-header #{@place.name}民宿房间价格查询
+    - @hotels.each_with_index do |hotel, index|
+      %div
+        %img.img-responsive.img-thumbnail{src:"#{hotel.img_url}", alt:"#{@place.name}民宿图片_#{index}"}
+        %h3= hotel.name
+        %p= hotel.info
+        %p= hotel.address
+        %p= "价格每晚#{hotel.price}起"
+    %h2 住宿推荐理由
     %div
-      %h3= hotel.name
-      %p= hotel.info
-      %p= hotel.address
-      %p= "价格每晚#{hotel.price}起"
-%section
-  %h2 住宿推荐理由
-  %div
-    - @hotels.each do |hotel|
-      - unless hotel.recommands.empty?
-        %p= hotel.name + "推荐理由：" + JSON.parse(hotel.recommands).join('。')
-%section
-  %h2 住宿评论
-  %div
-    - @hotels.each do |hotel|
-      - unless hotel.comments.empty?
-        %p= JSON.parse(hotel.comments)[0,5].join('。')
-%section
-  %h2 其他民宿与住宿查询
-  - @places.each do |place|
-    %a{href: "/fish/#{place.en_name}/", title: "#{place.name}民宿"}= "#{place.name}民宿"
-%footer
-  %p 更多优质便宜民宿会陆续上线，敬请期待。
+      - @hotels.each do |hotel|
+        - unless hotel.recommands.empty?
+          %p= hotel.name + "推荐理由：" + JSON.parse(hotel.recommands).join('。')
+    %h2 住宿评论
+    %div
+      - @hotels.each do |hotel|
+        - unless hotel.comments.empty?
+          %p= JSON.parse(hotel.comments)[0,5].join('。')
+  %aside.row
+    %h2 其他民宿与住宿查询
+    %div
+      - @places.each do |place|
+        %a{href: "/fish/#{place.en_name}/", title: "#{place.name}民宿"}= "#{place.name}民宿"
