@@ -26,6 +26,7 @@
       = render partial: "layouts/right_suggestions", locals: {model: @card}
       = render partial: "layouts/right_related_keywords", locals: {model: @card}
       = render partial: "layouts/links", locals: {links: @links}
+      = render partial: "layouts/friend_links", locals: {friend_links: get_friend_links}
       
 - @tbk_title = "#{@card_name}酒店会员卡租售 酒店会员代订"
 = render partial: "layouts/taobao_products"

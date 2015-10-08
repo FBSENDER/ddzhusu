@@ -1,0 +1,7 @@
+- unless friend_links.size.zero?
+  %h3.page-header 相关链接
+  .alert.alert-info
+    %p
+      - friend_links.each do |link|
+        %a{href:"#{link[0]}"}= link[1]
+        %br
