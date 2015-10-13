@@ -52,6 +52,8 @@ Ddzhusu::Application.routes.draw do
   get '/htp-:poi/', to: 'hotel#poi' # 城市地标
   get '/htb-:brand/', to: 'hotel#brand' # 差异化的品牌列表页
   get '/card-:card_name/', to: 'hotel#card' #品牌酒店会员卡
-  # 广场舞 gw
+  # 广场舞 gcw
   get '/vd-:video_name/', to: 'gcw#show' #gcw 视频show
+  # 羽毛球ymq
+  get '/ymqvd-:video_name/', to: 'ymq#show' #ymq 视频show 
 end

@@ -69,3 +69,10 @@ end
 class GcwDetail < ActiveRecord::Base
   self.table_name = 'gcw_video_details'
 end
+
+class Ymq < ActiveRecord::Base
+  self.table_name = 'ymq_videos'
+end
+class YmqDetail < ActiveRecord::Base
+  self.table_name = 'ymq_video_details'
+end

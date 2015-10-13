@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= yield :title %></title>
+    <meta name="keywords" content="<%= yield :keywords %>">
+    <meta name="description" content="<%= yield :head_desc %>">
+    <!-- 禁止转码 -->
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <!-- 声明适用设备-->
+    <meta name="applicable-device" content="pc,mobile">
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style type="text/css">
+    h1{
+        font-size: 16px;
+    }
+    h2{
+      font-size:16px;
+    }
+    h3{
+      font-size:16px;
+      margin-top:10px;
+    }
+    </style>
+  </head>
+  <body>
+    <%= render('/ymq/header') %>
+    <%= yield %>
+    <section style="border-top:1px solid #e5e5e5;" class="container">
+      <div class="row">
+        <div id="SOHUCS">
+        </div>
+        <script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
+        <script type="text/javascript">
+          window.changyan.api.config({
+            appid: 'cyrtgVHP2',
+            conf: 'prod_60051f90ec47ba299643a1e1c83a5ae8'
+          });
+        </script> 
+      </div>
+    </section>
+    <%= render('/ymq/footer') %>
+  </body>
+</html>
