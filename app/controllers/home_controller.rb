@@ -57,6 +57,10 @@ class HomeController < ApplicationController
     render 'fish/sitemap'
   end
 
+  def ppq
+    render 'ppq/sitemap'
+  end
+
   def set_layout_for_diff_hosts
     case request.host
     when "gaotie.ddzhusu.com" then "gaotie"
@@ -68,6 +72,7 @@ class HomeController < ApplicationController
     when "hotel.ddzhusu.com" then "hotel"
     when "www.1024yy.wang" then "movie"
     when "www.2026cup.com" then "soccer"
+    when "ppq.vxixi.com" then "ppq"
     else "application"
     end
   end

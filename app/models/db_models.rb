@@ -76,3 +76,10 @@ end
 class YmqDetail < ActiveRecord::Base
   self.table_name = 'ymq_video_details'
 end
+
+class PpqBaike < ActiveRecord::Base
+  self.table_name = 'ppq_baikes'
+end
+class PpqBaikeDetail < ActiveRecord::Base
+  self.table_name = 'ppq_baike_details'
+end

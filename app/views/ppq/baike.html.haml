@@ -1,0 +1,24 @@
+- title @baike.title
+- keywords @baike.title
+- head_desc ""
+
+%section.container
+  .row
+    %article.col-md-8.col-lg-8.col-sm-12
+      %h1.page-header= @baike.title
+      - @contents.each do |item|
+        - if item['type'] == 'h2'
+          %h2.page-header= item['content']
+        - elsif item['type'] == 'h3'
+          %h3.page-header= item['content']
+        - elsif item['type'] == 'p'
+          %p.alert.alert-info= item['content']
+
+    %aside.col-md-4.col-lg-4.col-sm-12
+      = render partial: "layouts/right_suggestions", locals: {model: @baike}
+      = render partial: "layouts/right_related_keywords", locals: {model: @baike}
+      = render partial: "layouts/links", locals: {links: @links}
+      = render partial: "layouts/friend_links", locals: {friend_links: get_friend_links}
+
+- @tbk_title = '优质产品推荐'
+= render partial: "layouts/taobao_products"
