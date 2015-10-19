@@ -58,4 +58,5 @@ Ddzhusu::Application.routes.draw do
   get '/ymqvd-:video_name/', to: 'ymq#show' #ymq 视频show 
   # 乒乓
   get '/ppqbk-:baike_name/', to: 'ppq#baike' #ppq 百科 baike
+  get '/ppqvd-:video_name/', to: 'ppq#video' #ppq 视频 video
 end

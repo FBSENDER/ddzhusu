@@ -83,3 +83,10 @@ end
 class PpqBaikeDetail < ActiveRecord::Base
   self.table_name = 'ppq_baike_details'
 end
+
+class PpqVideos < ActiveRecord::Base
+  self.table_name = 'ppq_videos'
+end
+class PpqVideoDetails < ActiveRecord::Base
+  self.table_name = 'ppq_video_details'
+end
