@@ -10,7 +10,7 @@ class HomeController < ApplicationController
   @@flight_lines = FlightLine.select(:from_name, :to_name).to_a
   @@hotels = Hoteln.select(:hotel_name).to_a
   @@cards = Card.select(:card_name).to_a
-  @@ppq_baikes = PpqBaike.where(status: [0,1]).select(:article, :title).to_a
+  @@ppq_baikes = PpqBaike.where(status: [0,1]).select(:article_name, :title).to_a
 
   def index
     host = request.host

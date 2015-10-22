@@ -3,9 +3,9 @@ class PpqController < ApplicationController
 
   def baike
     @baike_name = params[:baike_name]
-    @baike = PpqBaike.where("baike_name = ?", @baike_name).take
+    @baike = PpqBaike.where("article_name = ?", @baike_name).take
     not_found if @baike.nil?
-    @baike_detail = PpqBaikeDetail.where(baike_id: @baike.id).take
+    @baike_detail = PpqBaikeDetail.where(article_id: @baike.id).take
     not_found if @baike_detail.nil?
     @contents = JSON.parse(@baike_detail.contents_json)
     @products = JSON.parse(PpqBaikeDetail.where(id: 1).take.products_json).sample(8)
