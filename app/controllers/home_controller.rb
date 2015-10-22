@@ -10,6 +10,7 @@ class HomeController < ApplicationController
   @@flight_lines = FlightLine.select(:from_name, :to_name).to_a
   @@hotels = Hoteln.select(:hotel_name).to_a
   @@cards = Card.select(:card_name).to_a
+  @@ppq_baikes = PpqBaike.where(status: [0,1]).select(:article, :title).to_a
 
   def index
     host = request.host
@@ -60,7 +61,8 @@ class HomeController < ApplicationController
   end
 
   def ppq
-    render 'ppq/sitemap'
+    @ppq_baikes = @@ppq_baikes
+    render 'ppq/index'
   end
 
   def set_layout_for_diff_hosts

@@ -1,0 +1,12 @@
+- title '乒乓球知识'
+- keywords '乒乓球,乒乓球知识'
+- head_desc ""
+
+.container
+  .row
+    .col-md-12.col-lg-12.col-sm-12
+      %section
+        %h1.page-header 乒乓球知识
+        %p
+          - @ppq_baikes.each do |baike|
+            %a{href:"http://ppq.vxixi.com/ppqbk-#{URI.encode(baike.article_name)}/"}= baike.title
