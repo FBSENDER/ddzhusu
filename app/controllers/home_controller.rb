@@ -9,6 +9,7 @@ class HomeController < ApplicationController
   @@bus_lines = BusLine.select(:from_name, :to_name).to_a
   @@flight_lines = FlightLine.select(:from_name, :to_name).to_a
   @@hotels = Hoteln.select(:hotel_name).to_a
+  @@cards = Card.select(:card_name).to_a
 
   def index
     host = request.host
@@ -49,6 +50,7 @@ class HomeController < ApplicationController
 
   def hotel
     @hotels = @@hotels
+    @cards = @@cards
     render 'hotel/index'
   end
 

@@ -1,6 +1,6 @@
 require 'db_models'
 class FishController < ApplicationController
-  @@all_places = Place.select(:en_name, :name)
+  @@all_places = Place.select(:en_name, :name).to_a
   def place
     en_name = params[:en_name]
     @place = Place.where(en_name: en_name).take

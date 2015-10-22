@@ -8,5 +8,7 @@
       %section
         %h1.page-header 酒店信息查询 地址 电话
         %p
+          - @cards.each do |card|
+            %a{href:"http://hotel.ddzhusu.com/card-#{URI.encode(card.card_name)}/"}= "#{card.card_name}会员卡"
           - @hotels.each do |hotel|
             %a{href:"http://hotel.ddzhusu.com/ht-#{URI.encode(hotel.hotel_name)}/"}= hotel.hotel_name
