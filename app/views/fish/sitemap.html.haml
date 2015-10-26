@@ -9,4 +9,4 @@
         %p
           %a{href: "http://www.ddzhusu.com/train/numbers/"} 全国火车时刻表
           - @places.each do |place|
-            %a{href: "http://www.ddzhusu.com/fish/#{place.en_name}/"}= "#{place.name}民宿"
+            %a{href: "http://www.ddzhusu.com/fishnew/#{URI.encode(place.name)}/"}= "#{place.name}民宿"

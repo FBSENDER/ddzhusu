@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= yield(:title) %></title>
     <meta name="keywords" content="<%=yield(:keywords)%>">
-    <meta name="description" content="<%=yield(:head_desc)%> 滴滴住宿，为你提供优质便宜的民宿与住宿预订服务，世界这么大，多出去看看。">
-    <meta name="baidu-site-verification" content="hmr3YzDWKi" />
+    <meta name="description" content="<%=yield(:head_desc)%>">
+    <!-- 禁止转码 -->
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
     <!-- 声明适用设备-->
     <meta name="applicable-device" content="pc,mobile">
+    <meta name="baidu-site-verification" content="hmr3YzDWKi" />
     <script>
       var _hmt = _hmt || [];
       (function() {

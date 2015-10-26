@@ -8,16 +8,24 @@ class FishController < ApplicationController
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       return
     end
+    redirect_to "http://www.ddzhusu.com/fishnew/#{URI.encode(@place.name)}/", status: 301
+  end
+
+  def place_new
+    name = params[:name]
+    @place = Place.where(name: name).take
+    if @place.nil?
+      render file: "#{Rails.root}/public/404.html", layout: false, status: 404
+      return
+    end
     @places = @@all_places.sample(5)
     if @place.ptype == 3
-      @hotels = Hotel.where(place_id: @place.id).take(20)
+      @hotels = Hotel.where(fish_tag: @place.fish_tag).take(20)
     elsif @place.ptype == 2
-      place_ids = Place.where(parent_id: @place.id).to_a.map(&:id)
-      @hotels = Hotel.where(place_id: place_ids).take(20)
+      @hotels = Hotel.where(place_id: @place.id).take(20)
     elsif @place.ptype == 1
       p2 = Place.where(parent_id: @place.id).to_a.sample
-      place_ids = Place.where(parent_id: p2.id).to_a.map(&:id)
-      @hotels = Hotel.where(place_id: place_ids).take(20)
+      @hotels = Hotel.where(place_id: p2.id).take(20)
     else
       @hotels = []
     end
@@ -25,5 +33,19 @@ class FishController < ApplicationController
 
   def sitemap
     @places = @@all_places
+  end
+
+  def house
+    @hotel = Hotel.where(id: params[:hotel_id].to_i).take
+    not_found if @hotel.nil?
+    unless is_robot?
+      redirect_to "http://www.fishtrip.cn/houses/#{@hotel.source_id}?referral_id=1566163562"
+    end
+    @comments = JSON.parse(@hotel.comments)
+    @recommands = JSON.parse(@hotel.recommands)
+    @rooms = JSON.parse(@hotel.rooms)
+    @hotels = Hotel.where("id > ?", @hotel.id).select(:id,:name).take(5)
+    @place_1 = Place.where(id: @hotel.place_id).take
+    @place_2 = Place.where(fish_tag: @hotel.fish_tag).to_a
   end
 end

@@ -11,4 +11,9 @@ class ApplicationController < ActionController::Base
     user_agent.present? && user_agent =~ /\b(Android|iPhone|iPad|Windows Phone|Opera Mobi|Kindle|BackBerry|PlayBook|UCWEB|Mobile)\b/i
   end
 
+  def is_robot?
+    user_agent = request.headers["HTTP_USER_AGENT"]
+    user_agent.present? && user_agent =~ /(bot|spider)/i
+  end
+
 end
