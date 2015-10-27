@@ -7,9 +7,9 @@ class GaotieController < ApplicationController
     not_found if @line_detail.nil?
     @from_to = "#{@line.from_name}到#{@line.to_name}"
     @gaotie_info = JSON.parse(@line_detail.gaotie_json)
-    @gaotie_list = @gaotie_info["train_list"]
+    @gaotie_list = @gaotie_info["train_list"] || []
     @normal_info = JSON.parse(@line_detail.normal_json)
-    @normal_list = @normal_info["train_list"]
+    @normal_list = @normal_info["train_list"] || []
     @date = Date.today + 2
     @stations = JSON.parse(@line_detail.pass_stations)
     @links = JSON.parse(@line_detail.links_json)
