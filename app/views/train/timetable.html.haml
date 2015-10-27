@@ -2,26 +2,39 @@
 - keywords "#{@from.name}到#{@to.name}火车，#{@from.name}到#{@to.name}火车票，#{@from.name}到#{@to.name}火车时刻表"
 - head_desc "#{@from.name}到#{@to.name}火车时刻表、火车票、车次等相关查询，滴滴住宿尽力为您提供这些信息。"
 
-%header
-  %p= "滴滴住宿，尽力为您提供#{@from.name}到#{@to.name}火车时刻表、火车票、车次等相关信息~"
-%section
-  %h1= "#{@from.name}到#{@to.name}火车"
-  %p= "关于#{@from.name}到#{@to.name}火车车次列余票信息查询工作，遥遥无期~"
-%section 
-  %h2= "#{@from.name}至#{@to.name}火车时刻表"
-  %p= "#{@from.name}-#{@to.name}火车今日共有#{@numbers.size}次，下面是其具体信息。"
-  - @numbers.each do |num|
-    %div
-      %h3= num.name
+%section.container
+  %article.row.col-md-12
+    %h1.page-header= "#{@from.name}到#{@to.name}火车"
+    %p.alert.alert-info
+      滴滴住宿，尽力为您提供
+      %b #{@from.name}到#{@to.name}
+      火车时刻表、火车票、车次等相关信息~
+    %h2.page-header= "#{@from.name}至#{@to.name}火车时刻表"
+    %p.alert.alert-info 
+      %b #{@from.name}-#{@to.name}
+      火车今日共有#{@numbers.size}次，下面是其具体信息。
+    - @numbers.each do |num|
+      %h3.page-header= num.name
       - JSON.parse(num.infos).each_with_index do |data, index|
-        %p= "站次：#{index + 1}，到达时间：#{data["arrivalTime"]}，发车时间：#{data["departTime"]}，停留时间：#{data["stopTime"]}"
-%section
-  %h2 热门出行火车车次信息
-  - @related_urls.each do |url|
-    %a{href: "/train/timetable/#{url.values.first}/"}= url.keys.first
-- if @has_gaotie
-  %section
-    %h2= "#{@from.name}到#{@to.name}高铁动车组" 
-    %a{href: "/train/timetable/#{@from.pinyin}-#{@to.pinyin}/gaotie.html"}= "#{@from.name}到#{@to.name}高铁动车组"
-%footer
-  %p 更多更详细的火车车次信息查询，百度一下，你准知道~
+        - if data["stationName"] == @from.name || data["stationName"] == @to.name
+          %p.alert.alert-success
+            - if data["stationName"] == @from.name || data["stationName"] == @to.name
+              %b= data["stationName"]
+            - else
+              = data["stationName"]
+            = "，站次：#{index + 1}，到达时间：#{data["arrivalTime"]}，发车时间：#{data["departTime"]}，停留时间：#{data["stopTime"]}"
+        - else 
+          %p
+            - if data["stationName"] == @from.name || data["stationName"] == @to.name
+              %b= data["stationName"]
+            - else
+              = data["stationName"]
+            = "，站次：#{index + 1}，到达时间：#{data["arrivalTime"]}，发车时间：#{data["departTime"]}，停留时间：#{data["stopTime"]}"
+
+  %aside.row.col-md-12
+    %h2.page-header 热门出行火车车次信息
+    %p.alert.alert-info
+      - @related_urls.each do |url|
+        %a{href: "/train/timetable/#{url.values.first}/"}= url.keys.first
+      - if @has_gaotie
+        %a{href: "/train/timetable/#{@from.pinyin}-#{@to.pinyin}/gaotie.html"}= "#{@from.name}到#{@to.name}高铁动车组"

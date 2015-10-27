@@ -12,12 +12,12 @@ class TrainController < ApplicationController
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       return
     end
-    @related = TrainNumber.where(id: (1..8079).to_a.sample(10)).to_a
+    @related = TrainNumber.where(id: (1..8079).to_a.sample(10)).select(:name).to_a
     @related_urls = @num.from_to.split(',').map{|f| get_timetable_url(f)}
   end
 
   def numbers_sitemap
-    @numbers = TrainNumber.all.to_a
+    @numbers = TrainNumber.select(:name).to_a
   end
 
   def timetable
