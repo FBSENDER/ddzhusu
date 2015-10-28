@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><%= yield :title %></title>
+    <title><%= yield :title %>_手机版</title>
     <meta name="keywords" content="<%= yield :keywords %>">
     <meta name="description" content="<%= yield :head_desc %>">
-    <!-- 移动端url -->
-    <meta http-equiv="mobile-agent" content="format=html5; url=<%=yield(:mobile_url)%>">
-    <meta name="mobile-agent" content="format=html5; url=<%=yield(:mobile_url)%>">
     <!-- 禁止转码 -->
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <!-- 声明适用设备-->
-    <meta name="applicable-device" content="pc,mobile">
+    <meta name="applicable-device" content="mobile">
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->

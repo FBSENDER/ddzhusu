@@ -1,5 +1,9 @@
 require 'db_models'
 class YmqController < ApplicationController
+  layout :set_layout
+  def set_layout
+    "mvxixi" if request.host == 'm.vxixi.com'
+  end
 
   def show
     @video_name = params[:video_name]

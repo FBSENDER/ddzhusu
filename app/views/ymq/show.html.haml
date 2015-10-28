@@ -1,6 +1,7 @@
 - title "#{@title}"
 - keywords "#{@video.title}，#{@video.suggestions_keywords.split(',').join('，')}"
 - head_desc "羽毛球比赛视频在线观看——#{@video.title}。视频标签：#{@video.tags.gsub(',','，')}。"
+- mobile_url('m.vxixi.com',request.path) if request.host != 'm.vxixi.com'
 
 %section.container
   .row
