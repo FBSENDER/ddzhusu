@@ -8,6 +8,9 @@ module ApplicationHelper
   def head_desc(page_descriptions = "")
     content_for :head_desc, page_descriptions.to_s
   end
+  def mobile_url(domain, path)
+    content_for :mobile_url, "http://#{domain}#{path}/"
+  end
   def get_train_type(word)
     case word
     when 'D' then '动车'

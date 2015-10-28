@@ -1,6 +1,7 @@
 - title "#{@from_to}怎么走_滴滴地图"
 - keywords "#{@from_to},#{@from_to}火车,#{@from_to}机票,#{@from_to}汽车,#{@from_to}自驾路线,#{@from_to}怎么走,#{@from_to}怎么坐车"
 - head_desc @desc
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
   .row

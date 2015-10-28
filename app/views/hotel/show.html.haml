@@ -1,6 +1,7 @@
 - title "#{@hotel.title.empty? ? @hotel_name : @hotel.title }_滴滴酒店"
 - keywords "#{@hotel_name}，#{@hotel_name}预订，#{@hotel_name}地址，#{@hotel_name}电话，#{@hotel_name}图片"
 - head_desc "#{@desc["instruction"][0,80]}...滴滴酒店为您提供#{@hotel_name}地址、电话查询、预订等服务。"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
   .row

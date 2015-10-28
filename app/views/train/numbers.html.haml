@@ -1,6 +1,7 @@
 - title "#{@num.name}次 - #{@info.first["stationName"]}到#{@info.last["stationName"]}火车_滴滴住宿"
 - keywords "#{@num.name},#{@num.name}次"
 - head_desc "#{@num.name}次列车时刻表查询，票价查询，余票查询，滴滴住宿尽力为您提供这些信息。"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
   %article.row.col-md-12

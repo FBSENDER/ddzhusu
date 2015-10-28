@@ -1,5 +1,9 @@
 require 'db_models'
 class TrainController < ApplicationController
+  layout :set_layout
+  def set_layout
+    "mddzhusu" if request.host == 'm.ddzhusu.com'
+  end
   def numbers
     number = params[:number]
     @num = TrainNumber.where(name: number).take

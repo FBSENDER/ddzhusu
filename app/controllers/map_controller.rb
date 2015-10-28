@@ -1,5 +1,9 @@
 require 'db_models'
 class MapController < ApplicationController
+  layout :set_layout
+  def set_layout
+    "mddzhusu" if request.host == 'm.ddzhusu.com'
+  end
   def guide
     @from_name = params[:from]
     @to_name = params[:to]

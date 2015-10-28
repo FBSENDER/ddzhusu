@@ -1,5 +1,9 @@
 require 'db_models'
 class FishController < ApplicationController
+  layout :set_layout
+  def set_layout
+    "mddzhusu" if request.host == 'm.ddzhusu.com'
+  end
   @@all_places = Place.select(:en_name, :name).to_a
   def place
     en_name = params[:en_name]
@@ -39,7 +43,7 @@ class FishController < ApplicationController
     @hotel = Hotel.where(id: params[:hotel_id].to_i).take
     not_found if @hotel.nil?
     unless is_robot?
-      redirect_to "http://www.fishtrip.cn/houses/#{@hotel.source_id}?referral_id=1566163562"
+      #redirect_to "http://www.fishtrip.cn/houses/#{@hotel.source_id}?referral_id=1566163562"
     end
     @comments = JSON.parse(@hotel.comments)
     @recommands = JSON.parse(@hotel.recommands)

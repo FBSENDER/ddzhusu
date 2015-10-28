@@ -1,5 +1,9 @@
 require 'db_models'
 class HuocheController < ApplicationController
+  layout :set_layout
+  def set_layout
+    "mddzhusu" if request.host == 'm.ddzhusu.com'
+  end
   def shike
     @line = GaotieLine.where("from_name = ? and to_name = ?", params[:from], params[:to]).take
     not_found if @line.nil?

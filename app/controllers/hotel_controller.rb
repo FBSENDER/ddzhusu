@@ -1,5 +1,9 @@
 require 'db_models'
 class HotelController < ApplicationController
+  layout :set_layout
+  def set_layout
+    "mddzhusu" if request.host == 'm.ddzhusu.com'
+  end
   def show
     @hotel_name = params[:hotel_name]
     @hotel = Hoteln.where("hotel_name = ?", @hotel_name).take

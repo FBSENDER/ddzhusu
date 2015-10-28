@@ -1,6 +1,7 @@
 - title "#{@line.title.empty? ? "#{@from_to}长途汽车_#{@from_to}巴士" : @line.title }_滴滴公交"
 - keywords "#{@from_to}汽车，#{@from_to}长途汽车，#{@from_to}巴士"
 - head_desc "#{@from_to}长途汽车时刻表、汽车票、车次、经过哪些汽车站站等相关查询，滴滴公交尽力为您提供这些信息。"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
   .row

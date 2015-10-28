@@ -1,6 +1,7 @@
 - title "#{@line.title.empty? ? "#{@from_to}高铁时刻表" : @line.title }_滴滴高铁"
 - keywords "#{@from_to}高铁，#{@from_to}高铁时刻表"
 - head_desc "#{@from_to}高铁动车时刻表、火车票、车次、经过哪些车站等相关查询，滴滴高铁尽力为您提供这些信息。"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
   .row

@@ -1,6 +1,7 @@
 - title "#{@from_to}动车时刻表_滴滴动车"
 - keywords "#{@from_to}动车，#{@from_to}动车时刻表"
 - head_desc "#{@from_to}动车时刻表、火车票、车次、经过哪些车站等相关查询，滴滴动车尽力为您提供这些信息。"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
   .row

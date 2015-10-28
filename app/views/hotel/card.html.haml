@@ -1,6 +1,7 @@
 - title "#{@card.title.empty? ? "#{@card_name}酒店会员卡" : @hotel.title }_折扣优惠办理_滴滴酒店"
 - keywords "#{@card_name}会员卡，#{@card_name}酒店会员卡，#{@card_name}宾馆会员卡，#{@card_name}会员卡打几折"
 - head_desc "#{@card_name}酒店会员卡折扣信息：#{@discount[0,25]}...如何办理？#{@handle[0,25]}...滴滴酒店查询助手。"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
   .row
