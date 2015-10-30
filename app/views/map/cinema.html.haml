@@ -40,6 +40,8 @@
     %aside.col-md-4.col-lg-4.col-sm-12
       = render partial: "layouts/right_suggestions", locals: {model: @cinema}
       = render partial: "layouts/right_related_keywords", locals: {model: @cinema}
+      = render partial: "layouts/links", locals: {links: @links}
+      = render partial: "layouts/friend_links", locals: {friend_links: get_friend_links}
       - if @related_cinemas.size > 0
         %h3.page-header 更多电影院
         - @related_cinemas.each do |cinema|
@@ -48,6 +50,4 @@
               %a{href: "#{cinema['url']}",title: "#{cinema['name']}"}
                 %img.img-responsive{src: "#{cinema['img_url']}", alt: "#{cinema['name']}图片"}
                 %p.text-right{style:'margin-top: 5px'} #{cinema['name']}
-      = render partial: "layouts/links", locals: {links: @links}
-      = render partial: "layouts/friend_links", locals: {friend_links: get_friend_links}
 

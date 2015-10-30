@@ -11,6 +11,7 @@ class HomeController < ApplicationController
   @@hotels = Hoteln.select(:hotel_name).to_a
   @@cards = Card.select(:card_name).to_a
   @@ppq_baikes = PpqBaike.where(status: [0,1]).select(:article_name, :title).to_a
+  @@cinemas = Cinema.select(:cinema_name).take(10)
 
   def index
     host = request.host
@@ -36,6 +37,7 @@ class HomeController < ApplicationController
   def map
     @lines = @@map_lines
     @guides = @@map_guides
+    @cinemas = @@cinemas
     render 'map/index'
   end
 
