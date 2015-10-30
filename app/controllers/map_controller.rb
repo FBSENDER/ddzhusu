@@ -36,6 +36,18 @@ class MapController < ApplicationController
     @links = JSON.parse(@line_detail.links_json)
   end
 
+  def cinema
+    @cinema_name = params[:cinema_name]
+    @cinema = Cinema.where(cinema_name: @cinema_name).take
+    not_found if @cinema.nil?
+    @cinema_detail = CinemaDetail.where(cinema_id: @cinema.id).take
+    not_found if @cinema_detail.nil?
+    @info = JSON.parse(@cinema_detail.cinema_json)
+    @meituan_products = JSON.parse(@cinema_detail.meituan_json)
+    @related_cinemas = JSON.parse(@cinema_detail.related_cinemas_json)
+    @links = JSON.parse(@cinema_detail.links_json)
+  end
+
   private 
   def page_desc(from_to, flight, train, bus, car)
     if flight.size.zero? && train.size.zero? && bus.size.zero? && car.size.zero?

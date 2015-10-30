@@ -90,3 +90,10 @@ end
 class PpqVideoDetails < ActiveRecord::Base
   self.table_name = 'ppq_video_details'
 end
+
+class Cinema < ActiveRecord::Base
+  self.table_name = 'huoche_map_poi_cinemas'
+end
+class CinemaDetail < ActiveRecord::Base
+  self.table_name = 'huoche_map_poi_cinema_details'
+end

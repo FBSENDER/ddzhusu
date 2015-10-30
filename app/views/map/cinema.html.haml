@@ -1,0 +1,53 @@
+- title "#{@cinema.title.empty? ? @cinema_name : @cinema.title}地址_滴滴地图"
+- keywords "#{@cinema_name},#{@cinema_name}地址,#{@cinema_name}电话,#{@cinema_name}地图"
+- head_desc "#{@cinema_name}地址：#{@info['address']}。滴滴地图为您提供#{@info['city_name']}电影院查询，#{@cinema_name}地址、电话、地图、附近周边等详细信息。"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+%section.container
+  .row
+    %article.col-md-8.col-lg-8.col-sm-12
+      %h1.page-header #{@cinema_name}
+      .row
+        .col-md-6.col-sm-12
+          %img.img-responsive.img-thumbnail{src: "#{@info['img_url']}", alt: "#{@cinema_name}图片"}
+        .col-md-6.col-sm-12
+          %img.img-responsive.img-thumbnail{src: "http://api.map.baidu.com/staticimage?center=#{@info['lng']},#{@info['lat']}&width=400&height=240&zoom=14&markers=#{@info['lng']},#{@info['lat']}&makerStyles=l,,0xff3333", alt: "#{@cinema_name}周边地图"}
+      .row{style: "padding-top:20px"}
+        .col-md-12
+          %p
+            %a.btn.btn-warning{href: "http://r.union.meituan.com/url/visit/?a=1&key=f0000cc719e42010c909cd75e11af84b633&url=#{URI.encode(@info['source_url'])}", target: "_blank", rel: "nofollow", style:"width:100%"} 查看影讯/在线选座/团购优惠
+          %p.alert.alert-info
+            %b 地址
+            ：
+            %b #{@info['city_name']}
+            #{@info['address']}
+            %br
+            %b 电话
+            ：#{@info['tel']}
+            %br
+            %b 简介
+            ：#{@info['intro']}
+      - if @meituan_products.size > 0
+        %h2 #{@cinema_name}周边团购
+        .row
+          - @meituan_products.each do |product|
+            .col-md-6.col-sm-12
+              .thumbnail
+                %a{href:"http://r.union.meituan.com/url/visit/?a=1&key=f0000cc719e42010c909cd75e11af84b633&url=#{URI.encode(product['url'])}", target: "_blank", rel:"nofollow", title:"#{product['title']}"}
+                  %img{src: "#{product['img_url']}", alt: "#{product['title']}"}
+                  %p.text-right{style: "margin-top: 5px"}= product['desc']
+
+    %aside.col-md-4.col-lg-4.col-sm-12
+      = render partial: "layouts/right_suggestions", locals: {model: @cinema}
+      = render partial: "layouts/right_related_keywords", locals: {model: @cinema}
+      - if @related_cinemas.size > 0
+        %h3.page-header 更多电影院
+        - @related_cinemas.each do |cinema|
+          .col-md-6.col-lg-6.col-sm-12{style: "margin-bottom: 10px"}
+            .thumbnail
+              %a{href: "#{cinema['url']}",title: "#{cinema['name']}"}
+                %img.img-responsive{src: "#{cinema['img_url']}", alt: "#{cinema['name']}图片"}
+                %p.text-right{style:'margin-top: 5px'} #{cinema['name']}
+      = render partial: "layouts/links", locals: {links: @links}
+      = render partial: "layouts/friend_links", locals: {friend_links: get_friend_links}
+
