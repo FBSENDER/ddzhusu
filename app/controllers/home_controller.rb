@@ -67,6 +67,10 @@ class HomeController < ApplicationController
     render 'ppq/index'
   end
 
+  def m
+    redirect_to "http://www.ddzhusu.com", :status => 302
+  end
+
   def set_layout_for_diff_hosts
     case request.host
     when "gaotie.ddzhusu.com" then "gaotie"
