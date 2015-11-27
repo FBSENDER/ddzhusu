@@ -19,4 +19,20 @@ class YmqController < ApplicationController
     @related_videos = JSON.parse(@video_detail.related_videos_json)
   end
 
+  def hall_list
+    @place_name = params[:place_name]
+    @place = BadmintonPlace.where(name: @place_name).take
+    not_found if place.nil?
+    if @place.ptype == 0
+      pc = BadmintonPlace.where(parent_id: @place.id).take
+      @halls = BadmintonHall.where(place_id: pc.id).to_a
+    elsif @place.ptype == 1
+      @halls = BadmintonHall.where(place_id: @place.id).to_a
+    end
+  end
+
+  def hall_detail
+    @hall_name = params[:hall_name]
+  end
+
 end

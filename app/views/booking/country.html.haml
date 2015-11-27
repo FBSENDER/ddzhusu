@@ -1,0 +1,25 @@
+- title "#{@country.name}酒店预订_滴滴住宿"
+- keywords "#{@country.name}酒店,#{@country.name}酒店预订,#{@country.name}酒店价格,#{@country.name}酒店查询,#{@country.name}住宿,#{@country.name}住宿预订"
+- head_desc "滴滴住宿为您搜索#{@country.name}酒店住宿价格查询及预订信息。通过对#{@country.name}酒店宾馆价格、位置、设施、品牌、星级及用户真实点评为你推荐高性价比酒店库存、在线预订#{@country.name}酒店，价格优惠实时折扣."
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+%section.container
+  %article.row
+    %h1.hidden #{@country.name}酒店预订
+    - @cities.each do |city|
+      %div
+        %img.img-responsive.img-thumbnail{src:"http://7xnj96.com1.z0.glb.clouddn.com/booking_city_#{@country.en_short}_#{city[0]}.jpg", alt:"#{@country.name}#{city[1]}酒店图片"}
+        %h3 #{@country.name}#{city[1]}酒店
+        %p 共有#{city[2]}家酒店/宾馆/住宿
+    %h2.page-header #{@country.name}酒店价格查询
+    - @hotels.each_with_index do |hotel, index|
+      %div
+        %img.img-responsive.img-thumbnail{src:"http://7xnj96.com1.z0.glb.clouddn.com/booking_hotel_#{@country.en_short}_#{hotel.en_short}.jpg", alt:"#{@country.name}酒店图片_#{index}"}
+        %h3= hotel.name
+        - JSON.parse(hotel.description).each do |desc|
+          %p= desc
+        %p 评分#{hotel.score}（10分制）
+        - if hotel.price > 0
+          %p= "价格每晚#{hotel.price}起"
+        %p
+          %a{href:"/booking/hotel/#{hotel.id}/", title: "#{hotel.name}"} 预订#{hotel.name}

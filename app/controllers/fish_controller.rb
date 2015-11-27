@@ -28,7 +28,7 @@ class FishController < ApplicationController
     elsif @place.ptype == 2
       @hotels = Hotel.where(place_id: @place.id).take(20)
     elsif @place.ptype == 1
-      p2 = Place.where(parent_id: @place.id).to_a.sample
+      p2 = Place.where(parent_id: @place.id).select(:id).to_a.sample
       @hotels = Hotel.where(place_id: p2.id).take(20)
     else
       @hotels = []
@@ -43,7 +43,15 @@ class FishController < ApplicationController
     @hotel = Hotel.where(id: params[:hotel_id].to_i).take
     not_found if @hotel.nil?
     unless is_robot?
-      redirect_to "http://www.fishtrip.cn/houses/#{@hotel.source_id}?referral_id=1566163562"
+      if @hotel.source_id.start_with?('hm')
+        redirect_to "http://www.fishtrip.cn/houses/#{@hotel.source_id}?referral_id=1566163562"
+        return
+      else
+        place = Place.find(@hotel.place_id)
+        place1 = Place.find(place.parent_id)
+        redirect_to "http://www.fishtrip.cn/#{place1.en_name}/#{place.en_name}/?referral_id=1566163562"
+        return
+      end
     end
     @comments = JSON.parse(@hotel.comments)
     @recommands = JSON.parse(@hotel.recommands)

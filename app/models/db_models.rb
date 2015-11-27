@@ -6,6 +6,16 @@ class Hotel < ActiveRecord::Base
   self.table_name = 'fstnotes_base_fish_hotels'
 end
 
+class BkCountry < ActiveRecord::Base
+  self.table_name = 'booking_countries'
+end
+class BkCountryDetail < ActiveRecord::Base
+  self.table_name = 'booking_country_details'
+end
+class BkHotel < ActiveRecord::Base
+  self.table_name = 'booking_hotels'
+end
+
 class TrainNumber < ActiveRecord::Base
   self.table_name = 'fstnotes_base_train_numbers'
 end
@@ -96,4 +106,11 @@ class Cinema < ActiveRecord::Base
 end
 class CinemaDetail < ActiveRecord::Base
   self.table_name = 'huoche_map_poi_cinema_details'
+end
+
+class BadmintonDistrict < ActiveRecord::Base
+  self.table_name = 'ymq_places'
+end
+class BadmintonHall < ActiveRecord::Base
+  self.table_name = 'ymq_place_details'
 end

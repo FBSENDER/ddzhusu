@@ -48,6 +48,9 @@ class MapController < ApplicationController
     @links = JSON.parse(@cinema_detail.links_json)
   end
 
+  def badmintonhall
+  end
+
   private 
   def page_desc(from_to, flight, train, bus, car)
     if flight.size.zero? && train.size.zero? && bus.size.zero? && car.size.zero?

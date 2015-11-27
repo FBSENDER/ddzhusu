@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def is_robot?
     user_agent = request.headers["HTTP_USER_AGENT"]
-    user_agent.present? && user_agent =~ /(bot|spider)/i
+    user_agent.present? && user_agent =~ /(bot|spider|slurp)/i
   end
 
 end

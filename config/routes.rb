@@ -2,6 +2,7 @@ Ddzhusu::Application.routes.draw do
   root 'home#index'
   # 旧有路由，常规目录结构
   #root 'fish#sitemap'
+  #fish
   get '/fish/house/:hotel_id/', to: 'fish#house'
   get '/fish/:en_name/', to: 'fish#place'
   get '/fishnew/:name/', to: 'fish#place_new'
@@ -12,6 +13,9 @@ Ddzhusu::Application.routes.draw do
   get '/train/timetable/:from_to/', to: 'train#timetable'
   get '/train/timetable/:from_to/gaotie.html', to: 'train#timetable_gaotie'
   get '/train/stations/:station/', to: 'train#stations'
+  #booking 
+  get '/booking/country/:en_short/', to: 'booking#country'
+  get '/booking/hotel/:hotel_id/', to: 'booking#hotel'
   # 新启用路由规则，测试一级目录的seo优势，放在二级域名下，防止一级域名受牵连
   # 高铁gaotie
   get '/gaotieindex.html', to: 'gaotie#index'
@@ -58,6 +62,8 @@ Ddzhusu::Application.routes.draw do
   get '/vd-:video_name/', to: 'gcw#show' #gcw 视频show
   # 羽毛球ymq
   get '/ymqvd-:video_name/', to: 'ymq#show' #ymq 视频show 
+  get '/ymqhalllist-:place_name', to: 'ymq#hall_list' #ymq 场地列表
+  get '/ymqhalldetail-:hall_name', to: 'ymq#hall_detail' #ymq 场地详情
   # 乒乓
   get '/ppqbk-:baike_name/', to: 'ppq#baike' #ppq 百科 baike
   get '/ppqvd-:video_name/', to: 'ppq#video' #ppq 视频 video
