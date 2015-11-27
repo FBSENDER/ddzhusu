@@ -23,3 +23,8 @@
           %p= "价格每晚#{hotel.price}起"
         %p
           %a{href:"/booking/hotel/#{hotel.id}/", title: "#{hotel.title}"} 预订#{hotel.title}
+  %aside.row
+    %h2 热门国家酒店查询
+    %div
+      - @countries.each do |country|
+        %a{href: "/booking/country/#{country[0]}/", title: "#{country[1]}酒店预订"}= "#{country[1]}酒店"

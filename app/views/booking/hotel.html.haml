@@ -26,5 +26,7 @@
   %aside.row
     %h3.page-header 相关链接
     %p
+      - @countries.each do |country|
+        %a{href: "/booking/country/#{country[0]}/", title: "#{country[1]}酒店预订"}= "#{country[1]}酒店"
       - @hotels.each do |hotel|
         %a{href:"/booking/hotel/#{hotel.id}/"} #{hotel.title}
