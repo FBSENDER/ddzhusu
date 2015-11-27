@@ -1,15 +1,15 @@
-- title "#{@hotel.name}"
-- keywords "#{@hotel.name},#{@hotel.name}预订,#{@hotel.name}评论,#{@hotel.name}地址,#{@hotel.name}价格"
-- head_desc "#{@hotel.name}：#{@description [0]}。滴滴住宿为您提供#{@hotel.name}在线预订服务，您还可以在这里查询到#{@hotel.name}的电话、地址、交通、用户评论、房间价格等详细信息。"
+- title "#{@hotel.title}"
+- keywords "#{@hotel.title},#{@hotel.title}预订,#{@hotel.title}评论,#{@hotel.title}地址,#{@hotel.title}价格"
+- head_desc "#{@hotel.title}：#{@description [0]}。滴滴住宿为您提供#{@hotel.title}在线预订服务，您还可以在这里查询到#{@hotel.title}的电话、地址、交通、用户评论、房间价格等详细信息。"
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
   %article.row
-    %h1.page-header #{@hotel.name}
+    %h1.page-header #{@hotel.title}
     %div.col-md-6.col-sm-12.col-xs-12
-      %img.img-responsive.img-thumbnail{alt: "#{@hotel.name}图片", src: "http://7xnj96.com1.z0.glb.clouddn.com/booking_hotel_#{@hotel.country_en_short}_#{@hotel.en_short}.jpg"}
+      %img.img-responsive.img-thumbnail{alt: "#{@hotel.title}图片", src: "http://7xnj96.com1.z0.glb.clouddn.com/booking_hotel_#{@hotel.country_en_short}_#{@hotel.en_short}.jpg"}
     %div.col-md-6.col-sm-12.col-xs-12
-      %h2 #{@hotel.name}简介
+      %h2 #{@hotel.title}简介
       - @description.each do |desc|
         %p #{desc}
       %h2 推荐理由
@@ -27,4 +27,4 @@
     %h3.page-header 相关链接
     %p
       - @hotels.each do |hotel|
-        %a{href:"/booking/hotel/#{hotel.id}/"} #{hotel.name}
+        %a{href:"/booking/hotel/#{hotel.id}/"} #{hotel.title}

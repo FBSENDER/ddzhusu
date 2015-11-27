@@ -4,7 +4,7 @@ class BookingController < ApplicationController
   def set_layout
     "mddzhusu" if request.host == 'm.ddzhusu.com'
   end
-  @@all_bk_hotels = BkHotel.select(:id,:name).to_a
+  @@all_bk_hotels = BkHotel.select(:id,:title).to_a
   def country
     en_short = params[:en_short]
     @country = BkCountry.where(en_short: en_short).take
@@ -12,10 +12,10 @@ class BookingController < ApplicationController
     @country_detail = BkCountryDetail.where(country_id: @country.id).select(:cities_json, :hotel_ids).take
     not_found if @country_detail.nil?
     @cities = JSON.parse(@country_detail.cities_json)
-    @hotels = BkHotel.where(id: @country_detail.hotel_ids.split(',').map(&:to_i)).select(:id, :name, :price, :score, :description, :en_short).to_a
+    @hotels = BkHotel.where(id: @country_detail.hotel_ids.split(',').map(&:to_i)).select(:id, :name, :price, :score, :description, :en_short, :title).to_a
   end
   def hotel
-    @hotel = BkHotel.where(id: params[:hotel_id]).select(:id, :name, :country_en_short, :en_short, :price, :score, :description, :recommand, :facility, :notice, :review).take
+    @hotel = BkHotel.where(id: params[:hotel_id]).select(:id, :name, :title, :country_en_short, :en_short, :price, :score, :description, :recommand, :facility, :notice, :review).take
     not_found if @hotel.nil?
     unless is_robot?
       redirect_to "http://www.booking.com/hotel/#{@hotel.country_en_short}/#{@hotel.en_short}.zh-cn.html?aid=895877"
