@@ -8,5 +8,10 @@
         %h1.page-header 站点地图
         %p
           %a{href: "http://www.ddzhusu.com/train/numbers/"} 全国火车时刻表
+          %a{href: "http://www.ddzhusu.com/booking/country/jp/"} 日本酒店
+          %a{href: "http://www.ddzhusu.com/booking/country/us/"} 美国酒店
+          %a{href: "http://www.ddzhusu.com/booking/country/my/"} 马来西亚酒店
+          %a{href: "http://www.ddzhusu.com/booking/country/mv/"} 马尔代夫酒店
+          %a{href: "http://www.ddzhusu.com/booking/country/kr/"} 韩国酒店
           - @places.each do |place|
             %a{href: "http://www.ddzhusu.com/fishnew/#{URI.encode(place.name)}/"}= "#{place.name}民宿"
