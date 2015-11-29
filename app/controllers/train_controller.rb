@@ -37,6 +37,15 @@ class TrainController < ApplicationController
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       return
     end
+    unless is_robot?
+      if is_device_mobile?
+        redirect_to "http://m.ctrip.com/html5/trains/#{ft[0]}-#{ft[1]}/?ctripaid=24370&ctripsid=459959&popup=close"      
+        return
+      else
+        redirect_to "http://trains.ctrip.com/TrainBooking/Search.aspx?AllianceID=297552&sid=762386&fromCn=#{URI.encode(@from.name.encode('gb2312'))}&toCn=#{URI.encode(@to.name.encode('gb2312'))}"      
+        return
+      end
+    end
     @numbers = TrainNumber.where("from_to like ?", "% #{@from.id}to#{@to.id} %").take(10)
     if @numbers.size.zero?
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
