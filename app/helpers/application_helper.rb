@@ -11,6 +11,9 @@ module ApplicationHelper
   def mobile_url(domain, path)
     content_for :mobile_url, "http://#{domain}#{path}/"
   end
+  def page_lang(lang = 'zh-CN')
+    content_for :page_lang, lang
+  end
   def get_train_type(word)
     case word
     when 'D' then '动车'

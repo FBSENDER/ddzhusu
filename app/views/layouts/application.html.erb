@@ -1,5 +1,9 @@
 <!DOCTYPE html>
+<% unless yield(:page_lang).empty? %>
+<html lang="<%= yield(:page_lang) %>">
+<% else %>
 <html lang="zh-CN">
+<% end %>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><%= yield(:title) %></title>
