@@ -39,7 +39,7 @@ class TrainController < ApplicationController
     end
     unless is_robot?
       if is_device_mobile?
-        redirect_to "http://m.ctrip.com/html5/trains/#{ft[0]}-#{ft[1]}/?ctripaid=24370&ctripsid=459959&popup=close"      
+        redirect_to "http://m.ctrip.com/html5/trains/#{ft[0]}-#{ft[1]}/?AllianceID=297552&sid=762386&popup=close"      
         return
       else
         redirect_to "http://trains.ctrip.com/TrainBooking/Search.aspx?AllianceID=297552&sid=762386&fromCn=#{URI.encode(@from.name.encode('gb2312'))}&toCn=#{URI.encode(@to.name.encode('gb2312'))}"      

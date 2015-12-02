@@ -9,7 +9,7 @@ class DongcheController < ApplicationController
     not_found if @line.nil?
     unless is_robot?
       if is_device_mobile?
-        redirect_to "http://m.ctrip.com/html5/trains/#{@line.from_station_pinyin}-#{@line.to_station_pinyin}/?ctripaid=24370&ctripsid=459959&popup=close"      
+        redirect_to "http://m.ctrip.com/html5/trains/#{@line.from_station_pinyin}-#{@line.to_station_pinyin}/?AllianceID=297552&sid=762386&popup=close"      
         return
       else
         redirect_to "http://trains.ctrip.com/TrainBooking/Search.aspx?AllianceID=297552&sid=762386&fromCn=#{URI.encode(params[:from].encode('gb2312'))}&toCn=#{URI.encode(params[:to].encode('gb2312'))}"      
