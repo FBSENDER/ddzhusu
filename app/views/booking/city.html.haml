@@ -1,0 +1,58 @@
+- title "#{@city.title}酒店预订_滴滴住宿"
+- keywords "#{@city.title}酒店,#{@city.title}酒店预订,#{@city.title}酒店价格,#{@city.title}酒店查询,#{@city.title}住宿,#{@city.title}住宿预订"
+- head_desc "滴滴住宿为您搜索#{@city.title}酒店住宿价格查询及预订信息。通过对#{@city.title}酒店宾馆价格、位置、设施、品牌、星级及用户真实点评为你推荐高性价比酒店库存、在线预订#{@city.title}酒店，价格优惠实时折扣."
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+%section.container
+  %article.row
+    %h1.hidden #{@city.title}酒店预订
+    %p.alert.alert-info 共查询到#{@city.title}有#{@city.hotel_count}家酒店。
+    - if @hot_hotels.size > 0
+      %h2 热门酒店
+      %p
+        - @hot_hotels.each do |hotel|
+          %span #{hotel[0]}
+    %h2.page-header #{@city.title}酒店价格查询
+    - @hotels.each_with_index do |hotel, index|
+      %div
+        %img.img-responsive.img-thumbnail{src:"http://7xnj96.com1.z0.glb.clouddn.com/booking_hotel_#{hotel.country_en_short}_#{hotel.en_short}.jpg", alt:"#{@city.title}酒店图片_#{index}"}
+        %h3= hotel.title
+        - JSON.parse(hotel.description).each do |desc|
+          %p= desc
+        %p 评分#{hotel.score}（10分制）
+        - if hotel.price > 0
+          %p= "价格每晚#{hotel.price}起"
+        %p
+          %a{href:"/booking/hotel/#{hotel.id}/", title: "#{hotel.title}"} 预订#{hotel.title}
+  %aside.row
+    - if @cities.size > 0
+      %h2 周边城市酒店 
+      %div
+        %p
+          - @cities.each do |city|
+            %span #{city[1]}酒店
+    - if @hot_cities.size > 0
+      %h2 热门城市酒店 
+      %div
+        %p
+          - @hot_cities.each do |city|
+            %a{href:"/booking/city/#{city.id}/",title:"#{city.title}酒店预订"} #{city.title}酒店
+    - if @districts.size > 0
+      %h2 #{@city.title}所属行政区酒店 
+      %div
+        %p
+          - @districts.each do |district|
+            %span #{district[1]}酒店
+    - if @landmarks.size > 0
+      %h2 附近地标景点酒店 
+      %div
+        %p
+          - @landmarks.each do |landmark|
+            %span #{landmark[1]}附近酒店
+    - if @airports.size > 0
+      %h2 #{@city.title}机场酒店 
+      %div
+        %p
+          - @airports.each do |airport|
+            %span #{airport[1]}附近酒店
+          

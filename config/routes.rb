@@ -15,7 +15,12 @@ Ddzhusu::Application.routes.draw do
   get '/train/stations/:station/', to: 'train#stations'
   #booking 
   get '/booking/country/:en_short/', to: 'booking#country'
+  get '/booking/city/:city_id/', to: 'booking#city'
   get '/booking/hotel/:hotel_id/', to: 'booking#hotel'
+  #bookingen
+  get '/bookingen/country/:en_short/', to: 'bookingen#country'
+  get '/bookingen/city/:city_id/', to: 'bookingen#city'
+  get '/bookingen/hotel/:hotel_id/', to: 'bookingen#hotel'
   # 新启用路由规则，测试一级目录的seo优势，放在二级域名下，防止一级域名受牵连
   # 高铁gaotie
   get '/gaotieindex.html', to: 'gaotie#index'

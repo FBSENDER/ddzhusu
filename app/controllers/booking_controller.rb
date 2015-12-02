@@ -12,8 +12,22 @@ class BookingController < ApplicationController
     @country_detail = BkCountryDetail.where(country_id: @country.id).select(:cities_json, :hotel_ids).take
     not_found if @country_detail.nil?
     @cities = JSON.parse(@country_detail.cities_json)
+    @cities_enabled = BkCity.where("status = 1 and country_en_short = ?", @country.en_short).select(:id, :title).to_a.sample(10)
     @hotels = BkHotel.where(id: @country_detail.hotel_ids.split(',').map(&:to_i)).select(:id, :name, :price, :score, :description, :en_short, :title).to_a
     @countries = @@all_bk_countries.sample(10)
+  end
+  def city
+    @city = BkCity.where(id: params[:city_id], status: 1).select(:id, :title, :hotel_count, :country_en_short, :en_short).take
+    not_found if @city.nil?
+    @detail = BkCityDetail.where(city_id: @city.id).take
+    not_found if @detail.nil?
+    @hotels = BkHotel.where(id: @detail.hotel_ids.split(',').map(&:to_i)).select(:id, :name, :price, :score, :description, :en_short, :title, :country_en_short).to_a
+    @hot_hotels = JSON.parse(@detail.hotels_json)
+    @cities = JSON.parse(@detail.cities_json)
+    @hot_cities = BkCity.where("status = 1 and country_en_short = ?", @city.country_en_short).select(:id, :title).to_a.sample(10)
+    @districts = JSON.parse(@detail.districts_json)
+    @landmarks = JSON.parse(@detail.landmarks_json)
+    @airports = JSON.parse(@detail.airports_json)
   end
   def hotel
     @hotel = BkHotel.where(id: params[:hotel_id]).select(:id, :name, :title, :country_en_short, :en_short, :price, :score, :description, :recommand, :facility, :notice, :review).take

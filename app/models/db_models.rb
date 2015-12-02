@@ -12,8 +12,17 @@ end
 class BkCountryDetail < ActiveRecord::Base
   self.table_name = 'booking_country_details'
 end
+class BkCity < ActiveRecord::Base
+  self.table_name = 'booking_cities'
+end
+class BkCityDetail < ActiveRecord::Base
+  self.table_name = 'booking_city_details'
+end
 class BkHotel < ActiveRecord::Base
   self.table_name = 'booking_hotels'
+end
+class BkenHotel < ActiveRecord::Base
+  self.table_name = 'booking_en_hotels'
 end
 
 class TrainNumber < ActiveRecord::Base

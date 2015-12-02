@@ -28,3 +28,8 @@
     %div
       - @countries.each do |country|
         %a{href: "/booking/country/#{country[0]}/", title: "#{country[1]}酒店预订"}= "#{country[1]}酒店"
+    - if @cities_enabled.size > 0
+      %h2 #{@country.name}热门城市
+      %div
+        - @cities_enabled.each do |city|
+          %a{href: "/booking/city/#{city.id}/", title: "#{city.title}酒店预订"}= "#{city.title}酒店"
