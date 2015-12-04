@@ -24,6 +24,18 @@ end
 class BkenHotel < ActiveRecord::Base
   self.table_name = 'booking_en_hotels'
 end
+class CtBrand < ActiveRecord::Base
+  self.table_name = 'ctrip_brands'
+end
+class CtBrandDetail < ActiveRecord::Base
+  self.table_name = 'ctrip_brand_details'
+end
+class CtHotel < ActiveRecord::Base
+  self.table_name = 'ctrip_hotels'
+end
+class CtHotelDetail < ActiveRecord::Base
+  self.table_name = 'ctrip_hotel_details'
+end
 
 class TrainNumber < ActiveRecord::Base
   self.table_name = 'fstnotes_base_train_numbers'

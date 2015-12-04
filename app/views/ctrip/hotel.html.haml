@@ -1,0 +1,47 @@
+- title "#{@hotel.title}"
+- keywords "#{@hotel.title},#{@hotel.title}图片,#{@hotel.title}价格,#{@hotel.title}预订,#{@hotel.title}地址"
+- head_desc "#{@hotel.title}：#{@hotel.address}，#{@description[0]}"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+%section.container
+  %article.row
+    %h1.page-header #{@hotel.title}
+    %div.col-md-6.col-sm-12.col-xs-12
+      %img.img-responsive.img-thumbnail{alt: "#{@hotel.title}图片", src: "#{@hotel.img_url}"}
+    %div.col-md-6.col-sm-12.col-xs-12
+      %h2 #{@hotel.title}简介
+      - @description.each do |desc|
+        %p #{desc}
+    .col-md-12
+      -if @facility.size > 0
+        %h2 #{@hotel.title}设施
+        - @facility.each do |f|
+          %p #{f[0]}：#{f[1..-1].join("\t")}
+
+      -if @traffic.size > 0
+        %h2 #{@hotel.title}附近交通——火车站、机场、景点
+        - @traffic.each do |t|
+          %p #{t[0]}：#{t[1]}
+      
+      -if @nearby.size > 0
+        %h2 #{@hotel.title}附近消费娱乐
+        - @nearby.each do |n|
+          %p #{n[0]}：#{n[1..-1].join("\t")}
+
+      -if @review.size > 0
+        %h2 #{@hotel.title}评论
+        - @review.each_with_index do |review, index|
+          %p 
+            %strong 评论
+            #{index + 1}：#{review}
+
+  %aside.row
+    -if @hotels.size > 0
+      %h2 热门酒店宾馆
+      %p
+        - @hotels.each do |hotel|
+          %a{href:"/ctrip/hotel/#{hotel.id}/"} #{hotel.title}
+    %h3 您可能需要下面的链接
+    %p
+      %a{href:"/ctrip/brand/#{URI.encode(@hotel.brand_name)}/"} #{@hotel.brand_name}
+      %a{href:"/ctrip.brand/#{URI.encode(@hotel.brand_name)}/city/#{URI.encode(@hotel.city_name)}/"} #{@hotel.brand_name}#{@hotel.city_name}

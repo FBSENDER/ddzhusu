@@ -21,6 +21,10 @@ Ddzhusu::Application.routes.draw do
   get '/bookingen/country/:en_short/', to: 'bookingen#country'
   get '/bookingen/city/:city_id/', to: 'bookingen#city'
   get '/bookingen/hotel/:hotel_id/', to: 'bookingen#hotel'
+  #ctrip
+  get '/ctrip/brand/:brand_name/', to: 'ctrip#brand'
+  get '/ctrip/brand/:brand_name/city/:city_name/', to: 'ctrip#brand_city'
+  get '/ctrip/hotel/:id/', to: 'ctrip#hotel'
   # 新启用路由规则，测试一级目录的seo优势，放在二级域名下，防止一级域名受牵连
   # 高铁gaotie
   get '/gaotieindex.html', to: 'gaotie#index'
