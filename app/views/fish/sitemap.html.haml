@@ -13,5 +13,8 @@
           %a{href: "http://www.ddzhusu.com/booking/country/my/"} 马来西亚酒店
           %a{href: "http://www.ddzhusu.com/booking/country/mv/"} 马尔代夫酒店
           %a{href: "http://www.ddzhusu.com/booking/country/kr/"} 韩国酒店
+          %a{href: "http://www.ddzhusu.com/ctrip/brand/#{URI.encode('如家快捷')}/"} 如家
+          %a{href: "http://www.ddzhusu.com/ctrip/brand/#{URI.encode('锦江之星')}/"} 锦江之星
+          %a{href: "http://www.ddzhusu.com/ctrip/brand/#{URI.encode('7天')}/"} 7天
           - @places.each do |place|
             %a{href: "http://www.ddzhusu.com/fishnew/#{URI.encode(place.name)}/"}= "#{place.name}民宿"
