@@ -7,10 +7,12 @@
   %article.row
     %h1 #{@brand.title}
     %img.img-responsive.img-thumbnail{src:"http://7xnj96.com1.z0.glb.clouddn.com/ctrip_brand_#{@brand.id}.jpg", alt:"#{@brand.name}logo"}
-    %p.alert.alert-info #{@brand_detail.description}
-    - @hotels.each do |hotel|
+    - unless @brand_detail.description.empty?
+      %p.alert.alert-info #{@brand_detail.description}
+    - @hotels.each_with_index do |hotel, index|
       %div
         %h3 #{hotel.title}
+        %img.img-responsive.img-thumbnail{src:"http://7xnj96.com1.z0.glb.clouddn.com/ctrip_hotel_#{hotel.id}.jpg", alt:"#{@brand.name}图片_#{index}"}
         %p 全称：#{hotel.hotel_name}
         %p 地址：#{hotel.address}
         %p 价格：#{hotel.price}元起
@@ -24,3 +26,9 @@
             %a{href: "/ctrip/brand/#{URI.encode(brand.name)}/"} #{brand.title}
     - if @cities.size > 0
       %h2 热门城市#{@brand.name}连锁酒店宾馆
+      %div
+        %p
+          - @cities.each do |city|
+            %span
+              %a{href:"/ctrip/brand/#{URI.encode(@brand.name)}/city/#{URI.encode(city[0])}/"} #{@brand.title}#{city[0]}
+              共#{city[2]}家
