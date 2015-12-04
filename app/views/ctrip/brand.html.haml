@@ -17,6 +17,8 @@
         %p 地址：#{hotel.address}
         %p 价格：#{hotel.price}元起
         %p 评分：#{hotel.score}（5分制）
+        %p
+          %a{href:"/ctrip/hotel/#{hotel.id}/", title:"#{hotel.title}"} 预订#{hotel.title}
   %aside.row
     - if @brands.size > 0
       %h2 品牌酒店
