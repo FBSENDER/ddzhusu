@@ -8,7 +8,7 @@
     %h1.page-header #{@brand.title}#{@city_name}
     - @hotels.each_with_index do |hotel, index|
       %h2 #{hotel.title}
-      %img.img-responsive.img-thumbnail{src:"#{hotel.img_url}", alt:"#{@brand.name}图片_#{index}"}
+      %img.img-responsive.img-thumbnail{src:"http://7xnj96.com1.z0.glb.clouddn.com/ctrip_hotel_#{hotel.id}.jpg", alt:"#{@brand.name}图片_#{index}"}
       %p 全称：#{hotel.hotel_name}
       %p 地址：#{hotel.address}
       %p 价格：#{hotel.price}元起
