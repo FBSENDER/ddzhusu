@@ -1,0 +1,36 @@
+- title "#{@theme.title}_滴滴酒店"
+- keywords "#{@theme.title},#{@theme.title}预订,#{@theme.title}查询,#{@theme.title}价格,#{@theme.title}推荐,top20#{@theme.title},二十佳#{@theme.title}"
+- head_desc "滴滴酒店为您搜索#{@theme.title}价格查询及预订信息。通过对#{@theme.title}价格、位置、设施、品牌、星级及用户真实点评为你推荐高性价比酒店库存、在线预订#{@theme.title}，价格优惠实时折扣."
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+%section.container
+  %article.row
+    %h1.hidden #{@theme.title}
+    - @hotels.each_with_index do |hotel, index|
+      %div
+        %img.img-responsive.img-thumbnail{src:"#{hotel.img_url}", alt:"#{@theme.title}图片_#{index}"}
+        %h3= hotel.hotel_name
+        - desc = JSON.parse(@hotel_details.select{|item| item.hotel_id == hotel.id}.first.desc_json )
+        %p
+          %b 地址/位置
+          ：
+          #{desc["address"]}
+        
+        %p
+          %b 电话
+          ：
+          #{desc["tel"]}
+        
+        %p
+          %b 简介：
+          = desc["instruction"]
+        %p
+          %b 酒店设施：
+          = desc["service"]
+        %p
+          %a{href:"http://hotel.ddzhusu.com/ht-#{URI.encode(hotel.hotel_name)}/"} 预订#{hotel.hotel_name}
+  %aside.row
+    %h3 热门查询
+    %p
+      -@themes.each do |theme|
+        %a{href:"http://hotel.ddzhusu.com/theme-#{URI.encode(theme.name)}/"} #{theme.title}

@@ -61,6 +61,7 @@ Ddzhusu::Application.routes.draw do
   get '/qy-:name/', to: 'qy#show' #企业信息说明
   # 酒店 hotel
   get '/hotelindex.html', to: 'hotel#index'
+  get '/theme-:theme_name/', to: 'hotel#theme'
   get '/ht-:hotel_name/', to: 'hotel#show' # 单体酒店
   get '/htc-:city/', to: 'hotel#city' # 城市列表页
   get '/htc-:city-:brand/', to: 'hotel#city_brand' # 城市品牌

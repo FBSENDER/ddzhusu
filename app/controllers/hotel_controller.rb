@@ -4,6 +4,7 @@ class HotelController < ApplicationController
   def set_layout
     "mddzhusu" if request.host == 'm.ddzhusu.com'
   end
+  @@themes = CtTheme.select(:name,:title).to_a
   def show
     @hotel_name = params[:hotel_name]
     @hotel = Hoteln.where("hotel_name = ?", @hotel_name).take
@@ -25,5 +26,16 @@ class HotelController < ApplicationController
     @handle = @card_detail.handle_text
     @products = JSON.parse(@card_detail.products_json)
     @links = JSON.parse(@card_detail.links_json)
+  end
+
+  def theme
+    @theme_name = params[:theme_name]
+    @theme = CtTheme.where(name: @theme_name).take
+    not_found if @theme.nil?
+    ids = @theme.hotel_ids.split(',')
+    ids = ids + (1..2000).to_a.sample(20-ids.size) 
+    @hotels = Hoteln.where(id: ids).select(:hotel_name,:id,:elong_id,:img_url).to_a
+    @hotel_details = HotelnDetail.where(hotel_id: ids).select(:hotel_id,:desc_json).to_a
+    @themes = @@themes.sample(5)
   end
 end

@@ -27,6 +27,9 @@ end
 class CtBrand < ActiveRecord::Base
   self.table_name = 'ctrip_brands'
 end
+class CtTheme < ActiveRecord::Base
+  self.table_name = 'ctrip_hotel_themes'
+end
 class CtBrandDetail < ActiveRecord::Base
   self.table_name = 'ctrip_brand_details'
 end
