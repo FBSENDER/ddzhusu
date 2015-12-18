@@ -7,15 +7,15 @@ class HuocheController < ApplicationController
   def shike
     @line = GaotieLine.where("from_name = ? and to_name = ?", params[:from], params[:to]).take
     not_found if @line.nil?
-    unless is_robot?
-      if is_device_mobile?
-        redirect_to "http://m.ctrip.com/html5/trains/#{@line.from_station_pinyin}-#{@line.to_station_pinyin}/?AllianceID=297552&sid=762386&popup=close"      
-        return
-      else
-        redirect_to "http://trains.ctrip.com/TrainBooking/Search.aspx?AllianceID=297552&sid=762386&fromCn=#{URI.encode(params[:from].encode('gb2312'))}&toCn=#{URI.encode(params[:to].encode('gb2312'))}"      
-        return
-      end
-    end
+    #unless is_robot?
+    #  if is_device_mobile?
+    #    redirect_to "http://m.ctrip.com/html5/trains/#{@line.from_station_pinyin}-#{@line.to_station_pinyin}/?AllianceID=297552&sid=762386&popup=close"      
+    #    return
+    #  else
+    #    redirect_to "http://trains.ctrip.com/TrainBooking/Search.aspx?AllianceID=297552&sid=762386&fromCn=#{URI.encode(params[:from].encode('gb2312'))}&toCn=#{URI.encode(params[:to].encode('gb2312'))}"      
+    #    return
+    #  end
+    #end
     @line_detail = GaotieLineDetail.where(line_id: @line.id).take
     not_found if @line_detail.nil?
     @from_to = "#{@line.from_name}到#{@line.to_name}"
