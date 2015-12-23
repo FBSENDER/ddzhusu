@@ -28,6 +28,7 @@
 - @tbk_title = '优质产品推荐'
 = render partial: "layouts/taobao_products"
 
-%script{type: "text/javascript", src: "http://player.youku.com/jsapi"}
-  - @videos.each_with_index do |video, index|
-    player#{index} = new YKU.Player('ykplayer#{index}',{styleid: '0',client_id: '82ca06da2497bd12',vid:'#{video["id"]}',id:'yk#{index}', autoplay: 'true', show_related: 'true'});
+%script{type: "text/javascript", src: "/ykplayer/jsapi.js"}
+%script{type: "text/javascript"}
+  - @videos.each_with_index do |video,index|
+    var x#{index} = new JWP({client_id: '82ca06da2497bd12',vid:'#{video["id"]}',target:'ykplayer#{index}'});x#{index}.selectH5MP4();
