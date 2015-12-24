@@ -7,8 +7,7 @@
   .row
     %article.col-md-8.col-lg-8.col-sm-12
       %h1.page-header #{@video.title}      
-      %div{id: "ykplayer0", style: "width:100%;height:100%;", class: "hidden-lg hidden-md"}
-      %div{id: "ykplayer1", class: "hidden-xs hidden-sm"}
+      %div{id: "ykplayer0", style: "width:100%;height:100%;"}
       %p{style: "margin-top:10px", class: "alert alert-info"}
         %b 视频信息：
         %br
@@ -45,10 +44,6 @@
 - @tbk_title = '优质产品推荐'
 = render partial: "layouts/taobao_products"
 
-%script{type: "text/javascript", src: "http://player.youku.com/jsapi"}
-  player0 = new YKU.Player('ykplayer0',{styleid: '0',client_id: '82ca06da2497bd12',vid:'#{@video.youku_id}',id:'yk0', autoplay: 'false', show_related: 'true'});
-  player1 = new YKU.Player('ykplayer1',{styleid: '0',client_id: '82ca06da2497bd12',vid:'#{@video.youku_id}',id:'yk1', autoplay: 'false', show_related: 'true'});
+%script{type: "text/javascript", src: "http://gcw.vxixi.com/ykplayer/jsapi.js"}
 %script{type: "text/javascript"}
-  p_width = $("article")[0].clientWidth * 0.95;
-  p_height = p_width * 0.75;
-  $('#ykplayer1').css({"width": p_width, "height": p_height});
+  var x0 = new JWP({client_id: '82ca06da2497bd12',vid:'#{@video.youku_id}',target:'ykplayer0'});x0.selectH5MP4();
