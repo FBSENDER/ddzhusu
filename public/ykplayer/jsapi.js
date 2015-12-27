@@ -848,10 +848,34 @@
           if (this.processError(d)) return
         }
         this._videoInfo = new ga(d, e, this._type);
-        var fileId = this._videoInfo.getFileId(e[0].stream_fileid, 0);
-        var src = this._videoInfo.getVideoSrc(0, 0, d, e[0].stream_type, fileId);
+        var ii = 0;
+        for(var iii=0;iii<=5;iii++){
+          if(!e[iii])
+            break;
+          if(e[iii].stream_type == 'mp4' || e[iii].stream_type == 'mp4hd' || e[iii].stream_type == 'mp4hd2'){
+            ii = iii;
+            break;
+          }
+        }
+        var fileId = this._videoInfo.getFileId(e[ii].stream_fileid, 0);
+        var src = this._videoInfo.getVideoSrc(ii, 0, d, e[ii].stream_type, fileId);
+        var ww = document.getElementById('ykplayer0').clientWidth;
+        var hh = ww*0.75;
+        var tt = 'mp4';
         SRC = src;
-        jwplayer('ykplayer'+PCOUNT).setup({file:SRC,type:'mp4'});
+        if(SRC.indexOf('/flv/') > 0)
+          tt = 'flv';
+
+        jwplayer('ykplayer'+PCOUNT).setup({
+          file:SRC,
+          type:tt,
+          height: hh,
+          width: ww,
+          players:[
+          {type: "flash", src: '/jwplayer/jwplayer.flash.swf'},
+          {type: 'html5'}
+          ]
+        });
         PCOUNT+=1;
         return;
         e = this._videoInfo._videoSegsDic;
