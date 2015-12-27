@@ -62,19 +62,7 @@
   <body>
     <%= render('/gcw/header') %>
     <%= yield %>
-    <section style="border-top:1px solid #e5e5e5;" class="container">
-      <div class="row">
-        <div id="SOHUCS">
-        </div>
-        <script charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/changyan.js" ></script>
-        <script type="text/javascript">
-          window.changyan.api.config({
-            appid: 'cyrtgVHP2',
-            conf: 'prod_60051f90ec47ba299643a1e1c83a5ae8'
-          });
-        </script> 
-      </div>
-    </section>
+    <%= render('layouts/mobile_changyan_comments') %>
     <%= render('/gcw/footer') %>
   </body>
 </html>
