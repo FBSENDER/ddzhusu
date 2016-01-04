@@ -32,6 +32,10 @@ class CtripController < ApplicationController
   def hotel
     @hotel = CtHotel.where(id: params[:id]).take
     not_found if @hotel.nil?
+    unless is_robot?
+      redirect_to "http://u.ctrip.com/union/CtripRedirect.aspx?TypeID=2&Allianceid=297552&sid=762386&OUID=&jumpUrl=http%3A%2F%2Fhotels.ctrip.com%2Fhotel%2F#{@hotel.source_id}.html%3FAllianceid%3D297552%26sid%3D762386%26OUID%3D%26MultiUnionSupport%3Dtrue"
+      return
+    end
     @hotel_detail = CtHotelDetail.where(hotel_id: @hotel.id).take
     not_found if @hotel_detail.nil?
     @description = JSON.parse(@hotel_detail.description)
