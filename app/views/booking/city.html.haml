@@ -9,7 +9,7 @@
     
   %article.row
     %h1.hidden #{@city.title}酒店预订
-    %p.alert.alert-info 共查询到#{@city.title}有#{@city.hotel_count}家酒店。
+    %p.hidden-md.hidden-lg.alert.alert-info 共查询到#{@city.title}有#{@city.hotel_count}家酒店。
     - if @hot_hotels.size > 0
       %h2 热门酒店
       %p
