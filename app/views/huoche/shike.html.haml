@@ -34,7 +34,8 @@
               = '-'
               %br
               = shike['end_name']
-            %td= shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe
+            %td
+              %a{href: "#{@ctrip_url}"}= shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe
       - if @gaotie_list.size.zero?
         %p.alert.alert-warning
           %strong 并没有~
@@ -66,7 +67,8 @@
               = '-'
               %br
               = shike['end_name']
-            %td= shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe
+            %td
+              %a{href: "#{@ctrip_url}"}= shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe
       - if @normal_list.size.zero?
         %p.alert.alert-warning
           %strong 并没有~
@@ -80,10 +82,8 @@
        
       %h2.page-header 近期公休假放假安排
       .alert.alert-success
-        %p 中秋节：9月26日 ~ 9月27日 
-        %p 国庆节：10月1日 ~ 10月7日 
-        %p 元旦/新年：1月1日 ~ 1月3日 
-        %p 今天已经可以购买国庆假期的卧铺票，长假出游人多，合理计划行程。
+        %p 春节：2月8日 ~ 2月14日
+        %p 春运人多，合理计划行程。
 
       %h2.page-header 乘火车装备推荐 - 出行更舒适
       .alert.alert-info
