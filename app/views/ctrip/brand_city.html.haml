@@ -4,6 +4,8 @@
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
+  .row.hidden-sm.hidden-xs#ctrip_search
+    = render partial: "layouts/ctrip_search_1"
   %article.row
     %h1.page-header #{@brand.title}#{@city_name}
     - @hotels.each_with_index do |hotel, index|

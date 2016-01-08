@@ -4,6 +4,9 @@
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 - get_friend_links 
 %section.container
+  .row.hidden-sm.hidden-xs#ctrip_search
+    = render partial: "layouts/ctrip_search_1"
+
   %article.row
     %h1.hidden= "#{@place.name}民宿预订"
     %h2.page-header #{@place.name}民宿房间价格查询

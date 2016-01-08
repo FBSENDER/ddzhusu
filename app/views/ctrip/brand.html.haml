@@ -4,6 +4,8 @@
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
+  .row.hidden-sm.hidden-xs#ctrip_search
+    = render partial: "layouts/ctrip_search_1"
   %article.row
     %h1 #{@brand.title}
     %img.img-responsive.img-thumbnail{src:"http://7xnj96.com1.z0.glb.clouddn.com/ctrip_brand_#{@brand.id}.jpg", alt:"#{@brand.name}logo"}
