@@ -21,10 +21,16 @@
           %br
           = comment
     %h2.page-header #{@hotel.name}预订
-    %p
-      - @rooms.each do |room|
-        = "房间：#{room['name']} 价格：#{room['price']} 设施：#{room['device']}"
-        %br
+    - @rooms.each_with_index do |room, index|
+      %div.col-md-4.col-sm-12.col-xs-12
+        - if room["img_url"]
+          %img.img-responsive.img-thumbnail{alt: "#{@hotel.name}-房间图片#{index}", src: "http://7xnj96.com1.z0.glb.clouddn.com/fish_house_#{@hotel.id}_room_#{index}.jpg"}
+        %p
+          = "房间：#{room['name']}"
+          %br
+          = "价格：#{room['price']}元"
+          %br
+          = "设施：#{room['device']}"
   %aside.row
     %h3.page-header 相关链接
     %p
