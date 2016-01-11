@@ -43,7 +43,7 @@ class FishController < ApplicationController
     @hotel = Hotel.where(id: params[:hotel_id].to_i).take
     not_found if @hotel.nil?
     unless is_robot?
-      if @hotel.source_id.start_with?('hm')
+      if @hotel.status == 1
         redirect_to "http://www.fishtrip.cn/houses/#{@hotel.source_id}?referral_id=1566163562"
         return
       else
