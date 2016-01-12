@@ -47,9 +47,8 @@ class FishController < ApplicationController
         redirect_to "http://www.fishtrip.cn/houses/#{@hotel.source_id}?referral_id=1566163562"
         return
       else
-        place = Place.find(@hotel.place_id)
-        place1 = Place.find(place.parent_id)
-        redirect_to "http://www.fishtrip.cn/#{place1.en_name}/#{place.en_name}/?referral_id=1566163562"
+        city = FsCity.find(@hotel.city_id)
+        redirect_to "http://www.fishtrip.cn/#{city.country_en_name}/#{city.en_name}/?referral_id=1566163562"
         return
       end
     end

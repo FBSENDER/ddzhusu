@@ -5,6 +5,12 @@ end
 class Hotel < ActiveRecord::Base
   self.table_name = 'fstnotes_base_fish_hotels'
 end
+class FsCountry < ActiveRecord::Base
+  self.table_name = 'fstnotes_base_fish_countries'
+end
+class FsCity < ActiveRecord::Base
+  self.table_name = 'fstnotes_base_fish_cities'
+end
 
 class BkCountry < ActiveRecord::Base
   self.table_name = 'booking_countries'
