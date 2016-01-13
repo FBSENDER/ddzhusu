@@ -24,12 +24,12 @@ class FishController < ApplicationController
     end
     @places = @@all_places.sample(5)
     if @place.ptype == 3
-      @hotels = Hotel.where(fish_tag: @place.fish_tag).take(20)
+      @hotels = Hotel.where(fish_tag: @place.fish_tag, status: 1).take(20)
     elsif @place.ptype == 2
-      @hotels = Hotel.where(place_id: @place.id).take(20)
+      @hotels = Hotel.where(place_id: @place.id,status: 1).take(20)
     elsif @place.ptype == 1
       p2 = Place.where(parent_id: @place.id).select(:id).to_a.sample
-      @hotels = Hotel.where(place_id: p2.id).take(20)
+      @hotels = Hotel.where(place_id: p2.id, status: 1).take(20)
     else
       @hotels = []
     end
@@ -55,7 +55,7 @@ class FishController < ApplicationController
     @comments = JSON.parse(@hotel.comments)
     @recommands = JSON.parse(@hotel.recommands)
     @rooms = JSON.parse(@hotel.rooms)
-    @hotels = Hotel.where("id > ?", @hotel.id).select(:id,:name).take(5)
+    @hotels = Hotel.where("id > ? and status = 1", @hotel.id).select(:id,:name).take(5)
     @place_1 = Place.where(id: @hotel.place_id).take
     @place_2 = Place.where(fish_tag: @hotel.fish_tag).to_a
   end
