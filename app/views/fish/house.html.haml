@@ -17,6 +17,10 @@
             %li= recommand
       %p
         评论：
+        %br
+        %strong= "#{@hotel.name}怎么样？ "
+        %strong= "#{@hotel.name}住宿条件好不好？"
+        听听其他小伙伴怎么评价的。
         - @comments.each do |comment|
           %br
           = comment
