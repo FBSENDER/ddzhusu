@@ -15,6 +15,11 @@
       %h2 推荐理由
       - @recommand.each do |recommand|
         %p #{recommand.join('——')}
+      %h2 酒店设施
+      - @facility.each do |fac|
+        %p 
+          %b #{fac[0]}
+          = "：#{fac[1].join(' | ')}"
       - if @review.size > 0
         %h2 评论
         - @review.each do |review|
