@@ -29,6 +29,7 @@
 = render partial: "layouts/taobao_products"
 
 %script{type: "text/javascript", src: "/ykplayer/jsapi.js"}
+%script{type: "text/javascript", src: "/ykplayer/set_jw.js"}
 %script{type: "text/javascript"}
   - @videos.each_with_index do |video,index|
     var x#{index} = new JWP({client_id: '82ca06da2497bd12',vid:'#{video["id"]}',target:'ykplayer#{index}'});x#{index}.selectH5MP4();

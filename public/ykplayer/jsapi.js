@@ -1,6 +1,4 @@
 (function() {
-  var SRC = '';
-  var PCOUNT = 0;
   var P, z, B, G, Q, R, S;
   function A(b) {
     var d = document.createElement("script");
@@ -859,24 +857,7 @@
         }
         var fileId = this._videoInfo.getFileId(e[ii].stream_fileid, 0);
         var src = this._videoInfo.getVideoSrc(ii, 0, d, e[ii].stream_type, fileId);
-        var ww = document.getElementById('ykplayer0').clientWidth;
-        var hh = ww*0.75;
-        var tt = 'mp4';
-        SRC = src;
-        if(SRC.indexOf('/flv/') > 0)
-          tt = 'flv';
-
-        jwplayer('ykplayer'+PCOUNT).setup({
-          file:SRC,
-          type:tt,
-          height: hh,
-          width: ww,
-          players:[
-          {type: "flash", src: '/jwplayer/jwplayer.flash.swf'},
-          {type: 'html5'}
-          ]
-        });
-        PCOUNT+=1;
+        set_jwplayer(src);
         return;
         e = this._videoInfo._videoSegsDic;
         g = "";
