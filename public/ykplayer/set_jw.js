@@ -21,8 +21,21 @@ window.set_jwplayer = function(src){
       if(e.message == 'Error loading media: File could not be played'){
         $('#ykplayer0').append("<div class='hidden'><iframe src='http://www.youku.com'></iframe></div>");
         $('div.jw-title-primary.jw-reset').html("服务器开小差了，请刷新页面试一试~");
+        $('#source_link_p_' + PCOUNT).removeClass('hidden');
+        var lk = $('#source_link_a_' + PCOUNT).data('original');
+        $('#source_link_a_' + PCOUNT).attr({href: lk});
       }
     });
   }
+  else{
+    jwp.on('error',function(e){
+      if(e.message == 'Error loading media: File could not be played'){
+        $('#source_link_p_' + PCOUNT).removeClass('hidden');
+        var lk = $('#source_link_a_' + PCOUNT).data('original');
+        $('#source_link_a_' + PCOUNT).attr({href: lk});
+      }
+    });
+  }
+
   PCOUNT += 1;
 };

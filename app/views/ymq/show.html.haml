@@ -7,6 +7,8 @@
   .row
     %article.col-md-8.col-lg-8.col-sm-12
       %h1.page-header #{@video.title}      
+      %p.hidden{id: "source_link_p_0"}
+        %a{"href" => "#","data-original" => "http://v.youku.com/v_show/id_#{@video.youku_id}.html","id" => "source_link_a_0","target" => "_blank"} 到视频源播放
       %div{id: "ykplayer0", style: "width:100%;height:100%;"}
       %p{style: "margin-top:10px", class: "alert alert-info"}
         %b 视频信息：
