@@ -144,3 +144,7 @@ end
 class BadmintonHall < ActiveRecord::Base
   self.table_name = 'ymq_place_details'
 end
+
+class InsideLink < ActiveRecord::Base
+  self.table_name = 'inside_links'
+end

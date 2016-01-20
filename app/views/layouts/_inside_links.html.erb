@@ -1,0 +1,12 @@
+<% if @inside_links.size > 0 %>
+<section class="container hidden">
+  <div class="row">
+    <h4>站内其它链接</h4>
+    <p>
+      <% @inside_links.each do |link|%>
+      <a href="<%= link.url %>"><%= link.anchor %></a>
+      <% end %>
+    </p>
+  </div>
+</section>
+<% end %>

@@ -1,5 +1,6 @@
 require 'db_models'
 class HomeController < ApplicationController
+  skip_before_action :set_inside_links
   layout :set_layout_for_diff_hosts
 
   @@train_lines = GaotieLine.select(:from_name, :to_name).to_a

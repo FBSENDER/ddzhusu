@@ -1,5 +1,6 @@
 require 'db_models'
 class PpqController < ApplicationController
+  skip_before_action :set_inside_links
 
   def baike
     @baike_name = params[:baike_name]

@@ -1,5 +1,6 @@
 require 'db_models'
 class YmqController < ApplicationController
+  skip_before_action :set_inside_links
   layout :set_layout
   def set_layout
     "mvxixi" if request.host == 'm.vxixi.com'

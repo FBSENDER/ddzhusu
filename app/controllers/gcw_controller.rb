@@ -1,5 +1,6 @@
 require 'db_models'
 class GcwController < ApplicationController
+  skip_before_action :set_inside_links
 
   def show
     @video_name = params[:video_name]
