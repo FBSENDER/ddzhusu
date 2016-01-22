@@ -8,7 +8,7 @@
     %h1.hidden #{@theme.title}
     - @hotels.each_with_index do |hotel, index|
       %div
-        %img.img-responsive.img-thumbnail{src:"#{hotel.img_url}", alt:"#{@theme.title}图片_#{index}"}
+        %img.img-responsive.img-thumbnail{src:"http://img.ddzhusu.com/ht_hotel_#{hotel.id}.jpg", alt:"#{@theme.title}图片_#{index}"}
         %h3= hotel.hotel_name
         - desc = JSON.parse(@hotel_details.select{|item| item.hotel_id == hotel.id}.first.desc_json )
         %p

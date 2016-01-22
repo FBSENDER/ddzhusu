@@ -34,7 +34,7 @@ class HotelController < ApplicationController
     not_found if @theme.nil?
     ids = @theme.hotel_ids.split(',')
     ids = ids + (1..2000).to_a.sample(20-ids.size) 
-    @hotels = Hoteln.where(id: ids).select(:hotel_name,:id,:elong_id,:img_url).to_a
+    @hotels = Hoteln.where(id: ids).select(:hotel_name,:id,:elong_id).to_a
     @hotel_details = HotelnDetail.where(hotel_id: ids).select(:hotel_id,:desc_json).to_a
     @themes = @@themes.sample(5)
   end
