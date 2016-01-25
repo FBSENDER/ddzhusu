@@ -4,6 +4,7 @@ class BookingenController < ApplicationController
   def set_layout
     "mddzhusu" if request.host == 'm.ddzhusu.com'
   end
+  @@all_bken_hotels = BkenHotel.select(:id,:title).to_a
   def hotel
     @hotel = BkenHotel.where(hotel_id: params[:hotel_id]).select(:id, :hotel_id, :name,:en_name, :title, :country_en_short, :en_short, :price, :score, :description, :recommand, :facility, :notice, :review).take
     not_found if @hotel.nil?
@@ -15,7 +16,7 @@ class BookingenController < ApplicationController
     @recommand = JSON.parse(@hotel.recommand)
     @facility = JSON.parse(@hotel.facility)
     @review = JSON.parse(@hotel.review)
-    @hotels = []
+    @hotels = @@all_bken_hotels.sample(10)
     @countries = []
   end
 end
