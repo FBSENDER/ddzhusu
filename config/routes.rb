@@ -25,6 +25,12 @@ Ddzhusu::Application.routes.draw do
   get '/ctrip/brand/:brand_name/', to: 'ctrip#brand'
   get '/ctrip/brand/:brand_name/city/:city_name/', to: 'ctrip#brand_city'
   get '/ctrip/hotel/:id/', to: 'ctrip#hotel'
+  #clock_hotel
+  get '/clockhotel/', to: 'clockhotel#index'
+  get '/clockhotel/hotel/:id/', to: 'clockhotel#hotel'
+  get '/clockhotel/city/:city_name/', to: 'clockhotel#city'
+  get '/clockhotel/brand/:brand_name/', to: 'clockhotel#brand'
+  get '/clockhotel/city/:city_name/brand/:brand_name/', to: 'clockhotel#city_brand'
   # 新启用路由规则，测试一级目录的seo优势，放在二级域名下，防止一级域名受牵连
   # 高铁gaotie
   get '/gaotieindex.html', to: 'gaotie#index'

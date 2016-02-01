@@ -1,0 +1,16 @@
+- title "钟点房小时房_滴滴住宿"
+- keywords "钟点房,小时房"
+- head_desc "钟点房、小时房在线预订、团购以及多少钱价格查询——滴滴住宿。"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+.container
+  .row
+    .col-md-12.col-lg-12.col-sm-12
+      %section
+        %h1.page-header 钟点房预订_小时房价格查询 
+        %p
+          - @city_names.each do |name|
+            %a{href:"/clockhotel/city/#{URI.encode(name)}/"} #{name}钟点房
+        %p
+          - @brand_names.each do |name|
+            %a{href:"/clockhotel/brand/#{URI.encode(name)}/"} #{name}钟点房

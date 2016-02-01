@@ -145,6 +145,19 @@ class BadmintonHall < ActiveRecord::Base
   self.table_name = 'ymq_place_details'
 end
 
+class ClockHotel < ActiveRecord::Base
+  self.table_name = 'clock_hotels'
+end
+class ClockHotelDetail < ActiveRecord::Base
+  self.table_name = 'clock_hotel_details'
+end
+class ClockCity < ActiveRecord::Base
+  self.table_name = 'clock_cities'
+end
+class ClockBrand < ActiveRecord::Base
+  self.table_name = 'clock_brands'
+end
+
 class InsideLink < ActiveRecord::Base
   self.table_name = 'inside_links'
 end
