@@ -59,7 +59,10 @@ class HomeController < ApplicationController
 
   def www
     @places = @@places
-    render 'fish/sitemap'
+    @brands = CtBrand.select(:name, :title).order("hotel_count desc").limit(24).to_a
+    @themes = CtTheme.select(:name,:title).take(24)
+    @clock_cities = ClockCity.select(:name).take(24)
+    render 'home/www'
   end
 
   def ppq
@@ -73,6 +76,7 @@ class HomeController < ApplicationController
 
   def set_layout_for_diff_hosts
     case request.host
+    when "www.ddzhusu.com" then "home"
     when "gaotie.ddzhusu.com" then "gaotie"
     when "map.ddzhusu.com" then "map"
     when "dongche.ddzhusu.com" then "dongche"
