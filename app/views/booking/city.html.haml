@@ -5,9 +5,6 @@
 
 = render partial: "layouts/booking_search_header"
 %section.container
-  .row.hidden-sm.hidden-xs#ctrip_search
-    = render partial: "layouts/ctrip_search_1"
-    
   %article.row
     %h1.hidden #{@city.title}酒店预订
     %p.hidden-md.hidden-lg.alert.alert-info 共查询到#{@city.title}有#{@city.hotel_count}家酒店。
