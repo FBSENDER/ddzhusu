@@ -8,10 +8,11 @@
   %article.row
     %h1.hidden #{@country.name}酒店预订
     - @cities.each do |city|
-      %div
+      %div.col-md-12.col-sm-12.col-xs-12
         %img.img-responsive.img-thumbnail{src:"http://img.ddzhusu.com/booking_city_#{@country.en_short}_#{city[0]}.jpg", alt:"#{@country.name}#{city[1]}酒店图片"}
         %h3 #{@country.name}#{city[1]}酒店
         %p 共有#{city[2]}家酒店/宾馆/住宿
+
     %h2.page-header #{@country.name}酒店价格查询
     - @hotels.each_with_index do |hotel, index|
       %div
