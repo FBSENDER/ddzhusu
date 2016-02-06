@@ -3,6 +3,7 @@
 - head_desc "滴滴住宿为您搜索#{@country.name}酒店住宿价格查询及预订信息。通过对#{@country.name}酒店宾馆价格、位置、设施、品牌、星级及用户真实点评为你推荐高性价比酒店库存、在线预订#{@country.name}酒店，价格优惠实时折扣."
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
+= render partial: "layouts/booking_search_header"
 %section.container
   %article.row
     %h1.hidden #{@country.name}酒店预订
