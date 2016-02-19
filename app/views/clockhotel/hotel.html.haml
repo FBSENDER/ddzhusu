@@ -1,6 +1,6 @@
 - title "#{@hotel.name}钟点房_#{@hotel.name}小时房在预订,价格查询及团购多少钱"
 - keywords "#{@hotel.name}钟点房,#{@hotel.name}小时房,#{@hotel.name}钟点房预订,#{@hotel.name}钟点房价格"
-- head_desc "#{@hotel.name}钟点房、小时房在线预订、团购以及多少钱价格查询，#{@desc["instruction"][0,80]}..."
+- head_desc "#{@hotel.name}钟点房、小时房在线预订、团购以及多少钱价格查询，#{@desc["instruction"][0,80] if @desc["instruction"]}..."
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
