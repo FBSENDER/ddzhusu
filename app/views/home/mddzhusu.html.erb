@@ -1,0 +1,156 @@
+<% title("民宿住宿_短租日租_酒店宾馆_度假公寓_家庭旅馆_小时房钟点房-滴滴住宿手机站")%>
+<% keywords("民宿预订,住宿预订,滴滴住宿,家庭旅馆,台湾民宿,日本民宿,韩国民宿,泰国民宿,短租公寓,旅馆预订,宾馆预订,酒店预订")%>
+<% head_desc("滴滴住宿全球公寓民宿预订平台！提供国内外特色住宿，酒店式公寓、短租日租公寓、家庭旅馆、特色民宿在线预订。民宿价格查询，酒店地址电话查询及在线预订。")%>
+
+<article class="container">
+  <div class="row">
+    <h1 class="hidden">民宿预订</h1>
+    <div class="col-md-12">
+      <h2 class="page-header">热门旅游城市住宿</h2>
+      <div class="col-md-4">
+        <a href="/booking/city/79419/">
+          <div style="background-image:url(http://img.ddzhusu.com/booking_city_tw_tai-nan.jpg);height:120px">
+            <div style="padding:5px;margin:5px;background:rgba(0,0,0,0.6);color:#fff;width:180px">
+              <h3>台湾台南酒店</h3>
+              <p>共有60家酒店/宾馆/住宿</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="/booking/city/53083/">
+          <div style="background-image:url(http://img.ddzhusu.com/booking_city_tw_chiao-hsi.jpg);height:120px">
+            <div style="padding:5px;margin:5px;background:rgba(0,0,0,0.6);color:#fff;width:180px">
+              <h3>台湾礁溪酒店</h3>
+              <p>共有55家酒店/宾馆/住宿</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="/booking/city/61706/">
+          <div style="background-image:url(http://img.ddzhusu.com/booking_city_tw_chiayi-city.jpg);height:120px">
+            <div style="padding:5px;margin:5px;background:rgba(0,0,0,0.6);color:#fff;width:180px">
+              <h3>台湾嘉义市酒店</h3>
+              <p>共有34家酒店/宾馆/住宿</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="/booking/city/39831/">
+          <div style="background-image:url(http://img.ddzhusu.com/booking_city_tw_chiu-fen.jpg);height:120px">
+            <div style="padding:5px;margin:5px;background:rgba(0,0,0,0.6);color:#fff;width:180px">
+              <h3>台湾九份酒店</h3>
+              <p>共有43家酒店/宾馆/住宿</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="/booking/city/20676/">
+          <div style="background-image:url(http://img.ddzhusu.com/booking_city_tw_yu-chih.jpg);height:120px">
+            <div style="padding:5px;margin:5px;background:rgba(0,0,0,0.6);color:#fff;width:180px">
+              <h3>台湾鱼池酒店</h3>
+              <p>共有44家酒店/宾馆/住宿</p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4">
+        <a href="/booking/city/69268/">
+          <div style="background-image:url(http://img.ddzhusu.com/booking_city_tw_o-luan-pi.jpg);height:120px">
+            <div style="padding:5px;margin:5px;background:rgba(0,0,0,0.6);color:#fff;width:180px">
+              <h3>台湾鹅銮酒店</h3>
+              <p>共有50家酒店/宾馆/住宿</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <h2 class="page-header">热门民宿城市</h2>
+      <div>
+        <!-- Nav tabs -->
+        <ul class="nav nav-pills" role="tablist">
+          <li role="presentation" class="active"><a href="#tw" aria-controls="home" role="tab" data-toggle="tab">台湾</a></li>
+          <li role="presentation"><a href="#jp" aria-controls="profile" role="tab" data-toggle="tab">日本</a></li>
+          <li role="presentation"><a href="#kr" aria-controls="messages" role="tab" data-toggle="tab">韩国</a></li>
+          <li role="presentation"><a href="#tg" aria-controls="settings" role="tab" data-toggle="tab">泰国</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content" style="margin-top:20px">
+          <div role="tabpanel" class="tab-pane active" id="tw">
+            <div class="row">
+            <% @places.select{|item| item.parent_id == 1}.each do |place|%>
+              <div class="col-md-2">
+                <a href="/fishnew/<%= URI.encode(place.name )%>/"><%= place.name %>民宿</a>
+              </div>
+            <% end %>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="jp">
+            <div class="row">
+            <% @places.select{|item| item.parent_id == 2}.each do |place|%>
+              <div class="col-md-2">
+                <a href="/fishnew/<%= URI.encode(place.name )%>/"><%= place.name %>民宿</a>
+              </div>
+            <% end %>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="kr">
+            <div class="row">
+            <% @places.select{|item| item.parent_id == 247}.each do |place|%>
+              <div class="col-md-2">
+                <a href="/fishnew/<%= URI.encode(place.name )%>/"><%= place.name %>民宿</a>
+              </div>
+            <% end %>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tg">
+            <div class="row">
+            <% @places.select{|item| item.parent_id == 114}.each do |place|%>
+              <div class="col-md-2">
+                <a href="/fishnew/<%= URI.encode(place.name )%>/"><%= place.name %>民宿</a>
+              </div>
+            <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <h2 class="page-header">品牌连锁酒店</h2>
+      <% @brands.each do |brand|%>
+        <div class="col-md-2">
+          <a href="/ctrip/brand/<%= URI.encode(brand.name) %>/"><%= brand.title %>酒店</a>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-12">
+      <h2 class="page-header">家庭旅馆</h2>
+      <% @themes.each do |theme|%>
+        <div class="col-md-2">
+          <a href="http://hotel.ddzhusu.com/theme-<%= URI.encode(theme.name) %>/"><%= theme.title %></a>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-12">
+      <h2 class="page-header">钟点房小时房</h2>
+      <% @clock_cities.each do |city|%>
+        <div class="col-md-2">
+          <a href="/clockhotel/city/<%= URI.encode(city.name) %>/"><%= city.name %>钟点房</a>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-md-12 hidden-sm hidden-xs">
+      <h2 class="page-header">火车票机票查询</h2>
+      <div>
+        <script type="text/javascript" id="ctrip_union_product_20121221" src="http://u.ctrip.com/union/Js/productUI.js?st=ticket&sm=all&smi=s|t&hp=isPic|isGrede|isPrice|isLevel|isYoupiao&tp=isBE|isType|isPrice|isRebate&hop=isPic|isType|isPrice|isDescribe|isYoupiao&tn=isTrainNo|fdDate|fdStation|useTime|price&hdt=2016-02-03&hat=2016-02-04&tdt=2016-02-03&fat=2016-02-04&tddd=0&hdc=%u4E0A%u6D77&hhd=2&tdb=%u4E0A%u6D77&thd=SHA&tde=%u5317%u4EAC&tha=BJS&hfc=%u4E0A%u6D77&hod=2&hac=%u5317%u4EAC&hoa=1&ddc=%u4E0A%u6D77&hddc=shanghai&dac=%u5317%u4EAC&hdac=beijing&si=0&ti=0&num=0&fv=0&hsp=0|1|2&tsp=0|1|2|3|4|5|6&hosp=0|1&trsp=0|1|2|3|4&pw=950&ph=197&cl=2&rw=5&had=ctrip&allid=297552&sid=762386&oid=&app=0104B00&opt=sl" charset="gb2312"></script>
+      </div>
+    </div>
+  </div>
+  <div class="page-header">
+  </div>
+</article>

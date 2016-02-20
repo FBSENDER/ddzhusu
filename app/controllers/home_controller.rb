@@ -71,7 +71,11 @@ class HomeController < ApplicationController
   end
 
   def m
-    redirect_to "http://www.ddzhusu.com", :status => 302
+    @places = @@places
+    @brands = CtBrand.select(:name, :title).order("hotel_count desc").limit(24).to_a
+    @themes = CtTheme.select(:name,:title).take(24)
+    @clock_cities = ClockCity.select(:name).take(24)
+    render 'home/mddzhusu'
   end
 
   def set_layout_for_diff_hosts
