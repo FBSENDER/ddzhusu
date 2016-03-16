@@ -161,3 +161,15 @@ end
 class InsideLink < ActiveRecord::Base
   self.table_name = 'inside_links'
 end
+
+class WeatherPoi < ActiveRecord::Base
+  self.table_name = 'weather_pois'
+end
+
+class WeatherHistory < ActiveRecord::Base
+  self.table_name = 'weather_history'
+end
+
+class WeatherDetail < ActiveRecord::Base
+  self.table_name = 'weather_details'
+end

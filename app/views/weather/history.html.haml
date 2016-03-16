@@ -1,0 +1,15 @@
+- title "#{@poi.name}历史天气查询"
+- keywords "#{@poi.name}历史天气,#{@poi.name}历史天气查询"
+- head_desc "滴滴住宿为您报提供#{@poi.name}最近一周的天气预报，通过滴滴住宿天气预报详细了解#{@poi.name}天气预报以及#{@poi.name}周边各地区未来一周天天气情况，温度，空气质量，降水，风力，气压，紫外线强度，空气质量，PM2.5等！"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+%section.container
+  %article.row
+    %h1 #{@poi.name}历史天气查询
+    %ul
+      - @history.each do |history|
+        %li #{history.poi_name} #{history.log_date} #{history.l_tmp} ~ #{history.h_tmp} #{history.w_type} #{history.wd}#{history.ws} #{"空气质量：#{history.aqi_info}" unless history.aqi_info.empty?} 
+    %p
+      %a{href: "/weather/#{@poi.pinyin}/#{@poi.id}/"}= "#{@poi.name}一周天气"
+      %a{href: "/weather/today/#{@poi.pinyin}/#{@poi.id}/"}= "#{@poi.name}今日天气"
+      %a{href: "/weather/tomorrow/#{@poi.pinyin}/#{@poi.id}/"}= "#{@poi.name}明天天气"

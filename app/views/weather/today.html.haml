@@ -1,0 +1,28 @@
+- title "#{@poi.name}今日天气_#{@poi.name}今天有雨吗_#{@poi.name}今天风力"
+- keywords "#{@poi.name}今日天气,#{@poi.name}今天有雨吗,#{@poi.name}今天有雾霾吗,#{@poi.name}今天风力"
+- head_desc "滴滴住宿为您报提供#{@poi.name}今天天气情况，通过滴滴住宿天气预报详细了解#{@poi.name}天气预报以及#{@poi.name}周边各地区未来一周天天气情况，温度，空气质量，降水，风力，气压，紫外线强度，空气质量，PM2.5等！"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+%section.container
+  %article.row
+    %h1 #{@poi.name}今日天气
+    %p 天气概况
+    %ul
+      %li 空气质量：#{@data["today"]["aqi"]}
+      %li 最高气温：#{@data["today"]["hightemp"]}
+      %li 最低气温：#{@data["today"]["lowtemp"]}
+      %li 天气：#{@data["today"]["type"]}
+      %li 风力风向：#{@data["today"]["fengxiang"]}#{@data["today"]["fengli"]}
+    %p 生活贴士
+    %ul
+      - @data["today"]["index"].each do |info|
+        %li #{info["name"]} #{info["index"]} #{info["details"]}
+    %p 
+      %a{href: "/weather/tomorrow/#{@poi.pinyin}/#{@poi.id}/"}= "#{@poi.name}明天天气"
+      %a{href: "/weather/#{@poi.pinyin}/#{@poi.id}/"}= "#{@poi.name}天气"
+
+    %h2 #{@poi.name}一周天气预报
+    %ul
+      - @data["forecast"].each do |ft|
+        %li #{ft["date"]} #{ft["week"]} 空气质量：#{ft["aqi"]} #{ft["type"]} #{ft["lowtemp"]} ~ #{ft["hightemp"]}°c #{ft["fengxiang"]} #{ft["fengli"]}
+      
