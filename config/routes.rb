@@ -84,6 +84,7 @@ Ddzhusu::Application.routes.draw do
   get '/ppqbk-:baike_name/', to: 'ppq#baike' #ppq 百科 baike
   get '/ppqvd-:video_name/', to: 'ppq#video' #ppq 视频 video
   # 天气
+  get '/weather/', to: 'weather#index' #poi 天气首页
   get '/weather/:pinyin/:id', to: 'weather#show' #poi 天气详情
   get '/weather/today/:pinyin/:id', to: 'weather#today' #poi 今日天气
   get '/weather/tomorrow/:pinyin/:id', to: 'weather#tomorrow' #poi 明日天气

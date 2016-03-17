@@ -27,3 +27,20 @@
       - @data["forecast"].each do |ft|
         %li #{ft["date"]} #{ft["week"]} 空气质量：#{ft["aqi"]} #{ft["type"]} #{ft["lowtemp"]} ~ #{ft["hightemp"]}°c #{ft["fengxiang"]} #{ft["fengli"]}
       
+    %h2 相关地区天气
+    %h3 相关地区一周天气
+    %p
+      - @related_pois.each do |poi| 
+        %a{href:"/weather/#{poi.pinyin}/#{poi.id}/"}= "#{poi.name}一周天气"
+    %h3 相关地区今日天气
+    %p
+      - @related_pois.each do |poi| 
+        %a{href:"/weather/today/#{poi.pinyin}/#{poi.id}/"}= "#{poi.name}今日天气"
+    %h3 相关地区明日天气
+    %p
+      - @related_pois.each do |poi| 
+        %a{href:"/weather/tomorrow/#{poi.pinyin}/#{poi.id}/"}= "#{poi.name}明日天气"
+    %h3 相关地区历史天气
+    %p
+      - @related_pois.each do |poi| 
+        %a{href:"/weather/history/#{poi.pinyin}/#{poi.id}/"}= "#{poi.name}历史天气"

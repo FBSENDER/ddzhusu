@@ -1,0 +1,11 @@
+- title "全国天气预报_全国一周天气查询"
+- keywords "天气,天气预报,全国天气预报,全国一周天气预报"
+- head_desc "滴滴住宿为您报提供全国最近一周的天气预报，温度，空气质量，降水，风力，气压，紫外线强度，空气质量，PM2.5等！"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+%section.container
+  %article.row
+    %h1 全国天气预报
+    %p
+      - @pois.each do |poi|
+        %a{href:"/weather/#{poi.pinyin}/#{poi.id}/"}= "#{poi.name}天气"
