@@ -22,6 +22,20 @@ class CtripController < ApplicationController
     @brand = CtBrand.where(name: params[:brand_name]).take
     @city_name = params[:city_name]
     not_found if @brand.nil?
+    unless is_robot?
+      @brand_detail = CtBrandDetail.where(brand_id: @brand.id).take
+      not_found if @brand_detail.nil?
+      city_pinyin = 'beijing1'
+      cities = JSON.parse(@brand_detail.cities_json)
+      cities.each do |cc|
+        if cc[0] == @city_name
+          city_pinyin = cc[1]
+          break
+        end
+      end
+      redirect_to "http://u.ctrip.com/union/CtripRedirect.aspx?TypeID=2&Allianceid=297552&sid=762386&OUID=&jumpUrl=http%3A%2F%2Fhotels.ctrip.com%2Fhotel%2F#{city_pinyin}%3Fhid=#{@brand.source_id}%3DAllianceid%3D297552%26sid%3D762386%26OUID%3D%26MultiUnionSupport%3Dtrue"
+      return
+    end
     @hotels = CtHotel.where(brand_name: params[:brand_name], city_name: params[:city_name]).to_a
     not_found if @hotels.size.zero?
     @hotel_details = CtHotelDetail.where(hotel_id: @hotels.map(&:id)).select(:hotel_id,:description,:review).to_a
