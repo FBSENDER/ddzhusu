@@ -33,7 +33,7 @@ class CtripController < ApplicationController
           break
         end
       end
-      redirect_to "http://u.ctrip.com/union/CtripRedirect.aspx?TypeID=2&Allianceid=297552&sid=762386&OUID=&jumpUrl=http%3A%2F%2Fhotels.ctrip.com%2Fhotel%2F#{city_pinyin}%3Fhid=#{@brand.source_id}%3DAllianceid%3D297552%26sid%3D762386%26OUID%3D%26MultiUnionSupport%3Dtrue"
+      redirect_to "http://u.ctrip.com/union/CtripRedirect.aspx?TypeID=2&Allianceid=297552&sid=762386&OUID=&jumpUrl=http%3A%2F%2Fhotels.ctrip.com%2Fhotel%2F#{city_pinyin}%3Fhid=#{@brand.source_id}%26Allianceid%3D297552%26sid%3D762386%26OUID%3D%26MultiUnionSupport%3Dtrue"
       return
     end
     @hotels = CtHotel.where(brand_name: params[:brand_name], city_name: params[:city_name]).to_a
