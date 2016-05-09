@@ -22,7 +22,7 @@ class FishController < ApplicationController
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       return
     end
-    unless is_robots?
+    unless is_robot?
       if @place.ptype == 1
         redirect_to "http://www.fishtrip.cn/#{@place.en_name}?referral_id=1566163562"
       elsif @place.ptype == 2
@@ -32,7 +32,7 @@ class FishController < ApplicationController
         p2 = Place.where(id: @place.parent_id).take
         p1 = Place.where(id: p2.parent_id).take
         if @place.fish_tag > 0
-          redirect_to "http://www.fishtrip.cn/#{p1.en_name}/#{p2.en_name}/district_tag_ids%5B%5D=#{@place.fish_tag}?referral_id=1566163562"
+          redirect_to "http://www.fishtrip.cn/#{p1.en_name}/#{p2.en_name}/?district_tag_ids%5B%5D=#{@place.fish_tag}&referral_id=1566163562"
         else
           redirect_to "http://www.fishtrip.cn/#{p1.en_name}/#{p2.en_name}?referral_id=1566163562"
         end
