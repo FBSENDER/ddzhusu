@@ -19,6 +19,10 @@ class BookingController < ApplicationController
   def city
     @city = BkCity.where(id: params[:city_id], status: 1).select(:id, :title, :hotel_count, :country_en_short, :en_short).take
     not_found if @city.nil?
+    unless is_robot?
+      redirect_to "http://www.booking.com/city/#{@city.country_en_short}/#{@city.en_short}.zh-cn.html?aid=895877"
+      return
+    end
     @detail = BkCityDetail.where(city_id: @city.id).take
     not_found if @detail.nil?
     @hotels = BkHotel.where(id: @detail.hotel_ids.split(',').map(&:to_i)).select(:id, :name, :price, :score, :description, :en_short, :title, :country_en_short).to_a
