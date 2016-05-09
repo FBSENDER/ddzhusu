@@ -22,6 +22,23 @@ class FishController < ApplicationController
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       return
     end
+    unless is_robots?
+      if @place.ptype == 1
+        redirect_to "http://www.fishtrip.cn/#{@place.en_name}?referral_id=1566163562"
+      elsif @place.ptype == 2
+        p1 = Place.where(id: @place.parent_id).take
+        redirect_to "http://www.fishtrip.cn/#{p1.en_name}/#{@place.en_name}?referral_id=1566163562"
+      elsif @place.ptype == 3
+        p2 = Place.where(id: @place.parent_id).take
+        p1 = Place.where(id: p2.parent_id).take
+        if @place.fish_tag > 0
+          redirect_to "http://www.fishtrip.cn/#{p1.en_name}/#{p2.en_name}/district_tag_ids%5B%5D=#{@place.fish_tag}?referral_id=1566163562"
+        else
+          redirect_to "http://www.fishtrip.cn/#{p1.en_name}/#{p2.en_name}?referral_id=1566163562"
+        end
+      end 
+      return
+    end
     @places = @@all_places.sample(5)
     if @place.ptype == 3
       @hotels = Hotel.where(fish_tag: @place.fish_tag, status: 1).take(20)
