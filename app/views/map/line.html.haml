@@ -8,6 +8,8 @@
     %article.col-md-8.col-lg-8.col-sm-12
       %h1.hidden= @from_to
 
+      = render partial: ("layouts/sogou_pc_ad")
+
       - if @train.size.zero?
         %h2.page-header= "乘火车从#{@from_to}"
         .alert.alert-warning
