@@ -3,13 +3,12 @@
 - head_desc @desc
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
+- if @show_mobile_ads
+  = render partial: ("iquan/iquan_ads")
 %section.container
   .row
     %article.col-md-8.col-lg-8.col-sm-12
       %h1.hidden= @from_to
-
-      = render partial: ("layouts/sogou_pc_ad")
-
       - if @train.size.zero?
         %h2.page-header= "乘火车从#{@from_to}"
         .alert.alert-warning

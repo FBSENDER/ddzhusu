@@ -18,6 +18,7 @@ class MapController < ApplicationController
     @to_lines = MapGuide.where(to_name: @to_name).select(:from_name,:to_name).to_a.sample(10)
     @links = JSON.parse(@guide_detail.links_json)
     not_found if @guide_detail.nil?
+    @show_mobile_ads = is_device_mobile? && !is_robot?
   end
 
   def line
@@ -34,6 +35,7 @@ class MapController < ApplicationController
     @car_route = JSON.parse(@line_detail.by_car)
     @desc = page_desc(@from_to, @flight, @train, @bus, @car_route)
     @links = JSON.parse(@line_detail.links_json)
+    @show_mobile_ads = is_device_mobile? && !is_robot?
   end
 
   def cinema

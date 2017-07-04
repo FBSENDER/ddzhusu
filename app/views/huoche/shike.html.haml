@@ -3,6 +3,8 @@
 - head_desc "#{@from_to}火车时刻表、火车票票价、车次、经过哪些车站等相关查询，滴滴火车尽力为您提供这些信息。"
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
+- if @show_mobile_ads
+  = render partial: ("iquan/iquan_ads")
 %section.container
   .row
     %article.col-md-8.col-lg-8.col-sm-12

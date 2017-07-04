@@ -27,5 +27,6 @@ class DongcheController < ApplicationController
     @date = Date.today + 2
     @stations = JSON.parse(@line_detail.pass_stations)
     @links = JSON.parse(@line_detail.links_json)
+    @show_mobile_ads = is_device_mobile? && !is_robot?
   end
 end

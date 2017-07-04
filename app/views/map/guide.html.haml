@@ -3,11 +3,12 @@
 - head_desc @desc
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
+- if @show_mobile_ads
+  = render partial: ("iquan/iquan_ads")
 %section.container
   .row
     %article.col-md-8.col-lg-8.col-sm-12
       %h1.page-header #{@from_to}怎么走？
-      = render partial: ("layouts/sogou_pc_ad")
       %p.alert.alert-info 建议下载个地图相关的APP，现在使用手机导航又准确又方便。在使用电脑？建议使用百度地图，自动定位当前城市，公交、地铁、驾车、步行线路一目了然。当然，简单浏览一下从#{@from_name}，到#{@to_name}的出行方案，滴滴地图也可以为您提供这些信息（#{@from_to}怎么走最方便，得多久，如何乘车，打车费用多少等），具体路线如下：
       - unless @bus_info.size.zero?
         %h2.page-header= "#{@from_to}公交线路"
