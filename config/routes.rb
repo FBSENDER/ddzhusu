@@ -91,4 +91,6 @@ Ddzhusu::Application.routes.draw do
   get '/weather/history/:pinyin/:id', to: 'weather#history' #poi 历史天气
   get '/weather/aqi-today/:pinyin/:id', to: 'weather#aqi_tody' #poi 今日空气质量
   get '/weather/aqi-tomorrow/:pinyin/:id', to: 'weather#aqi_tomorrow' #poi 今日空气质量
+  # CPS
+  get '/cps/ctrip_h5', to: 'cps#ctrip_h5'
 end

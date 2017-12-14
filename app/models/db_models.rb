@@ -173,3 +173,7 @@ end
 class WeatherDetail < ActiveRecord::Base
   self.table_name = 'weather_details'
 end
+
+class CpsClick < ActiveRecord::Base
+  self.table_name = 'cps_clicks'
+end
