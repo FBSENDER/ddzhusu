@@ -12,12 +12,13 @@ class TrainController < ApplicationController
       return
     end
     @info = JSON.parse(@num.infos)
-    if @info.size.zero? 
+    if @info["info"].size.zero? 
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       return
     end
-    @related = TrainNumber.where(id: (1..8079).to_a.sample(10)).select(:name).to_a
+    @related = TrainNumber.where(id: (1..11236).to_a.sample(10)).select(:name).to_a
     @related_urls = @num.from_to.split(',').map{|f| get_timetable_url(f)}
+    @date = Date.today
   end
 
   def numbers_sitemap
@@ -33,6 +34,7 @@ class TrainController < ApplicationController
     end
     @from = TrainStation.where(pinyin: ft[0]).take
     @to = TrainStation.where(pinyin: ft[1]).take 
+    @date = Date.today
     if @from.nil? || @to.nil?
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       return
@@ -64,6 +66,7 @@ class TrainController < ApplicationController
     end
     @from = TrainStation.where(pinyin: ft[0]).take
     @to = TrainStation.where(pinyin: ft[1]).take 
+    @date = Date.today
     if @from.nil? || @to.nil?
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       return

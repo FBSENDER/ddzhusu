@@ -3,4 +3,4 @@
 - head_desc "滴滴住宿的全国火车时刻表，各位大侠请慢点抓取。"
 %h1 全国火车时刻表
 - @numbers.each do |num|
-  %a{href: "/train/numbers/#{num.name}/"}= "#{num.name}"
+  %a{href: "/train/numbers/#{num.name}/"} #{num.name}

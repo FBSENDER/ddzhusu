@@ -9,4 +9,8 @@
         %h1.page-header 全国热门高铁时刻表
         %p
           - @lines.each do |line|
-            %a{href:"http://gaotie.ddzhusu.com/gt-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}高铁时刻表
+            %a{href: "http://gaotie.ddzhusu.com/gt-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}高铁时刻表
+        %h2.page-header 全国热门高铁车次
+        %p
+          - @trains.each do |t|
+            %a{href: "http://www.ddzhusu.com/train/numbers/#{t.name}/"} #{t.name}

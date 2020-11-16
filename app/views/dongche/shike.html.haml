@@ -3,14 +3,18 @@
 - head_desc "#{@from_to}动车时刻表、火车票、车次、经过哪些车站等相关查询，滴滴动车尽力为您提供这些信息。"
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
-- if @show_mobile_ads
-  = render partial: ("iquan/iquan_ads")
 %section.container
   .row
     %article.col-md-8.col-lg-8.col-sm-12
       %h1.page-header #{@from_to}动车
       .alert.alert-info.hidden-sm.hidden-xs
-        %p= "#{@from_to}的动车D时刻表（含高铁G与城际高速C），共#{@gaotie_list.size}次。票价#{@gaotie_info['min_price']}起，最短用时#{@gaotie_info['duration']}，#{@from_to}距离#{@gaotie_info['distance']}。"
+        %p 
+          #{@from_to}的动车D时刻表（含高铁G与城际高速C），共#{@gaotie_list.size}次。票价#{@gaotie_info['min_price']}起
+          - if @gaotie_info["duration"] && !@gaotie_info["duration"].empty?
+            ，最短用时#{@gaotie_info["duration"]}
+          - if @gaotie_info["distance"] && !@gaotie_info["distance"].empty?
+            ，#{@from_to}距离#{@gaotie_info["distance"]}
+          。
       %table.table.table-bordered
         %tr.info
           %th.text-center 车次
@@ -20,30 +24,36 @@
         - @gaotie_list.each do |shike|
           %tr.text-center
             %td
-              %a{href:"http://www.ddzhusu.com/train/numbers/#{shike['checi']}/"}= shike['checi']
+              %a{href:"http://www.ddzhusu.com/train/numbers/#{shike['checi']}/"} #{shike['checi']}
               %br
               %br
-              %strong= get_train_type(shike['checi'][0]) 
+              %strong #{get_train_type(shike['checi'][0])}
             %td
-              %span= shike['depart_time']
+              %span #{shike['depart_time']}
               %br
-              %span= shike['arrival_time']
+              %span #{shike['arrival_time']}
               %br
-              %span= shike['duration'] 
+              %span #{shike['duration']}
             %td
-              = shike['start_name']
+              #{shike['start_name']}
               %br
-              = '-'
+              #{'-'}
               %br
-              = shike['end_name']
+              #{shike['end_name']}
             %td
-              %a{href: "#{@ctrip_url}"}= shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe
+              %a{href: "#{@ctrip_url}", rel: "nofollow", target: "_blank"} #{shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe}
       - if @gaotie_list.size.zero?
         %p.alert.alert-warning
           %strong 并没有~
 
       .alert.alert-info.hidden-sm.hidden-xs
-        %p= "#{@from_to}的火车卧铺时刻表（含直达、空调快速、特快、普快、临客），共#{@normal_list.size}次。最便宜的票#{@normal_info['min_price']}，耗时#{@normal_info['duration']}，距离#{@normal_info['distance']}。"
+        %p 
+          #{@from_to}的火车卧铺时刻表（含直达、空调快速、特快、普快、临客），共#{@normal_list.size}次。最便宜的票#{@normal_info['min_price']}
+          - if @normal_info["duration"] && !@normal_info["duration"].empty?
+            ，耗时#{@normal_info["duration"]}
+          - if @normal_info["distance"] && !@normal_info["distance"].empty?
+            ，距离#{@normal_info["distance"]}
+          。
       %table.table.table-bordered
         %tr.info
           %th.text-center 车次
@@ -53,24 +63,24 @@
         - @normal_list.each do |shike|
           %tr.text-center
             %td
-              %a{href:"http://www.ddzhusu.com/train/numbers/#{shike['checi']}/"}= shike['checi']
+              %a{href:"http://www.ddzhusu.com/train/numbers/#{shike['checi']}/"} #{shike['checi']}
               %br
               %br
-              %strong= get_train_type(shike['checi'][0]) 
+              %strong #{get_train_type(shike['checi'][0])}
             %td
-              %span= shike['depart_time']
+              %span #{shike['depart_time']}
               %br
-              %span= shike['arrival_time']
+              %span #{shike['arrival_time']}
               %br
-              %span= shike['duration']
+              %span #{shike['duration']}
             %td
-              = shike['start_name']
+              #{shike['start_name']}
               %br
-              = '-'
+              #{'-'}
               %br
-              = shike['end_name']
+              #{shike['end_name']}
             %td
-              %a{href: "#{@ctrip_url}"}= shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe
+              %a{href: "#{@ctrip_url}", rel: "nofollow", target: "_blank"} #{shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe}
       - if @normal_list.size.zero?
         %p.alert.alert-warning
           %strong 并没有~
@@ -78,24 +88,25 @@
     %aside.col-md-4.col-lg-4.col-sm-12
       %h2.page-header #{@from_to}动车票预售期
       .alert.alert-info
-        %p= "动车票今日（#{@date}）可购至："
-        %p= "电话、网络购票——#{@date + 59}"
-        %p= "代售点、车站购票——#{@date + 57}"
+        %p 当前的预售期为30天
+        %p= "高铁票今日（#{@date}）可购至："
+        %p= "电话、网络购票——#{@date + 30}"
+        %p= "代售点、车站购票——#{@date + 30}"
        
       %h2.page-header 近期公休假放假安排
       .alert.alert-success
-        %p 春节：2月8日 ~ 2月14日
-        %p 今天已经可以购买国庆假期的动车票，长假出游人多，合理计划行程。
+        %p 元旦：2021年1月1日 放假1天无调休
+        %p 春节：2021年2月11日 - 2月17日
 
       %h2.page-header 乘动车装备推荐 - 出行更舒适
       .alert.alert-info
         %p 
           站票必备：
-          %a{href:"#"} 折凳
+          %a{href: "https://www.uuhaodian.com/query/%E7%81%AB%E8%BD%A6%E6%8A%98%E5%87%B3/", target: "_blank"} 折凳
           火车站售卖的折凳10元1个，在网上买要便宜很多。
         %p
           硬座：
-          %a{href:"#"} 充气枕
+          %a{href: "https://www.uuhaodian.com/query/%E7%81%AB%E8%BD%A6%E5%85%85%E6%B0%94%E6%9E%95/", target: "_blank"} 充气枕
           保护颈椎，睡得更香。
         %p 常规：零食 图书 充电宝 现在多数高铁、动车组车次座位上提供电源插座了，很好很强大。
         %p PS：现在火车上的空调给的特别足，建议乘车时带个外套，以免着凉。
@@ -107,21 +118,52 @@
             - @stations.each do |key,value|
               %span= value
 
-      %h2.page-header 买动车票注意事项
+      %h2.page-header 买火车票注意事项
       .alert.alert-warning
         %p 
+          %strong 订票电话是什么？
+          %br
+          全国铁路电话订票号码为区号+95105105。
+        %p 
+          %strong 什么时候可以电话订票
+          %br
+          电话订票办理开车前4～30日（含购票当日）内的车票；服务时间为每天的6:00至23:00。
+        %p 
+          %strong 电话订票何时支付票款
+          %br
+          电话订票成功后，请在取票时支付车票票款。
+        %p
           %strong 关于取票
+          %br
           火车站售票窗口、铁路客票代售点或车站自动售取票机均可取票，取票需携带有效身份证件（自动取票机需要居民二代身份证）。
         %p 
           %strong 关于退票
+          %br
           在12306.cn网站购票、改签和退票须不晚于开车前30分钟。已取票的乘客，如需退票，请凭购票有效证件在发车前到火车站退票窗口办理。
         %p 
           %strong 火车票退票费用 
-          无票或取消订单退款到帐时间约为3-21天，按银行规定时限原渠道返还。开车时间15天（不含）以上退票的，不收退票费；15天（含）以内48小时以上的按票价5%计；24小时以上、不足48小时的按票价10%计；不足24小时的按票价20%计。并按照最低2元/张收取退票费。如果改签后乘车日期在春运期间收取20%的退票费。最终退款以铁路局实退为准。
+          %br
+          开车前15天（不含）以上退票的，不收取退票费；票面乘车站开车时间前48小时以上的按票价5%计，24小时以上、不足48小时的按票价10%计，不足24小时的按票价20%计。
+          %br
+          开车前48小时～15天期间内，改签或变更到站至距开车15天以上的其他列车，又在距开车15天前退票的，仍核收5%的退票费。
+          %br
+          办理车票改签或“变更到站”时，新车票票价低于原车票的，退还差额，对差额部分核收退票费并执行现行退票费标准。
+          %br
+          上述计算的尾数以5角为单位，尾数小于2.5角的舍去、2.5角及以上且小于7.5角的计为5角、7.5角及以上的进为1元。退票费最低按2元计收。
+          %br
+          改签或变更到站后的车票乘车日期在春运期间的，退票时一律按开车时间前不足24小时标准核收退票费。
         %p 
           %strong 关于改签 
-          办理“变更到站”业务时，请不晚于开车前48小时。如果已经取票，需携带购票有效证件原件和火车票，在火车发车前，前去始发地火车站窗口，按照铁路局相关规定办理。
+          %br
+          （1）在12306网站购票后，没有换取纸质车票且不晚于开车前25分钟的，可以在12306网站办理改签；已经换取纸质车票或者在开车前25分钟内的，请到车站售票窗口办理。
+          %br
+          （2）在有运输能力的前提下，开车前48小时（不含）以上，可改签预售期内的其他列车；开车前48小时以内，可改签开车前的其他列车，也可改签开车后至票面日期当日24:00之间的其他列车，不办理票面日期次日及以后的改签；开车之后，旅客仍可改签当日其他列车，但只能在票面发站办理改签。已经办理“变更到站”的车票，不再办理改签。开车前48小时～15天期间内，改签至距开车15天以上的其他列车，又在距开车15天前退票的，仍核收5%的退票费。改签或变更到站后的车票乘车日期在春运期间的，退票时一律按开车时间前不足24小时标准核收退票费。
+          %br
+          （3）按购票时所使用的在线支付工具相关规定，改签时，新车票票价高于原车票的，请使用在线支付工具支付新票全额票款，原票款在规定时间退回原购票时所使用的在线支付工具；新车票票价低于原车票的，退还差额，对差额部分核收退票费并执行现行退票费标准，应退票款在规定时间退回原购票时所使用的在线支付工具；新车票票价等于原车票的，无需支付。
+          %br
+          （4）在车站售票窗口改签后，出具纸质车票。
           
+
       = render partial: "layouts/right_suggestions", locals: {model: @line}
       = render partial: "layouts/right_related_keywords", locals: {model: @line}
       = render partial: "layouts/links", locals: {links: @links}

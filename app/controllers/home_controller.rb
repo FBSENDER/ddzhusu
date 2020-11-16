@@ -2,7 +2,6 @@ require 'db_models'
 class HomeController < ApplicationController
   layout :set_layout_for_diff_hosts
 
-  @@train_lines = GaotieLine.select(:from_name, :to_name).to_a
   @@map_lines = MapLine.select(:from_name, :to_name).to_a
   @@map_guides = MapGuide.select(:from_name, :to_name).take(10)
   @@places = Place.all.to_a
@@ -20,17 +19,25 @@ class HomeController < ApplicationController
   end
 
   def gaotie
-    @lines = @@train_lines
+    ids = (1..2000).to_a.sample(100)
+    @lines = GaotieLine.where(id: ids).select(:from_name, :to_name)
+    @trains = TrainNumber.where(id: ids).select(:name)
     render 'gaotie/index'
   end
 
   def dongche
-    @lines = @@train_lines
+    ids = (1..2000).to_a.sample(100)
+    @lines = GaotieLine.where(id: ids).select(:from_name, :to_name)
+    ids1 = (3659..6206).to_a.sample(100)
+    @trains = TrainNumber.where(id: ids1).select(:name)
     render 'dongche/index'
   end
 
   def huoche
-    @lines = @@train_lines
+    ids = (1..2000).to_a.sample(100)
+    @lines = GaotieLine.where(id: ids).select(:from_name, :to_name)
+    ids1 = (6207..11236).to_a.sample(100)
+    @trains = TrainNumber.where(id: ids1).select(:name)
     render 'huoche/index'
   end
 

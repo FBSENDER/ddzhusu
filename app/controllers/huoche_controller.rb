@@ -7,7 +7,7 @@ class HuocheController < ApplicationController
   def shike
     @line = GaotieLine.where("from_name = ? and to_name = ?", params[:from], params[:to]).take
     not_found if @line.nil?
-    @ctrip_url = is_device_mobile? ? "http://m.ctrip.com/html5/trains/#{@line.from_station_pinyin}-#{@line.to_station_pinyin}/?AllianceID=297552&sid=762386&popup=close" : "http://trains.ctrip.com/TrainBooking/Search.aspx?AllianceID=297552&sid=762386&fromCn=#{URI.encode(params[:from].encode('gb2312'))}&toCn=#{URI.encode(params[:to].encode('gb2312'))}"
+    @ctrip_url = is_device_mobile? ? "http://m.ctrip.com/html5/trains/#{@line.from_station_pinyin}-#{@line.to_station_pinyin}/?AllianceID=297552&sid=762386&popup=close" : "https://trains.ctrip.com/trainbooking/#{@line.from_station_pinyin}-#{@line.to_station_pinyin}/?AllianceID=297552&sid=762386&ouid=&app=0101X00&"
     #unless is_robot?
     #  if is_device_mobile?
     #    redirect_to "http://m.ctrip.com/html5/trains/#{@line.from_station_pinyin}-#{@line.to_station_pinyin}/?AllianceID=297552&sid=762386&popup=close"      
@@ -24,9 +24,8 @@ class HuocheController < ApplicationController
     @gaotie_list = @gaotie_info["train_list"] || []
     @normal_info = JSON.parse(@line_detail.normal_json)
     @normal_list = @normal_info["train_list"] || []
-    @date = Date.today + 2
+    @date = Date.today
     @stations = JSON.parse(@line_detail.pass_stations)
     @links = JSON.parse(@line_detail.links_json)
-    @show_mobile_ads = is_device_mobile? && !is_robot?
   end
 end

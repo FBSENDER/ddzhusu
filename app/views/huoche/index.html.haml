@@ -10,3 +10,7 @@
         %p
           - @lines.each do |line|
             %a{href:"http://huoche.ddzhusu.com/hc-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}火车时刻表
+        %h2.page-header 全国热门火车票车次
+        %p
+          - @trains.each do |t|
+            %a{href: "http://www.ddzhusu.com/train/numbers/#{t.name}/"} #{t.name}

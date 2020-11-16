@@ -47,7 +47,7 @@ class CtHotelDetail < ActiveRecord::Base
 end
 
 class TrainNumber < ActiveRecord::Base
-  self.table_name = 'fstnotes_base_train_numbers'
+  self.table_name = 'fstnotes_base_train_numbers_new'
 end
 
 class TrainStation < ActiveRecord::Base
