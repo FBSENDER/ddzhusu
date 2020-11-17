@@ -6,7 +6,6 @@ class HomeController < ApplicationController
   @@map_guides = MapGuide.select(:from_name, :to_name).take(10)
   @@places = Place.all.to_a
   @@bus_lines = BusLine.select(:from_name, :to_name).to_a
-  @@flight_lines = FlightLine.select(:from_name, :to_name).to_a
   @@hotels = Hoteln.select(:hotel_name).to_a
   @@cards = Card.select(:card_name).to_a
   @@ppq_baikes = PpqBaike.where(status: [0,1]).select(:article_name, :title).to_a
@@ -54,7 +53,8 @@ class HomeController < ApplicationController
   end
 
   def flight
-    @lines = @@flight_lines
+    ids = (1..2000).to_a.sample(100)
+    @lines = FlightLine.where(id: ids).select(:from_name, :to_name).to_a
     render 'flight/index'
   end
 
