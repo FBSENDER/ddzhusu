@@ -10,12 +10,16 @@
       滴滴住宿，尽力为您提供
       %b #{@from.name}到#{@to.name}
       高铁动车时刻表、火车票、车次等相关信息~
+    - if @from.lat > 0 && @to.lat > 0
+      %h2.page-header #{@from.name}至#{@to.name}高铁在地图上的线路
+      #bdmap{style: "height: 300px;"}
     %h2.page-header #{@from.name}至#{@to.name}动车时刻表
     %p 
       %b #{@from.name}-#{@to.name}
       高铁今日共有#{@numbers.size}次，下面是其具体信息。
     - @numbers.each do |num|
-      %h3.page-header #{num.name}
+      %h3.page-header 
+        %a{href: "/train/numbers/#{num.name}/"} #{num.name}
       - JSON.parse(num.infos)["info"].each_with_index do |data, index|
         - if data["stationName"] == @from.name || data["stationName"] == @to.name
           %p.alert.alert-success
@@ -31,6 +35,11 @@
             - else
               #{data["stationName"]}
             ，站次：#{index + 1}，到达时间：#{data["arrivalTime"]}，发车时间：#{data["departTime"]}，停留时间：#{data["stopTime"]}
+
+    %h2.page-header 相关火车站
+    %p.alert.alert-info
+      %a{href: "/train/stations/#{@from.pinyin}/"} #{@from.name}站列车时刻表
+      %a{href: "/train/stations/#{@to.pinyin}/"} #{@to.name}站列车时刻表
 
     %h2.page-header 热门出行高铁动车组车次信息
     %p.alert.alert-info
@@ -108,3 +117,28 @@
         （3）按购票时所使用的在线支付工具相关规定，改签时，新车票票价高于原车票的，请使用在线支付工具支付新票全额票款，原票款在规定时间退回原购票时所使用的在线支付工具；新车票票价低于原车票的，退还差额，对差额部分核收退票费并执行现行退票费标准，应退票款在规定时间退回原购票时所使用的在线支付工具；新车票票价等于原车票的，无需支付。
         %br
         （4）在车站售票窗口改签后，出具纸质车票。
+
+:javascript
+  function bdmapinitialize() {
+    var mp = new BMap.Map('bdmap');
+    var point = new BMap.Point(#{@from.lng}, #{@from.lat})
+    mp.centerAndZoom(point, 5);
+    var transit = new BMap.TransitRoute(mp, {
+      renderOptions: {
+          map: mp,
+          autoViewport: true
+      }
+    });
+    var start = new BMap.Point(#{@from.lng}, #{@from.lat});
+    var end = new BMap.Point(#{@to.lng}, #{@to.lat});
+    transit.search(start, end);
+  }
+  function bdmaploadScript() {
+    var script = document.createElement("script");
+    script.src = "https://api.map.baidu.com/api?v=3.0&ak=QlBXvaNGsPmYIOjPYlsdOOmKnMlnAwVV&callback=bdmapinitialize";
+    document.body.appendChild(script);
+  }
+  if(#{@from.lat} > 0 && #{@to.lat} > 0){
+    bdmaploadScript();
+  }
+

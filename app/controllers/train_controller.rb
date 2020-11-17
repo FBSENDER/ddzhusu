@@ -16,9 +16,14 @@ class TrainController < ApplicationController
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       return
     end
-    @related = TrainNumber.where(id: (1..11236).to_a.sample(10)).select(:name).to_a
-    @related_urls = @num.from_to.split(',').map{|f| get_timetable_url(f)}
+    @related = TrainNumber.where("id > ?", @num.id).select(:name).limit(10)
+    @related_urls = @num.from_to.split(',').sample(20).map{|f| get_timetable_url(f)}
     @date = Date.today
+    @stations = TrainStation.where(name: @info["info"].map{|f| f["stationName"]}).select(:name, :pinyin, :lat, :lng)
+    f = @stations.select{|s| s.name == @info["info"][0]["stationName"]}
+    @from_station = f.size > 0 ? f.first : @stations[0]
+    t = @stations.select{|s| s.name == @info["info"][-1]["stationName"]}
+    @to_station = t.size > 0 ? t.first : @stations[-1]
   end
 
   def numbers_sitemap
@@ -54,7 +59,7 @@ class TrainController < ApplicationController
       return
     end
     @has_gaotie = @numbers.any?{|n| ['D','G','C'].include?n.train_type }
-    @related_urls = @numbers.map{|n| n.from_to.split(',').map{|f| get_timetable_url(f)}}.flatten.sample(20)
+    @related_urls = @numbers.sample(2).map{|n| n.from_to.split(',').sample(10).map{|f| get_timetable_url(f)}}.flatten
   end
 
   def timetable_gaotie
@@ -76,7 +81,7 @@ class TrainController < ApplicationController
       render file: "#{Rails.root}/public/404.html", layout: false, status: 404
       return
     end
-    @related_urls = @numbers.map{|n| n.from_to.split(',').map{|f| get_timetable_url(f, '高铁动车组')}}.flatten.sample(20)
+    @related_urls = @numbers.sample(2).map{|n| n.from_to.split(',').sample(10).map{|f| get_timetable_url(f, '高铁动车组')}}.flatten
   end
 
   def timetable_sitemap
@@ -92,6 +97,16 @@ class TrainController < ApplicationController
   end
 
   def stations
+    @station = TrainStation.where(pinyin: params[:station]).take
+    if @station.nil?
+      render file: "#{Rails.root}/public/404.html", layout: false, status: 404
+      return
+    end
+    @date = Date.today
+    @froms = TrainNumber.where("from_to like ?", "% #{@station.id}to% ").select(:name)
+    @tos = TrainNumber.where("from_to like ?", "%to#{@station.id} %").select(:name)
+    n = TrainNumber.where("from_to like ?", "% #{@station.id}to% ").select(:from_to).take
+    @related_urls = n.from_to.split(',').sample(20).map{|f| get_timetable_url(f)}
   end
 
   private

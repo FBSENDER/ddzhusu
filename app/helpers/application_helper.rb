@@ -9,7 +9,7 @@ module ApplicationHelper
     content_for :head_desc, page_descriptions.to_s
   end
   def mobile_url(domain, path)
-    content_for :mobile_url, "http://#{domain}#{path}/"
+    content_for :mobile_url, "http://#{domain}#{path}/".gsub(".html/", ".html")
   end
   def page_lang(lang = 'zh-CN')
     content_for :page_lang, lang

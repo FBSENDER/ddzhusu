@@ -34,6 +34,14 @@
       %h3 #{data["stationName"]}
       %p 站次：#{index + 1}，到达时间：#{data["arrivalTime"]}，发车时间：#{data["departTime"]}，停留时间：#{data["stopTime"]}
 
+    - if @from_station.lat > 0 && @to_station.lat > 0
+      %h2.page-header 车次#{@num.name}在地图上的表示
+      #bdmap{style: "height: 300px;"}
+    %h2.page-header 相关火车站
+    %p.alert.alert-info
+      - @stations.each do |s|
+        %a{href: "/train/stations/#{s.pinyin}/"} #{s.name}站列车时刻表
+
     %h2.page-header 热门火车车次信息
     %p.alert.alert-info
       - @related.each do |data|
@@ -113,3 +121,28 @@
         （3）按购票时所使用的在线支付工具相关规定，改签时，新车票票价高于原车票的，请使用在线支付工具支付新票全额票款，原票款在规定时间退回原购票时所使用的在线支付工具；新车票票价低于原车票的，退还差额，对差额部分核收退票费并执行现行退票费标准，应退票款在规定时间退回原购票时所使用的在线支付工具；新车票票价等于原车票的，无需支付。
         %br
         （4）在车站售票窗口改签后，出具纸质车票。
+
+:javascript
+  function bdmapinitialize() {
+    var mp = new BMap.Map('bdmap');
+    var point = new BMap.Point(#{@from_station.lng}, #{@from_station.lat})
+    mp.centerAndZoom(point, 5);
+    var transit = new BMap.TransitRoute(mp, {
+      renderOptions: {
+          map: mp,
+          autoViewport: true
+      }
+    });
+    var start = new BMap.Point(#{@from_station.lng}, #{@from_station.lat});
+    var end = new BMap.Point(#{@to_station.lng}, #{@to_station.lat});
+    transit.search(start, end);
+  }
+  function bdmaploadScript() {
+    var script = document.createElement("script");
+    script.src = "https://api.map.baidu.com/api?v=3.0&ak=QlBXvaNGsPmYIOjPYlsdOOmKnMlnAwVV&callback=bdmapinitialize";
+    document.body.appendChild(script);
+  }
+  if(#{@from_station.lat} > 0 && #{@to_station.lng} > 0){
+    bdmaploadScript();
+  }
+

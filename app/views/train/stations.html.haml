@@ -1,0 +1,122 @@
+- title "#{@station.name}火车站时刻表,#{@station.name}站列车时刻表查询_滴滴住宿"
+- keywords "#{@station.name},#{@station.name}站,#{@station.name}火车站,#{@station.name}站列车时刻表,#{@station.name}列车时刻表"
+- head_desc "滴滴住宿为您提供#{@station.name}火车站列车时刻表查询。从#{@station.name}站出发的列车一共有#{@froms.size}趟,到达#{@station.name}火车站的列车一共有#{@tos.size}趟。"
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+%section.container
+  %article.col-md-8.col-lg-8.col-sm-12
+    %h1.page-header #{@station.name}站列车时刻表
+    .alert.alert-info
+      %p 从#{@station.name}站发出的车次一共有#{@froms.size}趟。
+      %p 到达#{@station.name}站的车次一共有#{@tos.size}趟。
+
+    %h2.page-header #{@station.name}站发出的列车时刻表 - #{@froms.size}趟列车
+    .alert.alert-info
+      %p
+        - @froms.each do |t|
+          %a{href: "http://www.ddzhusu.com/train/numbers/#{t.name}/"} #{t.name}
+
+    %h2.page-header 到达#{@station.name}站的列车时刻表 - #{@tos.size}趟列车
+    .alert.alert-info
+      %p
+        - @tos.each do |t|
+          %a{href: "http://www.ddzhusu.com/train/numbers/#{t.name}/"} #{t.name}
+
+    - if @station.lat > 0
+      %h2.page-header #{@station.name}站地图位置
+      #bdmap{style: "height: 300px;"}
+
+    %h2.page-header 热门出行火车车次信息
+    %p.alert.alert-info
+      - @related_urls.each do |url|
+        %a{href: "/train/timetable/#{url.values.first}/"} #{url.keys.first}
+
+  %aside.col-md-4.col-lg-4.col-sm-12
+    %h2.page-header #{@station.name}站火车票预售期
+    .alert.alert-info
+      %p 当前的预售期为30天
+      %p= "高铁票今日（#{@date}）可购至："
+      %p= "电话、网络购票——#{@date + 30}"
+      %p= "代售点、车站购票——#{@date + 30}"
+     
+    %h2.page-header 近期公休假放假安排
+    .alert.alert-success
+      %p 元旦：2021年1月1日 放假1天无调休
+      %p 春节：2021年2月11日 - 2月17日
+
+    %h2.page-header 乘火车装备推荐 - 出行更舒适
+    .alert.alert-info
+      %p 
+        站票必备：
+        %a{href: "https://www.uuhaodian.com/query/%E7%81%AB%E8%BD%A6%E6%8A%98%E5%87%B3/", target: "_blank"} 折凳
+        火车站售卖的折凳10元1个，在网上买要便宜很多。
+      %p
+        硬座：
+        %a{href: "https://www.uuhaodian.com/query/%E7%81%AB%E8%BD%A6%E5%85%85%E6%B0%94%E6%9E%95/", target: "_blank"} 充气枕
+        保护颈椎，睡得更香。
+      %p 常规：零食 图书 充电宝 现在多数高铁、动车组车次座位上提供电源插座了，很好很强大。
+      %p PS：现在火车上的空调给的特别足，建议乘车时带个外套，以免着凉。
+
+    %h2.page-header 买火车票注意事项
+    .alert.alert-warning
+      %p 
+        %strong 订票电话是什么？
+        %br
+        全国铁路电话订票号码为区号+95105105。
+      %p 
+        %strong 什么时候可以电话订票
+        %br
+        电话订票办理开车前4～30日（含购票当日）内的车票；服务时间为每天的6:00至23:00。
+      %p 
+        %strong 电话订票何时支付票款
+        %br
+        电话订票成功后，请在取票时支付车票票款。
+      %p
+        %strong 关于取票
+        %br
+        火车站售票窗口、铁路客票代售点或车站自动售取票机均可取票，取票需携带有效身份证件（自动取票机需要居民二代身份证）。
+      %p 
+        %strong 关于退票
+        %br
+        在12306.cn网站购票、改签和退票须不晚于开车前30分钟。已取票的乘客，如需退票，请凭购票有效证件在发车前到火车站退票窗口办理。
+      %p 
+        %strong 火车票退票费用 
+        %br
+        开车前15天（不含）以上退票的，不收取退票费；票面乘车站开车时间前48小时以上的按票价5%计，24小时以上、不足48小时的按票价10%计，不足24小时的按票价20%计。
+        %br
+        开车前48小时～15天期间内，改签或变更到站至距开车15天以上的其他列车，又在距开车15天前退票的，仍核收5%的退票费。
+        %br
+        办理车票改签或“变更到站”时，新车票票价低于原车票的，退还差额，对差额部分核收退票费并执行现行退票费标准。
+        %br
+        上述计算的尾数以5角为单位，尾数小于2.5角的舍去、2.5角及以上且小于7.5角的计为5角、7.5角及以上的进为1元。退票费最低按2元计收。
+        %br
+        改签或变更到站后的车票乘车日期在春运期间的，退票时一律按开车时间前不足24小时标准核收退票费。
+      %p 
+        %strong 关于改签 
+        %br
+        （1）在12306网站购票后，没有换取纸质车票且不晚于开车前25分钟的，可以在12306网站办理改签；已经换取纸质车票或者在开车前25分钟内的，请到车站售票窗口办理。
+        %br
+        （2）在有运输能力的前提下，开车前48小时（不含）以上，可改签预售期内的其他列车；开车前48小时以内，可改签开车前的其他列车，也可改签开车后至票面日期当日24:00之间的其他列车，不办理票面日期次日及以后的改签；开车之后，旅客仍可改签当日其他列车，但只能在票面发站办理改签。已经办理“变更到站”的车票，不再办理改签。开车前48小时～15天期间内，改签至距开车15天以上的其他列车，又在距开车15天前退票的，仍核收5%的退票费。改签或变更到站后的车票乘车日期在春运期间的，退票时一律按开车时间前不足24小时标准核收退票费。
+        %br
+        （3）按购票时所使用的在线支付工具相关规定，改签时，新车票票价高于原车票的，请使用在线支付工具支付新票全额票款，原票款在规定时间退回原购票时所使用的在线支付工具；新车票票价低于原车票的，退还差额，对差额部分核收退票费并执行现行退票费标准，应退票款在规定时间退回原购票时所使用的在线支付工具；新车票票价等于原车票的，无需支付。
+        %br
+        （4）在车站售票窗口改签后，出具纸质车票。
+
+
+:javascript
+  function bdmapinitialize() {
+    var mp = new BMap.Map('bdmap');
+    var point = new BMap.Point(#{@station.lng}, #{@station.lat})
+    mp.centerAndZoom(point, 15);
+    var marker = new BMap.Marker(point);
+    mp.addOverlay(marker);
+  }
+  function bdmaploadScript() {
+    var script = document.createElement("script");
+    script.src = "https://api.map.baidu.com/api?v=3.0&ak=QlBXvaNGsPmYIOjPYlsdOOmKnMlnAwVV&callback=bdmapinitialize";
+    document.body.appendChild(script);
+  }
+  if(#{@station.lat} > 0){
+    bdmaploadScript();
+  }
+
