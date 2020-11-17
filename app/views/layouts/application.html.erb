@@ -9,6 +9,7 @@
     <title><%= yield(:title) %></title>
     <meta name="keywords" content="<%=yield(:keywords)%>">
     <meta name="description" content="<%=yield(:head_desc)%>">
+    <link rel="canonical" href="<%= yield(:path) %>">
     <!-- 移动端url -->
     <meta http-equiv="mobile-agent" content="format=html5; url=<%=yield(:mobile_url)%>">
     <meta name="mobile-agent" content="format=html5; url=<%=yield(:mobile_url)%>">

@@ -1,6 +1,7 @@
 - title "#{@line.title.empty? ? "#{@from_to}高铁时刻表" : @line.title }_滴滴高铁"
 - keywords "#{@from_to}高铁,#{@from_to}高铁时刻表,#{@from_to}高铁车次,#{@from_to}火车票"
 - head_desc "#{@from_to}高铁动车时刻表、火车票、车次、经过哪些车站等相关查询，滴滴高铁尽力为您提供这些信息。有关火车票的预售期、网络购票和电话购票的注意事项，这里也可以查询到呦！"
+- path("http://gaotie.ddzhusu.com#{request.path}/")
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
@@ -15,6 +16,9 @@
           - if @gaotie_info["distance"] && !@gaotie_info["distance"].empty?
             ，#{@from_to}距离#{@gaotie_info["distance"]}
           。
+      - if @from_station && @to_station && @from_station.lat > 0 && @to_station.lat > 0
+        %h2.page-header #{@from_to}高铁地图
+        #bdmap{style: "height: 300px;margin-bottom: 20px;"}
       %table.table.table-bordered
         %tr.info
           %th.text-center 车次
@@ -85,6 +89,11 @@
       - if @normal_list.size.zero?
         %p.alert.alert-warning
           %strong 并没有~
+
+      %h2.page-header 相关高铁站列车时刻表
+      .alert.alert-info
+        %a{href: "http://www.ddzhusu.com/train/stations/#{@from_station.pinyin}/"} #{@from_station.name}站列车时刻表
+        %a{href: "http://www.ddzhusu.com/train/stations/#{@to_station.pinyin}/"} #{@to_station.name}站列车时刻表
 
     %aside.col-md-4.col-lg-4.col-sm-12
       %h2.page-header #{@from_to}高铁票预售期
@@ -168,3 +177,28 @@
       = render partial: "layouts/right_related_keywords", locals: {model: @line}
       = render partial: "layouts/links", locals: {links: @links}
       = render partial: "layouts/friend_links", locals: {friend_links: get_friend_links}
+
+:javascript
+  function bdmapinitialize() {
+    var mp = new BMap.Map('bdmap');
+    var point = new BMap.Point(#{@from_station.lng}, #{@from_station.lat})
+    mp.centerAndZoom(point, 5);
+    var transit = new BMap.TransitRoute(mp, {
+      renderOptions: {
+          map: mp,
+          autoViewport: true
+      }
+    });
+    var start = new BMap.Point(#{@from_station.lng}, #{@from_station.lat});
+    var end = new BMap.Point(#{@to_station.lng}, #{@to_station.lat});
+    transit.search(start, end);
+  }
+  function bdmaploadScript() {
+    var script = document.createElement("script");
+    script.src = "https://api.map.baidu.com/api?v=3.0&ak=QlBXvaNGsPmYIOjPYlsdOOmKnMlnAwVV&callback=bdmapinitialize";
+    document.body.appendChild(script);
+  }
+  if(#{@from_station.nil? ? 0 : @from_station.lat} > 0 && #{@to_station.nil? ? 0 : @to_station.lng} > 0){
+    bdmaploadScript();
+  }
+

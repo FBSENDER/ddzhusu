@@ -1,6 +1,7 @@
 - title "#{@station.name}火车站时刻表,#{@station.name}站列车时刻表查询_滴滴住宿"
 - keywords "#{@station.name},#{@station.name}站,#{@station.name}火车站,#{@station.name}站列车时刻表,#{@station.name}列车时刻表"
 - head_desc "滴滴住宿为您提供#{@station.name}火车站列车时刻表查询。从#{@station.name}站出发的列车一共有#{@froms.size}趟,到达#{@station.name}火车站的列车一共有#{@tos.size}趟。"
+- path("http://www.ddzhusu.com#{request.path}/")
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container

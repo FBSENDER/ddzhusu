@@ -27,5 +27,7 @@ class HuocheController < ApplicationController
     @date = Date.today
     @stations = JSON.parse(@line_detail.pass_stations)
     @links = JSON.parse(@line_detail.links_json)
+    @from_station = TrainStation.where(name: @line.from_name).take
+    @to_station = TrainStation.where(name: @line.to_name).take
   end
 end
