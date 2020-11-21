@@ -1,86 +1,102 @@
 - title "#{@from_to}怎么走_滴滴地图"
 - keywords "#{@from_to},#{@from_to}火车,#{@from_to}机票,#{@from_to}汽车,#{@from_to}自驾路线,#{@from_to}怎么走,#{@from_to}怎么坐车"
 - head_desc @desc
+- path("http://map.ddzhusu.com#{request.path}/")
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
-- if @show_mobile_ads
-  = render partial: ("iquan/iquan_ads")
 %section.container
   .row
     %article.col-md-8.col-lg-8.col-sm-12
-      %h1.hidden= @from_to
-      - if @train.size.zero?
-        %h2.page-header= "乘火车从#{@from_to}"
+      %h1.hidden #{@from_to}
+      - if (@train + @train_normal).size.zero?
+        %h2.page-header 乘火车从#{@from_to}
         .alert.alert-warning
-          %p= "未查询到#{@from_to}火车/高铁/动车直达车次，请您选择其它方式出行。"
+          %p 未查询到#{@from_to}火车/高铁/动车直达车次，请您选择其它方式出行。
       - else
-        %h2.page-header= "乘火车从#{@from_to}"
+        %h2.page-header 乘火车从#{@from_to}
         .alert.alert-info
-          %p= "共查询到#{@from_to}火车#{@train.size}次，其中<strong>高铁</strong>/<strong>动车</strong>组列车#{@train.select{|t| ['G','D','C'].include? t['trainNumber'][0]}.count}次。".html_safe
+          %p
+            共查询到#{@from_to}火车#{@train.size + @train_normal.size}次，其中
+            %strong高铁
+            #{"/"}
+            %strong 动车组
+            列车#{@train.size}次。
+
         %table.table.table-bordered
           %thead
             %tr.info
               %th.text-center 车次
-              %th.text-center 时间
+              %th.text-center 时刻
               %th.text-center 车站
               %th.text-center 票价
             %tbody
-              - @train.each do |train|
+              - (@train + @train_normal).each do |shike|
                 %tr.text-center
                   %td
-                    %a{href:"http://www.ddzhusu.com/train/numbers/#{train['trainNumber']}/", title:"#{train['trainNumber']}次"}= train["trainNumber"]
+                    %a{href:"http://www.ddzhusu.com/train/numbers/#{shike['checi']}/"} #{shike['checi']}
                     %br
                     %br
-                    %strong= get_train_type(train['trainNumber'])
+                    %strong #{get_train_type(shike['checi'][0]) }
                   %td
-                    %span= train["from"]["time"]
+                    %span #{shike['depart_time']}
                     %br
-                    %span= train["to"]["time"]
+                    %span #{shike['arrival_time']}
                     %br
-                    %span= train["duration"] 
+                    %span #{shike['duration']}
                   %td
-                    = train["from"]["name"]
+                    #{shike['start_name']}
                     %br
-                    = '至'
+                    #{'-'}
                     %br
-                    = train["to"]["name"]
-
-                  %td= train["seatList"].map{|seat| "#{seat['seatTypeName']} #{seat['price']}"}.join('<br/>').html_safe
+                    #{shike['end_name']}
+                  %td
+                    #{shike['prices'].map{|t| "#{t['seat_type']} ￥#{t['price']}"}.join("<br/>").html_safe}
     
       - if @flight.size.zero?
-        %h2.page-header= "坐飞机从#{@from_to}"
+        %h2.page-header 坐飞机从#{@from_to}
         .alert.alert-warning
-          %p= "未查询到#{@from_to}机票信息，可能是该条航线尚未开通，请您选择其它方式出行。"
+          %p 未查询到#{@from_to}机票信息，可能是该条航线尚未开通，请您选择其它方式出行。
       - else
-        %h2.page-header= "坐飞机从#{@from_to}"
+        %h2.page-header 坐飞机从#{@from_to}
         .alert.alert-info
-          %p= "以下是#{@from_to}飞机航班信息。"
+          %p 以下是#{@from_to}飞机航班信息。
         %table.table.table-bordered
           %thead
             %tr.info
-              %th.text-center 航班
-              %th.text-center 机场
-              %th.text-center 时间
+              %th.text-center 起飞/到达
+              %th.text-center 航班号/飞机机型
+              %th.text-center 出发城市/飞机场
+              %th.text-center 到达城市/飞机场
           %tbody
-            - @flight.each do |f|
+            - @flight.each do |shike|
               %tr.text-center
-                %td
-                  %span= f["line_number"]
+                %td{style: "vertical-align:middle;"}
+                  %span #{shike['departTime']}
                   %br
+                  #{"-"}
                   %br
-                  - unless f["flight_model"].nil?
-                    %span= "型号：#{f["flight_model"]}"
-                %td
-                  %span{style:"color:blue;"}= f["from_airport"]
+                  %span #{shike['arriveTime']}
+                %td{style: "vertical-align:middle;"}
+                  %span 
+                    %a{href: "http://flight.ddzhusu.com/ftn-#{shike['flightNo']}/", title: "#{shike['flightNo']}航班时刻表"} #{shike['airlineCompanyName']} #{shike['flightNo']}
                   %br
-                  = '至'
+                  #{"-"}
                   %br
-                  %span{style:"color:orange;"}= f["to_airport"]
-                %td
-                  %span= f["depart_time"]
+                  %span 机型：#{shike['aircraftType']}
+                %td{style: "vertical-align:middle;"}
+                  %span 
+                    %a{href: "http://flight.ddzhusu.com/ftc-#{URI.encode(@from_name)}/"} #{@from_name}
                   %br
+                  #{"-"}
                   %br
-                  %span= f["arrival_time"]
+                  %span #{shike['departPortName']}#{shike['departTerminal']}
+                %td{style: "vertical-align:middle;"}
+                  %span
+                    %a{href: "http://flight.ddzhusu.com/ftc-#{URI.encode(@to_name)}/"} #{@to_name}
+                  %br
+                  #{"-"}
+                  %br
+                  %span #{shike['arrivePortName']}#{shike['arriveTerminal']}
     
       - if @bus.size.zero?
         %h2.page-header= "#{@from_to}怎么乘车？"

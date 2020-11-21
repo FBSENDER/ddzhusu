@@ -29,13 +29,16 @@ class MapController < ApplicationController
     not_found if @line.nil?
     @line_detail = MapLineDetail.where(line_id: @line.id).take
     not_found if @line_detail.nil?
-    @flight = JSON.parse(@line_detail.by_air)
-    @train = JSON.parse(@line_detail.by_train)
+    flight = JSON.parse(@line_detail.by_air)
+    @flight = flight["scheduleVOList"].nil? ? [] : flight["scheduleVOList"]
+    train = JSON.parse(@line_detail.by_train)
+    @train = train["train_list"].nil? ? [] : train["train_list"]
+    train_normal = JSON.parse(@line_detail.by_train_normal)
+    @train_normal = train_normal["train_list"].nil? ? [] : train_normal["train_list"]
     @bus = JSON.parse(@line_detail.by_bus)
     @car_route = JSON.parse(@line_detail.by_car)
-    @desc = page_desc(@from_to, @flight, @train, @bus, @car_route)
+    @desc = page_desc(@from_to, @flight, @train, @train_normal, @bus, @car_route)
     @links = JSON.parse(@line_detail.links_json)
-    @show_mobile_ads = is_device_mobile? && !is_robot?
   end
 
   def cinema
@@ -54,13 +57,13 @@ class MapController < ApplicationController
   end
 
   private 
-  def page_desc(from_to, flight, train, bus, car)
+  def page_desc(from_to, flight, train, train_normal, bus, car)
     if flight.size.zero? && train.size.zero? && bus.size.zero? && car.size.zero?
       return "滴滴地图查询到#{from_to}的出行信息，#{from_to}火车票、机票、汽车票、自驾路线等信息尚在完善中，敬请关注。"
     end
     desc = "滴滴地图为您提供#{from_to}出行选择，"
     if train.size > 0
-      desc += "您可以乘坐火车，共查询到#{train.size}次#{from_to}的火车，推荐乘坐高铁/动车组列车，舒适便捷速度快，列车车次有#{train.take(15).map{|t| t["trainNumber"]}.join('，')}。"
+      desc += "您可以乘坐火车，共查询到#{train.size + train_normal.size}次#{from_to}的火车，推荐乘坐高铁/动车组列车，舒适便捷速度快，列车车次有#{train.take(15).map{|t| t["checi"]}.join('，')}。"
     end
     if flight.size > 0 
       desc += "您可以选择乘飞机从#{from_to}，有#{flight.size}次航班，本站提供#{from_to}机票查询、航线航班信息查询，特价机票请见本站其他频道。"

@@ -56,7 +56,7 @@ Ddzhusu::Application.routes.draw do
   # 地图 map
   get '/mapindex.html', to: 'map#index'
   get '/mp-:from-:to/', to: 'map#guide' # 从A到B怎么走
-  get '/mpl-:from-:to/', to: 'map#line' # A到B 跨省的长距离路线
+  get '/mpl-:from-:to/', to: 'map#line', constraints: {host: ["map.ddzhusu.com", "m.ddzhusu.com"]} # A到B 跨省的长距离路线
   get '/cinema-:cinema_name/', to: 'map#cinema' #poi 电影院
   # 企业 qy
   get '/qyindex.html', to: 'qy#index'
