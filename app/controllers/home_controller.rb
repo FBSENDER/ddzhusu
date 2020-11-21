@@ -55,6 +55,8 @@ class HomeController < ApplicationController
   def flight
     ids = (1..2000).to_a.sample(100)
     @lines = FlightLine.where(id: ids).select(:from_name, :to_name).to_a
+    @cities = FlightCity.select(:name).to_a
+    @nums = FlightNumber.where(id: ids).select(:name).to_a
     render 'flight/index'
   end
 

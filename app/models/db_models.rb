@@ -88,6 +88,15 @@ end
 class FlightLineDetail < ActiveRecord::Base
   self.table_name = 'huoche_flight_line_details'
 end
+class FlightCity < ActiveRecord::Base
+  self.table_name = 'fstnotes_base_flight_cities'
+end
+class FlightStation < ActiveRecord::Base
+  self.table_name = 'fstnotes_base_flight_stations'
+end
+class FlightNumber < ActiveRecord::Base
+  self.table_name = 'fstnotes_base_flight_numbers'
+end
 
 class Hoteln < ActiveRecord::Base
   self.table_name = 'huoche_hotels'

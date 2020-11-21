@@ -1,6 +1,6 @@
 - title "全国热门飞机时刻表_滴滴航班"
 - keywords "飞机时刻表，航班查询，航班"
-- head_desc "精选全国共#{@lines.size}条航班，提供时刻表查询等功能，滴滴航班。"
+- head_desc "精选全国热门航班，提供全国#{@cities.size}个城市国内航班时刻表查询等功能，包含出发城市机场、出发时间、抵达城市机场、抵达时间、航空公司信息、航班飞机型号信息等 -滴滴航班。"
 
 .container
   .row
@@ -9,4 +9,12 @@
         %h1.page-header 全国热门航班
         %p
           - @lines.each do |line|
-            %a{href:"http://flight.ddzhusu.com/ft-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}航班
+            %a{href:"/ft-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}航班
+        %h2.page-header 国内航班出发城市列表
+        %p
+          - @cities.each do |c|
+            %a{href: "/ftc-#{URI.encode(c.name)}/", title: "#{c.name}航班时刻表"} #{c.name}
+        %h2.page-header 航班号查询
+        %p
+          - @nums.each do |n|
+            %a{href: "/ftn-#{n.name}/"} #{n.name}

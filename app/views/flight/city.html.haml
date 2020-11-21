@@ -1,0 +1,51 @@
+- title "#{@city.name}航班时刻表,#{@city.name}航班信息查询_滴滴航班"
+- keywords "#{@city.name},#{@city.name}航班,#{@city.name}航班时刻表,#{@city.name}航班信息,#{@city.name}机票,#{@city.name}航班查询"
+- head_desc "#{@city.name}航班时刻表，从#{@city.name}出发的国内航班线路共有#{@lines.size}条，其将会飞抵不同的机场，#{@city.name}航班机型、时刻、起飞时间、飞抵的机场，滴滴航班交尽力为您提供这些信息。"
+- path("http://flight.ddzhusu.com#{request.path}/")
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+%section.container
+  .row
+    %article.col-md-8.col-lg-8.col-sm-12
+      %h1.page-header 从#{@city.name}出发的航班列表
+      .alert.alert-info
+        - @lines.each do |line|
+          %a{href: "/ft-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}航班
+        
+      - if @stations.size > 0
+        %h2.page-header #{@city.name}机场地图
+        .alert.alert-info
+          %p 
+            #{@city.name}共有#{@stations.size}个机场，分别是：
+            - @stations.each do |s|
+              %a{href: "javascript:;", onclick: "changeMapMark(#{s.lat}, #{s.lng});"} #{s.name}
+        #bdmap{style: "height: 300px;margin-bottom: 20px;"}
+
+    %aside.col-md-4.col-lg-4.col-sm-12
+      = render partial: "right"
+      = render partial: "layouts/friend_links", locals: {friend_links: get_friend_links}
+
+:javascript
+  function changeMapMark(lat, lng){
+    var mp = new BMap.Map('bdmap');
+    var point = new BMap.Point(lng, lat);
+    mp.centerAndZoom(point, 13);
+    var marker = new BMap.Marker(point);
+    mp.addOverlay(marker);
+  }
+  function bdmapinitialize() {
+    var mp = new BMap.Map('bdmap');
+    var point = new BMap.Point(#{@stations.size > 0 ? @stations[0].lng : 0}, #{@stations.size > 0 ? @stations[0].lat : 0})
+    mp.centerAndZoom(point, 13);
+    var marker = new BMap.Marker(point);
+    mp.addOverlay(marker);
+  }
+  function bdmaploadScript() {
+    var script = document.createElement("script");
+    script.src = "https://api.map.baidu.com/api?v=3.0&ak=QlBXvaNGsPmYIOjPYlsdOOmKnMlnAwVV&callback=bdmapinitialize";
+    document.body.appendChild(script);
+  }
+  if(#{@stations.size > 0 ? @stations[0].lat : 0} > 0){
+    bdmaploadScript();
+  }
+

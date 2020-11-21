@@ -7,12 +7,12 @@ Ddzhusu::Application.routes.draw do
   get '/fish/:en_name/', to: 'fish#place'
   get '/fishnew/:name/', to: 'fish#place_new'
   get '/fish/', to: 'fish#sitemap'
-  get '/train/numbers/', to: 'train#numbers_sitemap'
-  get '/train/numbers/:number/', to: 'train#numbers'
-  get '/train/timetable/', to: 'train#timetable_sitemap'
-  get '/train/timetable/:from_to/', to: 'train#timetable'
-  get '/train/timetable/:from_to/gaotie.html', to: 'train#timetable_gaotie'
-  get '/train/stations/:station/', to: 'train#stations'
+  get '/train/numbers/', to: 'train#numbers_sitemap', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
+  get '/train/numbers/:number/', to: 'train#numbers', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
+  get '/train/timetable/', to: 'train#timetable_sitemap', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
+  get '/train/timetable/:from_to/', to: 'train#timetable', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
+  get '/train/timetable/:from_to/gaotie.html', to: 'train#timetable_gaotie', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
+  get '/train/stations/:station/', to: 'train#stations', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
   #booking 
   get '/booking/country/:en_short/', to: 'booking#country'
   get '/booking/city/:city_id/', to: 'booking#city'
@@ -34,23 +34,19 @@ Ddzhusu::Application.routes.draw do
   # 新启用路由规则，测试一级目录的seo优势，放在二级域名下，防止一级域名受牵连
   # 高铁gaotie
   get '/gaotieindex.html', to: 'gaotie#index'
-  get '/gt-:from-:to/', to: 'gaotie#shike' 
-  get '/gtc-:checi/', to: 'gaotie#checi'
-  get '/gts-:station/', to: 'gaotie#station'
+  get '/gt-:from-:to/', to: 'gaotie#shike', constraints: {host: ["gaotie.ddzhusu.com", "m.ddzhusu.com"]}
   # 动车dongche
   get '/dongcheindex.html', to: 'dongche#index'
-  get '/dc-:from-:to/', to: 'dongche#shike'
-  get '/dcc-:checi/', to: 'dongche#checi'
-  get '/dcs-:station/', to: 'dongche#station'
+  get '/dc-:from-:to/', to: 'dongche#shike', constraints: {host: ["dongche.ddzhusu.com", "m.ddzhusu.com"]}
   # 火车 huoche
   get '/huocheindex.html', to: 'huoche#index'
-  get '/hc-:from-:to/', to: 'huoche#shike'
-  get '/hcc-:checi/', to: 'huoche#shike'
-  get '/hcs-:station/', to: 'huoche#station'
+  get '/hc-:from-:to/', to: 'huoche#shike', constraints: {host: ["huoche.ddzhusu.com", "m.ddzhusu.com"]}
   # 飞机 flight
   get '/flightindex.html', to: 'flight#index'
-  get '/ft-:from-:to/', to: 'flight#shike'
-  get '/fts-:station/', to: 'flight#station'
+  get '/ft-:from-:to/', to: 'flight#shike', constraints: {host: ["flight.ddzhusu.com", "m.ddzhusu.com"]}
+  get '/fts-:station/', to: 'flight#station', constraints: {host: ["flight.ddzhusu.com", "m.ddzhusu.com"]}
+  get '/ftc-:city/', to: 'flight#city', constraints: {host: ["flight.ddzhusu.com", "m.ddzhusu.com"]}
+  get '/ftn-:name/', to: 'flight#number', constraints: {host: ["flight.ddzhusu.com", "m.ddzhusu.com"]}
   # 公交 bus
   get '/busindex.html', to: 'bus#index'
   get '/bs-:from-:to/', to: 'bus#shike'

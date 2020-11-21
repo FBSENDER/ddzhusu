@@ -20,4 +20,24 @@ class FlightController < ApplicationController
     to_city_code = @info.size > 0 ? @info[0]["arriveCityCode"] : ""
     @ctrip_url = is_device_mobile? ? "https://m.ctrip.com/html5/flight/swift/domestic/#{from_city_code}/#{to_city_code}/#{@date}?AllianceID=297552&sid=762386&ouid=&app=0101X00&" : "https://flights.ctrip.com/itinerary/oneway/#{from_city_code.downcase}-#{to_city_code.downcase}?date=#{@date}&sortByPrice=true&AllianceID=297552&sid=762386&ouid=&app=0101X00&"
   end
+
+  def number
+    @number = FlightNumber.where(name: params[:name]).take
+    not_found if @number.nil?
+    @flight_info = JSON.parse(@number.flight_json)
+    @info = @flight_info["scheduleVOList"].nil? ? [] : @flight_info["scheduleVOList"]
+    @links = JSON.parse(@number.links_json)
+    @date = Date.today + 2
+    from_city_code = @info.size > 0 ? @info[0]["departCityCode"] : ""
+    to_city_code = @info.size > 0 ? @info[0]["arriveCityCode"] : ""
+    @ctrip_url = is_device_mobile? ? "https://m.ctrip.com/html5/flight/swift/domestic/#{from_city_code}/#{to_city_code}/#{@date}?AllianceID=297552&sid=762386&ouid=&app=0101X00&" : "https://flights.ctrip.com/itinerary/oneway/#{from_city_code.downcase}-#{to_city_code.downcase}?date=#{@date}&sortByPrice=true&AllianceID=297552&sid=762386&ouid=&app=0101X00&"
+  end
+
+  def city
+    @city = FlightCity.where(name: params[:city]).take
+    not_found if @city.nil?
+    @stations = FlightStation.where(city_name: @city.name).select(:name, :lat, :lng)
+    @lines = FlightLine.where(from_name: @city.name).select(:from_name, :to_name).to_a
+  end
+
 end

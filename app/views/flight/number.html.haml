@@ -1,13 +1,13 @@
-- title "#{@line.title.empty? ? "#{@from_to}航班时刻表" : @line.title }_滴滴航班"
-- keywords "#{@from_to}机票，#{@from_to}飞机，#{@from_to}航班，#{@from_to}飞机时刻表"
-- head_desc "共查询到#{@from_to}航班#{@flight_info["totalCount"]}架次，#{@from_to}航班时刻表，航班机型、时刻、起飞时间、飞抵的机场，滴滴航班交尽力为您提供这些信息。"
+- title "航班#{@number.name}时刻表,#{@number.name}航班信息查询_滴滴航班"
+- keywords "#{@number.name},#{@number.name}航班,#{@number.name}航班时刻表,#{@number.name}航班信息,#{@number.name}机票,#{@number.name}航班查询"
+- head_desc "#{@info.size > 0 ? "#{@number}航班将于#{@info[0]["departTime"]}#{@info[0]["departPortName"]}起飞，预计于#{@info[0]["arriveTime"]}抵达#{@info[0]["arrivePortName"]}。": ""}#{@number.name}航班时刻表，#{@number.name}航班机型、时刻、起飞时间、飞抵的机场，滴滴航班交尽力为您提供这些信息。"
 - path("http://flight.ddzhusu.com#{request.path}/")
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container
   .row
     %article.col-md-8.col-lg-8.col-sm-12
-      %h1.page-header #{@from_to}航班时刻表
+      %h1.page-header #{@number.name}航班时刻表
       %table.table.table-bordered
         %tr.info
           %th.text-center 起飞/到达
@@ -24,22 +24,21 @@
               %br
               %span #{shike['arriveTime']}
             %td{style: "vertical-align:middle;"}
-              %span 
-                %a{href: "/ftn-#{shike['flightNo']}/", title: "#{shike['flightNo']}航班时刻表"} #{shike['airlineCompanyName']} #{shike['flightNo']}
+              %span #{shike['airlineCompanyName']} #{shike['flightNo']}
               %br
               #{"-"}
               %br
               %span 机型：#{shike['aircraftType']}
             %td{style: "vertical-align:middle;"}
               %span 
-                %a{href: "/ftc-#{URI.encode(@from_name)}/"} #{@from_name}
+                %a{href: "/ftc-#{URI.encode(@flight_info["departureCityName"])}/"} #{@flight_info["departureCityName"]}
               %br
               #{"-"}
               %br
               %span #{shike['departPortName']}#{shike['departTerminal']}
             %td{style: "vertical-align:middle;"}
-              %span
-                %a{href: "/ftc-#{URI.encode(@to_name)}/"} #{@to_name}
+              %span 
+                %a{href: "/ftc-#{URI.encode(@flight_info["arriveCityName"])}/"} #{@flight_info["arriveCityName"]}
               %br
               #{"-"}
               %br
@@ -49,7 +48,5 @@
 
     %aside.col-md-4.col-lg-4.col-sm-12
       = render partial: "right"
-      = render partial: "layouts/right_suggestions", locals: {model: @line}
-      = render partial: "layouts/right_related_keywords", locals: {model: @line}
       = render partial: "layouts/links", locals: {links: @links}
       = render partial: "layouts/friend_links", locals: {friend_links: get_friend_links}
