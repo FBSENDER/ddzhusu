@@ -1,6 +1,7 @@
 - title "#{@hotel.name}"
 - keywords "#{@hotel.name},#{@hotel.name}预订,#{@hotel.name}评论,#{@hotel.name}地址,#{@hotel.name}价格"
 - head_desc "#{@hotel.name}：#{@hotel.info}。滴滴住宿为您提供#{@hotel.name}在线预订服务，您还可以在这里查询到#{@hotel.name}的电话、地址、交通、用户评论、房间价格等详细信息。"
+- path("http://www.ddzhusu.com#{request.path}/")
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
 %section.container

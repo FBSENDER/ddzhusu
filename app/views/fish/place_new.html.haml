@@ -1,7 +1,10 @@
 - title "#{@place.name}民宿预订_滴滴住宿"
 - keywords "#{@place.name}民宿，#{@place.name}住宿，#{@place.name}住宿预订，#{@place.name}民宿预订"
 - head_desc "滴滴住宿为您搜索#{@place.name}民宿酒店价格查询及预订信息。通过对#{@place.name}民宿酒店宾馆价格、位置、设施、品牌、星级及用户真实点评为你推荐高性价比民宿库存、在线预订#{@place.name}民宿，价格优惠实时折扣."
+
+- path("http://www.ddzhusu.com#{request.path}/")
 - mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
 - get_friend_links 
 %section.container
   .row.hidden-sm.hidden-xs#ctrip_search

@@ -1,6 +1,10 @@
 - title "站点地图 - 滴滴住宿"
 - keywords "滴滴住宿"
 - head_desc "滴滴住宿的站点地图，各位大侠请慢点抓取。"
+
+- path("http://www.ddzhusu.com#{request.path}/")
+- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
 %section.container
   .row
     .col-md-12.col-lg-12.col-sm-12

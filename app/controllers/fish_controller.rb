@@ -24,18 +24,14 @@ class FishController < ApplicationController
     end
     unless is_robot?
       if @place.ptype == 1
-        redirect_to "http://www.fishtrip.cn/#{@place.en_name}?referral_id=1566163562"
+        redirect_to "https://www.booking.com/homestay/country/#{@place.en_short}.zh-cn.html?aid=895877"
       elsif @place.ptype == 2
-        p1 = Place.where(id: @place.parent_id).take
-        redirect_to "http://www.fishtrip.cn/#{p1.en_name}/#{@place.en_name}?referral_id=1566163562"
+        city = FsCity.where(name: @place.name).take
+        redirect_to url_by_city(city)
       elsif @place.ptype == 3
         p2 = Place.where(id: @place.parent_id).take
-        p1 = Place.where(id: p2.parent_id).take
-        if @place.fish_tag > 0
-          redirect_to "http://www.fishtrip.cn/#{p1.en_name}/#{p2.en_name}/?district_tag_ids%5B%5D=#{@place.fish_tag}&referral_id=1566163562"
-        else
-          redirect_to "http://www.fishtrip.cn/#{p1.en_name}/#{p2.en_name}?referral_id=1566163562"
-        end
+        city = FsCity.where(name: p2.name).take
+        redirect_to url_by_city(city)
       end 
       return
     end
@@ -60,14 +56,9 @@ class FishController < ApplicationController
     @hotel = Hotel.where(id: params[:hotel_id].to_i).take
     not_found if @hotel.nil?
     unless is_robot?
-      if @hotel.status == 1
-        redirect_to "http://www.fishtrip.cn/houses/#{@hotel.source_id}?referral_id=1566163562"
-        return
-      else
-        city = FsCity.find(@hotel.city_id)
-        redirect_to "http://www.fishtrip.cn/#{city.country_en_name}/#{city.en_name}/?referral_id=1566163562"
-        return
-      end
+      city = FsCity.find(@hotel.city_id)
+      redirect_to url_by_city(city)
+      return
     end
     @comments = JSON.parse(@hotel.comments)
     @recommands = JSON.parse(@hotel.recommands)
@@ -75,5 +66,18 @@ class FishController < ApplicationController
     @hotels = Hotel.where("id > ? and status = 1", @hotel.id).select(:id,:name).take(5)
     @place_1 = Place.where(id: @hotel.place_id).take
     @place_2 = Place.where(fish_tag: @hotel.fish_tag).to_a
+  end
+
+  private
+  def url_by_city(city)
+    if city.booking_city_type == 0
+      return "https://www.booking.com/homestay/city/#{city.country_en_short}/#{city.en_short}.zh-cn.html?aid=895877"
+    elsif city.booking_city_type == 1
+      return "https://www.booking.com/homestay/landmark/#{city.country_en_short}/#{city.en_short}.zh-cn.html?aid=895877"
+    elsif city.booking_city_type == 2
+      return "https://www.booking.com/homestay/region/#{city.country_en_short}/#{city.en_short}.zh-cn.html?aid=895877"
+    else
+      return "https://www.booking.com/index.zh-cn.html?aid=895877"
+    end
   end
 end

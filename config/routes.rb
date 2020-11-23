@@ -3,10 +3,10 @@ Ddzhusu::Application.routes.draw do
   # 旧有路由，常规目录结构
   #root 'fish#sitemap'
   #fish
-  get '/fish/house/:hotel_id/', to: 'fish#house'
-  get '/fish/:en_name/', to: 'fish#place'
-  get '/fishnew/:name/', to: 'fish#place_new'
-  get '/fish/', to: 'fish#sitemap'
+  get '/fish/house/:hotel_id/', to: 'fish#house', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
+  get '/fish/:en_name/', to: 'fish#place', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
+  get '/fishnew/:name/', to: 'fish#place_new', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
+  get '/fish/', to: 'fish#sitemap', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
   get '/train/numbers/', to: 'train#numbers_sitemap', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
   get '/train/numbers/:number/', to: 'train#numbers', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
   get '/train/timetable/', to: 'train#timetable_sitemap', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
