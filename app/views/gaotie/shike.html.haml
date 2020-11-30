@@ -92,8 +92,10 @@
 
       %h2.page-header 相关高铁站列车时刻表
       .alert.alert-info
-        %a{href: "http://www.ddzhusu.com/train/stations/#{@from_station.pinyin}/"} #{@from_station.name}站列车时刻表
-        %a{href: "http://www.ddzhusu.com/train/stations/#{@to_station.pinyin}/"} #{@to_station.name}站列车时刻表
+        - if @from_station
+          %a{href: "http://www.ddzhusu.com/train/stations/#{@from_station.pinyin}/"} #{@from_station.name}站列车时刻表
+        - if @to_station
+          %a{href: "http://www.ddzhusu.com/train/stations/#{@to_station.pinyin}/"} #{@to_station.name}站列车时刻表
 
     %aside.col-md-4.col-lg-4.col-sm-12
       %h2.page-header #{@from_to}高铁票预售期
@@ -178,27 +180,28 @@
       = render partial: "layouts/links", locals: {links: @links}
       = render partial: "layouts/friend_links", locals: {friend_links: get_friend_links}
 
-:javascript
-  function bdmapinitialize() {
-    var mp = new BMap.Map('bdmap');
-    var point = new BMap.Point(#{@from_station.lng}, #{@from_station.lat})
-    mp.centerAndZoom(point, 5);
-    var transit = new BMap.TransitRoute(mp, {
-      renderOptions: {
-          map: mp,
-          autoViewport: true
-      }
-    });
-    var start = new BMap.Point(#{@from_station.lng}, #{@from_station.lat});
-    var end = new BMap.Point(#{@to_station.lng}, #{@to_station.lat});
-    transit.search(start, end);
-  }
-  function bdmaploadScript() {
-    var script = document.createElement("script");
-    script.src = "https://api.map.baidu.com/api?v=3.0&ak=QlBXvaNGsPmYIOjPYlsdOOmKnMlnAwVV&callback=bdmapinitialize";
-    document.body.appendChild(script);
-  }
-  if(#{@from_station.nil? ? 0 : @from_station.lat} > 0 && #{@to_station.nil? ? 0 : @to_station.lng} > 0){
-    bdmaploadScript();
-  }
-
+- if @from_station && @to_station
+  :javascript
+    function bdmapinitialize() {
+      var mp = new BMap.Map('bdmap');
+      var point = new BMap.Point(#{@from_station.lng}, #{@from_station.lat})
+      mp.centerAndZoom(point, 5);
+      var transit = new BMap.TransitRoute(mp, {
+        renderOptions: {
+            map: mp,
+            autoViewport: true
+        }
+      });
+      var start = new BMap.Point(#{@from_station.lng}, #{@from_station.lat});
+      var end = new BMap.Point(#{@to_station.lng}, #{@to_station.lat});
+      transit.search(start, end);
+    }
+    function bdmaploadScript() {
+      var script = document.createElement("script");
+      script.src = "https://api.map.baidu.com/api?v=3.0&ak=QlBXvaNGsPmYIOjPYlsdOOmKnMlnAwVV&callback=bdmapinitialize";
+      document.body.appendChild(script);
+    }
+    if(#{@from_station.nil? ? 0 : @from_station.lat} > 0 && #{@to_station.nil? ? 0 : @to_station.lng} > 0){
+      bdmaploadScript();
+    }
+  
