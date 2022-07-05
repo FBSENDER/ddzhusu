@@ -17,9 +17,6 @@
             ，#{@from_to}距离#{@gaotie_info["distance"]}
           。
 
-      - if @from_station && @to_station && @from_station.lat > 0 && @to_station.lat > 0
-        %h2.page-header #{@from_to}动车地图
-        #bdmap{style: "height: 300px;margin-bottom: 20px;"}
 
       %table.table.table-bordered
         %tr.info
@@ -97,6 +94,10 @@
           %a{href: "http://www.ddzhusu.com/train/stations/#{@from_station.pinyin}/"} #{@from_station.name}站列车时刻表
         - if @to_station
           %a{href: "http://www.ddzhusu.com/train/stations/#{@to_station.pinyin}/"} #{@to_station.name}站列车时刻表
+
+      - if @from_station && @to_station && @from_station.lat > 0 && @to_station.lat > 0
+        %h2.page-header #{@from_to}动车地图
+        #bdmap{style: "height: 300px;margin-bottom: 20px;"}
 
     %aside.col-md-4.col-lg-4.col-sm-12
       %h2.page-header #{@from_to}动车票预售期
