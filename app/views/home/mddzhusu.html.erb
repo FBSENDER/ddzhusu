@@ -84,7 +84,7 @@
           <div role="tabpanel" class="tab-pane active" id="tw">
             <div class="row">
             <% @places.select{|item| item.parent_id == 1}.each do |place|%>
-              <div class="col-md-2">
+              <div class="col-md-4 col-sm-4 col-xs-4" style="margin: 5px 0">
                 <a href="/fishnew/<%= URI.encode(place.name )%>/"><%= place.name %>民宿</a>
               </div>
             <% end %>
@@ -93,7 +93,7 @@
           <div role="tabpanel" class="tab-pane" id="jp">
             <div class="row">
             <% @places.select{|item| item.parent_id == 2}.each do |place|%>
-              <div class="col-md-2">
+              <div class="col-md-4 col-sm-4 col-xs-4" style="margin: 5px 0">
                 <a href="/fishnew/<%= URI.encode(place.name )%>/"><%= place.name %>民宿</a>
               </div>
             <% end %>
@@ -102,7 +102,7 @@
           <div role="tabpanel" class="tab-pane" id="kr">
             <div class="row">
             <% @places.select{|item| item.parent_id == 247}.each do |place|%>
-              <div class="col-md-2">
+              <div class="col-md-4 col-sm-4 col-xs-4" style="margin: 5px 0">
                 <a href="/fishnew/<%= URI.encode(place.name )%>/"><%= place.name %>民宿</a>
               </div>
             <% end %>
@@ -120,26 +120,29 @@
         </div>
       </div>
     </div>
+    <div class="clearfix"></div>
     <div class="col-md-12">
       <h2 class="page-header">品牌连锁酒店</h2>
       <% @brands.each do |brand|%>
-        <div class="col-md-2">
+        <div class="col-md-4 col-sm-4 col-xs-4" style="margin: 5px 0">
           <a href="/ctrip/brand/<%= URI.encode(brand.name) %>/"><%= brand.title %>酒店</a>
         </div>
       <% end %>
     </div>
+    <div class="clearfix"></div>
     <div class="col-md-12">
       <h2 class="page-header">家庭旅馆</h2>
       <% @themes.each do |theme|%>
-        <div class="col-md-2">
+        <div class="col-md-4 col-sm-4 col-xs-4" style="margin: 5px 0">
           <a href="http://hotel.ddzhusu.com/theme-<%= URI.encode(theme.name) %>/"><%= theme.title %></a>
         </div>
       <% end %>
     </div>
+    <div class="clearfix"></div>
     <div class="col-md-12" style="margin-bottom: 50px;">
       <h2 class="page-header">钟点房小时房</h2>
       <% @clock_cities.each do |city|%>
-        <div class="col-md-2">
+        <div class="col-md-4 col-sm-4 col-xs-4" style="margin: 5px 0">
           <a href="/clockhotel/city/<%= URI.encode(city.name) %>/"><%= city.name %>钟点房</a>
         </div>
       <% end %>

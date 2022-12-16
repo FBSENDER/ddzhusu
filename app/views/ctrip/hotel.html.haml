@@ -5,7 +5,8 @@
 
 %section.container
   %article.row
-    %h1.page-header #{@hotel.title}
+    %div.col-md-6.col-sm-12.col-xs-12
+      %h1.page-header #{@hotel.title}
     %div.col-md-6.col-sm-12.col-xs-12
       %img.img-responsive.img-thumbnail{alt: "#{@hotel.title}图片", src: "http://7xnj96.com1.z0.glb.clouddn.com/ctrip_hotel_#{@hotel.id}.jpg"}
     %div.col-md-6.col-sm-12.col-xs-12
@@ -37,11 +38,16 @@
 
   %aside.row
     -if @hotels.size > 0
-      %h2 热门酒店宾馆
-      %p
-        - @hotels.each do |hotel|
+      %div.col-md-6.col-sm-12.col-xs-12
+        %h2 热门酒店宾馆
+      
+      - @hotels.each do |hotel|
+        .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
           %a{href:"/ctrip/hotel/#{hotel.id}/"} #{hotel.title}
-    %h3 您可能需要下面的链接
-    %p
+    %div.col-md-6.col-sm-12.col-xs-12
+      %h3 您可能需要下面的链接
+    
+    .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
       %a{href:"/ctrip/brand/#{URI.encode(@hotel.brand_name)}/"} #{@hotel.brand_name}
+    .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
       %a{href:"/ctrip/brand/#{URI.encode(@hotel.brand_name)}/city/#{URI.encode(@hotel.city_name)}/"} #{@hotel.brand_name}#{@hotel.city_name}

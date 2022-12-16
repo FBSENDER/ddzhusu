@@ -1,0 +1,104 @@
+- title @title
+- keywords @keywords
+- head_desc @description
+- lang @lang
+- alternate("http://www.ddzhusu.com/hotel-#{@hotel.url_path_md5}", [["zh-CN","http://www.ddzhusu.com/hotel-#{@hotel.url_path_md5}"],["de", "http://www.ddzhusu.com/hotel-de-#{@hotel.url_path_md5}"]])
+
+= render partial: 'header'
+%main.container
+  .row
+    %nav
+      %ol.breadcrumb
+        %li.breadcrumb-item.active
+          %a{href: "/", title: "特色民宿客栈"} 首页
+        %li.breadcrumb-item.active
+          #{@hotel.country_name}#{@hotel.hotel_type}
+        %li.breadcrumb-item.active
+          #{@hotel.region_name}#{@hotel.hotel_type}
+        %li.breadcrumb-item.active
+          #{@hotel.city_name}#{@hotel.hotel_type}
+        %li.breadcrumb-item
+          %h1.text-muted{style: "font-size: 16px;"} #{@hotel.title}
+  .row
+    %h2 #{@hotel.hotel_name}
+    %hr
+    %address.alert.alert-info 地址：#{@hotel.address}
+    %p.alert.alert-primary 找到#{@hotel.images.split("|||").size}张该#{@hotel.hotel_type}图片，图片如下：
+    - @hotel.images.split("|||").each_with_index do |image, index|
+      .col-6.col-md-4
+        %img.img-fluid{src: "#{image}", alt: "#{@hotel.hotel_name} picture #{index + 1}"}
+  .row{style: "margin-top: 10px;"}
+    %h3 #{@hotel.hotel_type}简介
+    %hr
+    %p.alert.alert-info 
+      - @hotel.hotel_desc.split("|||").each do |desc|
+        #{desc}
+        %br
+    %p.alert.alert-primary
+      - @hotel.reasons.split("|||").each do |reason|
+        #{reason}
+        %br
+
+  .row{style: "margin-top: 10px;"}
+    %h3 #{Time.now.to_s[0,10]}可以预定的空房信息
+    %hr
+    %ul.list-group.list-group-flush
+      - @hotel.rooms_table.split("|||").each_with_index do |room, index|
+        %li.list-group-item 
+          %span.text-secondary 房型#{index + 1}：#{room}
+
+  .row{style: "margin-top: 10px;"}
+    %h3 #{@hotel.hotel_type}用户评价
+    %hr
+    - @hotel.reviews.split(/\|+/).each_with_index do |review, index|
+      %p.alert.alert-secondary 评价#{index+1}：#{review.sub("查看更多查看翻译", "")}
+
+  .row{style: "margin-top: 10px;"}
+    %h3 热门设施
+    %hr
+    - @hotel.important_facilities.split("|||").each do |fa|
+      .col-2
+        %span.text-success #{fa}
+
+  .row{style: "margin-top: 10px;"}
+    %h3 #{@hotel.hotel_name}所有设施与服务
+    %hr
+    - @hotel.facilities.split("|||").each do |fa|
+      .col-4
+        .alert.alert-secondary
+          %span #{fa}
+  
+  .row{style: "margin-top: 10px;"}
+    %h3 入住规定
+    %hr
+    %p.alert.alert-info
+      - @hotel.regulations.split("|||").each do |reg|
+        #{reg}
+        %br
+
+  .row{style: "margin-top: 10px;"}
+    %h3 #{@hotel.hotel_name}顾客常见问题与解答
+    %hr
+    - @hotel.qa.split("|||").each_with_index do |qa, index|
+      .col-6
+        .alert.alert-warning
+          - q = qa.split(/\|\s?\|/)
+          %p
+            %em 问题#{index + 1}：#{q[0]}
+          %p #{q[1]}
+
+  .row{style: "margin-top: 10px;"}
+    %h3 #{@hotel.hotel_type}附近地标
+    %hr
+    - @hotel.pois.split("|||").each do |poi|
+      .col-4
+        .alert.alert-secondary
+          %span #{poi}
+
+  .row{style: "margin-top: 10px;"}
+    %h3 #{@hotel.city_name}其他#{@hotel.hotel_type}推荐
+    %hr
+    - @hotels.each do |h|
+      .col-6
+        .alert.alert-primary
+          %a{href: "/hotel-#{h.url_path_md5}"} #{h.hotel_name}

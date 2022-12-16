@@ -6,7 +6,8 @@
 
 %section.container
   %article.row
-    %h1.page-header #{@hotel.name}
+    %div.col-md-6.col-sm-12.col-xs-12
+      %h1.page-header #{@hotel.name}
     %div.col-md-6.col-sm-12.col-xs-12
       %img.img-responsive.img-thumbnail{alt: "#{@hotel.name}图片", src: "http://img.yysssr.com/fish_house_#{@hotel.id}.jpg"}
     %div.col-md-6.col-sm-12.col-xs-12
@@ -25,7 +26,8 @@
         - @comments.each do |comment|
           %br
           = comment
-    %h2.page-header #{@hotel.name}预订
+    %div.col-md-6.col-sm-12.col-xs-12
+      %h2.page-header #{@hotel.name}预订
     - @rooms.each_with_index do |room, index|
       %div.col-md-4.col-sm-12.col-xs-12
         - if room["img_url"]
@@ -37,10 +39,14 @@
           %br
           = "设施：#{room['device']}"
   %aside.row
-    %h3.page-header 相关链接
-    %p
+    %div.col-md-6.col-sm-12.col-xs-12
+      %h3.page-header 相关链接
+    .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
       %a{href:"http://www.ddzhusu.com/fishnew/#{URI.encode(@place_1.name)}/"} #{@place_1.name}民宿
-      - @place_2.each do |place|
+    - @place_2.each do |place|
+      .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
+
         %a{href:"http://www.ddzhusu.com/fishnew/#{URI.encode(place.name)}/"} #{place.name}民宿
-      - @hotels.each do |hotel|
+    - @hotels.each do |hotel|
+      .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
         %a{href:"http://www.ddzhusu.com/fish/house/#{hotel.id}/"} #{hotel.name}

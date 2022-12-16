@@ -1,4 +1,7 @@
 module ApplicationHelper
+  def lang(lang = "zh-CN")
+    content_for :lang, lang.to_s
+  end
   def title(page_title = "滴滴住宿")
       content_for :title, page_title.to_s
   end
@@ -17,6 +20,16 @@ module ApplicationHelper
   def page_lang(lang = 'zh-CN')
     content_for :page_lang, lang
   end
+
+  def alternate(canonical_url, lang_urls)
+    a1 = """
+    <link rel=\"canonical\" href=\"#{canonical_url}\">
+    <link rel=\"alternate\" hreflang=\"x-default\" href=\"#{canonical_url}\">
+    """
+    a2 = lang_urls.map{|u| "<link rel=\"alternate\" hreflang=\"#{u[0]}\" href=\"#{u[1]}\">"}.join("\n")
+    content_for :alternate, (a1 + a2).html_safe
+  end
+
   def get_train_type(word)
     case word
     when 'D' then '动车'

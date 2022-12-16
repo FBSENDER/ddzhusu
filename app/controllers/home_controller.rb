@@ -71,6 +71,7 @@ class HomeController < ApplicationController
     @brands = CtBrand.select(:name, :title).order("hotel_count desc").limit(24).to_a
     @themes = CtTheme.select(:name,:title).take(24)
     @clock_cities = ClockCity.select(:name).take(24)
+    @bk = BkCnHotel.where(status: 2).select(:url_path_md5, :hotel_name).limit(20)
     render 'home/www'
   end
 

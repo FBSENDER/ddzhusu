@@ -2,6 +2,9 @@ Ddzhusu::Application.routes.draw do
   root 'home#index'
   # 旧有路由，常规目录结构
   #root 'fish#sitemap'
+  #new bk
+  get '/hotel-de-:url_md5', to: 'bk#hotel_de_detail', constraints: {host: "www.ddzhusu.com"}
+  get '/hotel-:url_md5', to: 'bk#hotel_detail', constraints: {host: "www.ddzhusu.com"}
   #fish
   get '/fish/house/:hotel_id/', to: 'fish#house', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}
   get '/fish/:en_name/', to: 'fish#place', constraints: {host: ["www.ddzhusu.com", "m.ddzhusu.com"]}

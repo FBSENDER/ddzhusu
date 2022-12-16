@@ -186,3 +186,11 @@ end
 class CpsClick < ActiveRecord::Base
   self.table_name = 'cps_clicks'
 end
+
+class BkCnHotel < ActiveRecord::Base
+  self.table_name = 'bk_cn_hotels'
+end
+
+class BkDeHotel < ActiveRecord::Base
+  self.table_name = 'bk_de_hotels'
+end
