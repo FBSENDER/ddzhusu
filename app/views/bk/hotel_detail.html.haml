@@ -2,7 +2,9 @@
 - keywords @keywords
 - head_desc @description
 - lang @lang
-- alternate("http://www.ddzhusu.com/hotel-#{@hotel.url_path_md5}", [["zh-CN","http://www.ddzhusu.com/hotel-#{@hotel.url_path_md5}"],["de", "http://www.ddzhusu.com/hotel-de-#{@hotel.url_path_md5}"]])
+- lang_array = [["zh-CN","http://www.ddzhusu.com/hotel-#{@hotel.url_path_md5}"]]
+- lang_array << ["de", "http://www.ddzhusu.com/hotel-de-#{@hotel.url_path_md5}"] if @has_de
+- alternate("http://www.ddzhusu.com/hotel-#{@hotel.url_path_md5}", lang_array)
 
 = render partial: 'header'
 %main.container

@@ -13,6 +13,7 @@ class BkController < ApplicationController
     @keywords = "#{@hotel.hotel_name},#{@hotel.hotel_type}预订,#{@hotel.country_name}#{@hotel.hotel_type}预订,#{@hotel.region_name}#{@hotel.hotel_type}预订,#{@hotel.city_name}#{@hotel.hotel_type}预订"
     @lang = "zh-CN"
     @hotels = BkCnHotel.where(city_short: @hotel.city_short, hotel_type: @hotel.hotel_type).where("id > ? and status = 2", @hotel.id).select(:id, :url_path_md5, :hotel_name).order(:id).limit(10)
+    @has_de = BkDeHotel.where(url_path_md5: params[:url_md5].to_s, status: 2).select(:id).take
   end
 
   def hotel_de_detail
@@ -28,5 +29,6 @@ class BkController < ApplicationController
     @keywords = "#{@hotel.hotel_name},#{@hotel.hotel_type}"
     @lang = "de"
     @hotels = BkDeHotel.where(city_short: @hotel.city_short, hotel_type: @hotel.hotel_type).where("id > ? and status = 2", @hotel.id).select(:id, :url_path_md5, :hotel_name).order(:id).limit(10)
+    @has_cn = BkCnHotel.where(url_path_md5: params[:url_md5].to_s, status: 2).select(:id).take
   end
 end
