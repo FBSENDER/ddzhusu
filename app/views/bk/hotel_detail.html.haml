@@ -5,6 +5,7 @@
 - lang_array = [["zh-CN","http://www.ddzhusu.com/hotel-#{@hotel.url_path_md5}"]]
 - lang_array << ["de", "http://www.ddzhusu.com/hotel-de-#{@hotel.url_path_md5}"] if @has_de
 - alternate("http://www.ddzhusu.com/hotel-#{@hotel.url_path_md5}", lang_array)
+- ld_json(@ld_json.to_json.html_safe)
 
 = render partial: 'header'
 %main.container
@@ -15,10 +16,14 @@
           %a{href: "/", title: "特色民宿客栈"} 首页
         %li.breadcrumb-item.active
           #{@hotel.country_name}#{@hotel.hotel_type}
+        - unless @hotel.region_short.empty?
+          %li.breadcrumb-item.active
+            #{@hotel.region_name}#{@hotel.hotel_type}
         %li.breadcrumb-item.active
-          #{@hotel.region_name}#{@hotel.hotel_type}
-        %li.breadcrumb-item.active
-          #{@hotel.city_name}#{@hotel.hotel_type}
+          - if @hotel.hotel_type == '酒店'
+            %a{href: "/hotel-city-#{@hotel.city_short}"} #{@hotel.city_name}#{@hotel.hotel_type}
+          - else
+            %a{href: "/hotel-city-#{@hotel.city_short}?hotel_type=#{URI.encode(@hotel.hotel_type)}"} #{@hotel.city_name}#{@hotel.hotel_type}
         %li.breadcrumb-item
           %h1.text-muted{style: "font-size: 16px;"} #{@hotel.title}
   .row

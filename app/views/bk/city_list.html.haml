@@ -1,0 +1,44 @@
+- title @title
+- keywords @keywords
+- head_desc @description
+- lang @lang
+- lang_array = []
+- url = "http://www.ddzhusu.com/hotel-city-#{@city_short}"
+- url += "?hotel_type=#{URI.encode(@hotel_type)}" if @hotel_type != '酒店'
+- alternate(url, lang_array)
+- ld_json(@ld_json.to_json.html_safe)
+
+= render partial: 'header'
+%main.container
+  .row
+    %nav
+      %ol.breadcrumb
+        %li.breadcrumb-item.active
+          %a{href: "/", title: "特色民宿客栈"} 首页
+        %li.breadcrumb-item.active
+          #{@country_name}#{@hotel_type}
+        - unless @region_short.empty?
+          %li.breadcrumb-item.active
+            #{@region_name}#{@hotel_type}
+        %li.breadcrumb-item
+          %h1.text-muted{style: "font-size: 16px;"} #{@city_name}#{@hotel_type}
+  .row
+    %h2 #{@region_name}#{@city_name}的#{@hotel_type}推荐：#{@hotels.size}家位于#{@city_name}的#{@hotel_type}
+    %hr
+  - @hotels.each_with_index do |hotel, index|
+    .row
+      %h3 推荐#{index+1}: #{hotel.hotel_name}
+      %hr
+      %address.alert.alert-info 地址：#{hotel.address}
+      - hotel.images.split("|||").each_with_index do |image, i|
+        .col-6.col-md-4
+          %img.img-fluid{src: "#{image}", alt: "#{hotel.hotel_name} picture #{i + 1}"}
+    .row{style: "margin-top: 10px;"}
+      %p.alert.alert-secondary
+        精选评价：
+        %br
+        - hotel.reviews.split(/\|+/).each do |review|
+          #{review.sub("查看更多查看翻译", "").sub("查看更多", "")}
+          %br
+        - if hotel.status == 2
+          %a{href: "/hotel-#{hotel.url_path_md5}", title: "#{hotel.hotel_name}"} 查看详情

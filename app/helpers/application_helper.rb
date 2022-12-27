@@ -30,6 +30,10 @@ module ApplicationHelper
     content_for :alternate, (a1 + a2).html_safe
   end
 
+  def ld_json(json)
+    content_for :ld_json, json
+  end
+
   def get_train_type(word)
     case word
     when 'D' then '动车'
