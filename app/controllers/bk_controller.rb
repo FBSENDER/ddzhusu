@@ -21,29 +21,29 @@ class BkController < ApplicationController
     @keywords = "#{@city_name}#{@hotel_type},#{@city_name}#{@hotel_type}预订"
     @lang = "zh-CN"
     @ld_json = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": []
+      "@context"=> "https://schema.org",
+      "@type"=> "BreadcrumbList",
+      "itemListElement"=> []
     }
-    @ld_json[:itemListElement] << {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "滴滴住宿",
-      "item": "http://www.ddzhusu.com"
+    @ld_json["itemListElement"] << {
+      "@type"=> "ListItem",
+      "position"=> 1,
+      "name"=> "滴滴住宿",
+      "item"=> "http://www.ddzhusu.com"
     }
     if @hotel_type == '酒店'
-      @ld_json[:itemListElement] << {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "#{@city_name}#{@hotel_type}",
-        "item": "http://www.ddzhusu.com/hotel-city-#{@city_short}"
+      @ld_json["itemListElement"] << {
+        "@type"=> "ListItem",
+        "position"=> 2,
+        "name"=> "#{@city_name}#{@hotel_type}",
+        "item"=> "http://www.ddzhusu.com/hotel-city-#{@city_short}"
       }
     else
-      @ld_json[:itemListElement] << {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "#{@city_name}#{@hotel_type}",
-        "item": "http://www.ddzhusu.com/hotel-city-#{@city_short}?hotel_type=#{URI.encode(@hotel_type)}"
+      @ld_json["itemListElement"] << {
+        "@type"=> "ListItem",
+        "position"=> 2,
+        "name"=> "#{@city_name}#{@hotel_type}",
+        "item"=> "http://www.ddzhusu.com/hotel-city-#{@city_short}?hotel_type=#{URI.encode(@hotel_type)}"
       }
     end
   end
@@ -62,36 +62,36 @@ class BkController < ApplicationController
     @hotels = BkCnHotel.where(city_short: @hotel.city_short, hotel_type: @hotel.hotel_type).where("id > ? and status = 2", @hotel.id).select(:id, :url_path_md5, :hotel_name).order(:id).limit(10)
     @has_de = BkDeHotel.where(url_path_md5: params[:url_md5].to_s, status: 2).select(:id).take
     @ld_json = {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": []
+      "@context"=> "https://schema.org",
+      "@type"=> "BreadcrumbList",
+      "itemListElement"=> []
     }
-    @ld_json[:itemListElement] << {
-      "@type": "ListItem",
-      "position": 1,
-      "name": "滴滴住宿",
-      "item": "http://www.ddzhusu.com"
+    @ld_json["itemListElement"] << {
+      "@type"=> "ListItem",
+      "position"=> 1,
+      "name"=> "滴滴住宿",
+      "item"=> "http://www.ddzhusu.com"
     }
     if @hotel_type == '酒店'
-      @ld_json[:itemListElement] << {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "#{@hotel.city_name}#{@hotel.hotel_type}",
-        "item": "http://www.ddzhusu.com/hotel-city-#{@hotel.city_short}"
+      @ld_json["itemListElement"] << {
+        "@type"=> "ListItem",
+        "position"=> 2,
+        "name"=> "#{@hotel.city_name}#{@hotel.hotel_type}",
+        "item"=> "http://www.ddzhusu.com/hotel-city-#{@hotel.city_short}"
       }
     else
-      @ld_json[:itemListElement] << {
-        "@type": "ListItem",
-        "position": 2,
-        "name": "#{@hotel.city_name}#{@hotel.hotel_type}",
-        "item": "http://www.ddzhusu.com/hotel-city-#{@hotel.city_short}?hotel_type=#{URI.encode(@hotel.hotel_type)}"
+      @ld_json["itemListElement"] << {
+        "@type"=> "ListItem",
+        "position"=> 2,
+        "name"=> "#{@hotel.city_name}#{@hotel.hotel_type}",
+        "item"=> "http://www.ddzhusu.com/hotel-city-#{@hotel.city_short}?hotel_type=#{URI.encode(@hotel.hotel_type)}"
       }
     end
-    @ld_json[:itemListElement] << {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "#{@hotel.hotel_name}",
-      "item": "http://www.ddzhusu.com/hotel-#{@hotel.url_path_md5}"
+    @ld_json["itemListElement"] << {
+      "@type"=> "ListItem",
+      "position"=> 3,
+      "name"=> "#{@hotel.hotel_name}",
+      "item"=> "http://www.ddzhusu.com/hotel-#{@hotel.url_path_md5}"
     }
   end
 
