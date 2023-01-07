@@ -1,41 +1,48 @@
 - title "#{@hotel.title}"
 - keywords "#{@hotel.title},#{@hotel.title} booking,#{@hotel.title} reviews,#{@hotel.title} address,#{@hotel.title} price"
 - head_desc " #{@hotel.title}: #{@description[0]}. ddzhusu.com provides you online booking service of #{@hotel.title}, you also can get the phone number, address, traffic infomation, reviews, prices of #{@hotel.title} here."
-- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
-- page_lang('en-us')
+
+- lang @lang
+- lang_array = [["en-US","http://www.ddzhusu.com/bookingen/hotel/#{@hotel.id}/"]]
+- alternate("http://www.ddzhusu.com/bookingen/hotel/#{@hotel.id}/", lang_array)
+
+= render partial: '/bk/header'
 
 %section.container
   %article.row
-    %div.col-md-6.col-sm-12.col-xs-12
-      %h1.page-header #{@hotel.title}
-    %div.col-md-6.col-sm-12.col-xs-12
-      %img.img-responsive.img-thumbnail{alt: "image of #{@hotel.title}", src: "http://img.yysssr.com/booking_hotel_#{@hotel.country_en_short}_#{@hotel.en_short}.jpg"}
-    %div.col-md-6.col-sm-12.col-xs-12
+    %h1 #{@hotel.title}
+    %hr
+    %img.img-fluid{alt: "image of #{@hotel.title}", src: "http://img.yysssr.com/booking_hotel_#{@hotel.country_en_short}_#{@hotel.en_short}.jpg"}
+    .col-12{style: "margin-top: 10px;"}
       %h2 #{@hotel.title} descritpion
-      - @description.each do |desc|
-        %p #{desc}
-      %h2 Recommand
-      - @recommand.each do |recommand|
-        %p #{recommand.join('——')}
-      %h2= "Facilities of #{@hotel.en_name}"
-      - @facility.each do |fac|
-        %p 
-          %b #{fac[0]}
-          = ": #{fac[1].join(' | ')}"
-      - if @review.size > 0
-        %h2= "Reviews for #{@hotel.en_name}"
-        - @review.each do |review|
+      %hr
+      %p.alert.alert-info 
+        - @description.each do |desc|
+          #{desc}
           %br
-          = review
+      %h2 Recommand
+      %p.alert.alert-info 
+        - @recommand.each do |recommand|
+          #{recommand.join('——')}
+          %br
+      %h2 Facilities of #{@hotel.en_name}
+      - @facility.each do |fac|
+        %p.alert.alert-info 
+          %b #{fac[0]}
+          ：#{fac[1].join(' | ')}
+      - if @review.size > 0
+        %h2 Reviews for #{@hotel.en_name}
+        - @review.each_with_index do |review, index|
+          %p.alert.alert-success Review #{index+1}：#{review}
       - unless @hotel.notice.empty?
         %h2 The Fine Print
-        %p #{@hotel.notice}
+        %p.alert.alert-warning #{@hotel.notice}
+
   %aside.row
-    %div.col-md-6.col-sm-12.col-xs-12
-      %h3.page-header Related Links
+    %h3 Related Links
     - @countries.each do |country|
-      .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
+      .col-6.alert
         %a{href: "/booking/country/#{country[0]}/", title: "#{country[1]} booking"}= "hotels in #{country[1]}"
     - @hotels.each do |hotel|
-      .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
+      .col-6.alert
         %a{href:"/bookingen/hotel/#{hotel.id}/"} #{hotel.title}

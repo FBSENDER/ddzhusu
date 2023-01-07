@@ -1,11 +1,13 @@
 require 'db_models'
 class BookingController < ApplicationController
-  layout :set_layout
-  def set_layout
-    "mddzhusu" if request.host == 'm.ddzhusu.com'
-  end
+  layout "bk"
+  #layout :set_layout
+  #def set_layout
+  #  "mddzhusu" if request.host == 'm.ddzhusu.com'
+  #end
   @@all_bk_hotels = BkHotel.select(:id,:title).to_a
   def country
+    @lang = "zh-CN"
     en_short = params[:en_short]
     @country = BkCountry.where(en_short: en_short).take
     not_found if @country.nil?
@@ -15,14 +17,34 @@ class BookingController < ApplicationController
     @cities_enabled = BkCity.where("status = 1 and country_en_short = ?", @country.en_short).select(:id, :title).to_a.sample(10)
     @hotels = BkHotel.where(id: @country_detail.hotel_ids.split(',').map(&:to_i)).select(:id, :name, :price, :score, :description, :en_short, :title).to_a
     @countries = @@all_bk_countries.sample(10)
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
+    @ld_json = {
+      "@context"=> "https://schema.org",
+      "@type"=> "BreadcrumbList",
+      "itemListElement"=> []
+    }
+    @ld_json["itemListElement"] << {
+      "@type"=> "ListItem",
+      "position"=> 1,
+      "name"=> "滴滴住宿",
+      "item"=> "http://www.ddzhusu.com"
+    }
+    @ld_json["itemListElement"] << {
+      "@type"=> "ListItem",
+      "position"=> 2,
+      "name"=> "#{@country.name}酒店民宿",
+      "item"=> "http://www.ddzhusu.com/booking/country/#{@country.en_short}/"
+    }
   end
   def city
-    @city = BkCity.where(id: params[:city_id], status: 1).select(:id, :title, :hotel_count, :country_en_short, :en_short).take
+    @lang = "zh-CN"
+    @city = BkCity.where(id: params[:city_id], status: 1).select(:id, :title, :hotel_count, :country_en_short, :en_short, :name).take
     not_found if @city.nil?
     unless is_robot?
       redirect_to "http://www.booking.com/city/#{@city.country_en_short}/#{@city.en_short}.zh-cn.html?aid=895877"
       return
     end
+    @country = BkCountry.where(en_short: @city.country_en_short).take
     @detail = BkCityDetail.where(city_id: @city.id).take
     not_found if @detail.nil?
     @hotels = BkHotel.where(id: @detail.hotel_ids.split(',').map(&:to_i)).select(:id, :name, :price, :score, :description, :en_short, :title, :country_en_short).to_a
@@ -32,9 +54,34 @@ class BookingController < ApplicationController
     @districts = JSON.parse(@detail.districts_json)
     @landmarks = JSON.parse(@detail.landmarks_json)
     @airports = JSON.parse(@detail.airports_json)
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
+    @ld_json = {
+      "@context"=> "https://schema.org",
+      "@type"=> "BreadcrumbList",
+      "itemListElement"=> []
+    }
+    @ld_json["itemListElement"] << {
+      "@type"=> "ListItem",
+      "position"=> 1,
+      "name"=> "滴滴住宿",
+      "item"=> "http://www.ddzhusu.com"
+    }
+    @ld_json["itemListElement"] << {
+      "@type"=> "ListItem",
+      "position"=> 2,
+      "name"=> "#{@country.name}酒店民宿",
+      "item"=> "http://www.ddzhusu.com/booking/country/#{@country.en_short}/"
+    }
+    @ld_json["itemListElement"] << {
+      "@type"=> "ListItem",
+      "position"=> 3,
+      "name"=> "#{@city.name}酒店民宿",
+      "item"=> "http://www.ddzhusu.com/booking/city/#{@city.id}/"
+    }
   end
   def hotel
-    @hotel = BkHotel.where(id: params[:hotel_id]).select(:id, :name, :title, :country_en_short, :en_short, :price, :score, :description, :recommand, :facility, :notice, :review).take
+    @lang = "zh-CN"
+    @hotel = BkHotel.where(id: params[:hotel_id]).select(:id, :name, :title, :country_en_short, :en_short, :price, :score, :description, :recommand, :facility, :notice, :review, :city_en_short, :img_url).take
     not_found if @hotel.nil?
     unless is_robot?
       redirect_to "http://www.booking.com/hotel/#{@hotel.country_en_short}/#{@hotel.en_short}.zh-cn.html?aid=895877"
@@ -46,6 +93,32 @@ class BookingController < ApplicationController
     @review = JSON.parse(@hotel.review)
     @hotels = @@all_bk_hotels.sample(10)
     @countries = @@all_bk_countries.sample(10)
+    @country = BkCountry.where(en_short: @hotel.country_en_short).take
+    @city = BkCity.where(en_short: @hotel.city_en_short).take
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
+    @ld_json = {
+      "@context"=> "https://schema.org",
+      "@type"=> "BreadcrumbList",
+      "itemListElement"=> []
+    }
+    @ld_json["itemListElement"] << {
+      "@type"=> "ListItem",
+      "position"=> 1,
+      "name"=> "滴滴住宿",
+      "item"=> "http://www.ddzhusu.com"
+    }
+    @ld_json["itemListElement"] << {
+      "@type"=> "ListItem",
+      "position"=> 2,
+      "name"=> "#{@country.name}酒店民宿",
+      "item"=> "http://www.ddzhusu.com/booking/country/#{@country.en_short}/"
+    }
+    @ld_json["itemListElement"] << {
+      "@type"=> "ListItem",
+      "position"=> 3,
+      "name"=> "#{@city.name}酒店民宿",
+      "item"=> "http://www.ddzhusu.com/booking/city/#{@city.id}/"
+    }
   end
   @@all_bk_countries = [['gb','英国'],
     ['us','美国'],

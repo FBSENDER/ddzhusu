@@ -1,37 +1,49 @@
 - title "#{@city.title}酒店预订_滴滴住宿"
 - keywords "#{@city.title}酒店,#{@city.title}酒店预订,#{@city.title}酒店价格,#{@city.title}酒店查询,#{@city.title}住宿,#{@city.title}住宿预订"
 - head_desc "滴滴住宿为您搜索#{@city.title}酒店住宿价格查询及预订信息。通过对#{@city.title}酒店宾馆价格、位置、设施、品牌、星级及用户真实点评为你推荐高性价比酒店库存、在线预订#{@city.title}酒店，价格优惠实时折扣."
-- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
 
-= render partial: "layouts/booking_search_header"
+- lang @lang
+- lang_array = [["zh-CN","http://www.ddzhusu.com/booking/city/#{@city.id}/"]]
+- alternate("http://www.ddzhusu.com/booking/city/#{@city.id}/", lang_array)
+- ld_json(@ld_json.to_json.html_safe)
+
+= render partial: '/bk/header'
+
 %section.container
+  .row
+    %nav
+      %ol.breadcrumb
+        %li.breadcrumb-item.active
+          %a{href: "/", title: "特色民宿客栈"} 首页
+        %li.breadcrumb-item.active
+          %a{href: "/booking/country/#{@country.en_short}/"} #{@country.name}酒店民宿
+        %li.breadcrumb-item
+          %h1.text-muted{style: "font-size: 16px;"} #{@city.name}酒店民宿
   %article.row
-    %h1.hidden #{@city.title}酒店预订
-    %p.hidden-md.hidden-lg.alert.alert-info 共查询到#{@city.title}有#{@city.hotel_count}家酒店。
-    - if @hot_hotels.size > 0
-      %h2 热门酒店
-      %p
-        - @hot_hotels.each do |hotel|
-          %span #{hotel[0]}
-    %h2.page-header #{@city.title}酒店价格查询
+    %h2 #{@city.title}酒店预订
+    %hr
+    .col-12
+      %p.alert.alert-info 共查询到#{@city.title}有#{@city.hotel_count}家酒店。热门酒店推荐：#{@hot_hotels.map{|h| h[0]}.join("、")}。
+
+    %h3 #{@city.title}酒店价格查询
     - @hotels.each_with_index do |hotel, index|
-      %div
-        %img.img-responsive.img-thumbnail{src:"http://img.yysssr.com/booking_hotel_#{hotel.country_en_short}_#{hotel.en_short}.jpg", alt:"#{@city.title}酒店图片_#{index}"}
-        %h3= hotel.title
+      %hr
+      .col-12
+        %h4 #{hotel.title}
+        %img.img-fluid{src:"http://img.yysssr.com/booking_hotel_#{hotel.country_en_short}_#{hotel.en_short}.jpg", alt:"#{@city.title}酒店图片_#{index}"}
         - JSON.parse(hotel.description).each do |desc|
           %p= desc
         %p 评分#{hotel.score}（10分制）
         - if hotel.price > 0
-          %p= "价格每晚#{hotel.price}起"
+          %p 价格每晚#{hotel.price}起
         %p
           %a{href:"/booking/hotel/#{hotel.id}/", title: "#{hotel.title}"} 预订#{hotel.title}
   %aside.row
     - if @cities.size > 0
-      %h2 周边城市酒店 
-      %div
-        %p
-          - @cities.each do |city|
-            %span #{city[1]}酒店
+      %h3 周边城市酒店 
+      .col-12
+        %p.alert.alert-info
+          #{@city.title}周边酒店：#{@cities.map{|c| "#{c[1]}酒店"}.join("、")}。
     - if @hot_cities.size > 0
       %h2 热门城市酒店 
       %div
@@ -57,3 +69,11 @@
           - @airports.each do |airport|
             %span #{airport[1]}附近酒店
           
+    %h3 随便看看
+    - @rand_hotels.each do |h|
+      .col-12
+        %hr
+        %a{href: "/hotel-#{h.url_path_md5}"}
+          %h4 #{h.hotel_name}
+        %p #{h.address}
+        %img.img-fluid{src: "#{h.images.split("|||")[0]}", alt: "#{h.hotel_name}图片"}
