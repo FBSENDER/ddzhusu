@@ -1,20 +1,33 @@
 - title "#{@brand.title}_滴滴住宿"
 - keywords "#{@brand.title},#{@brand.name}酒店,#{@brand.name}宾馆,#{@brand.name}连锁,#{@brand.name}快捷"
 - head_desc "滴滴住宿为您搜索#{@brand.name}酒店宾馆价格查询及预订信息。通过对#{@brand.name}酒店宾馆价格、位置、设施、品牌、星级及用户真实点评为你推荐高性价比酒店库存、在线预订#{@brand.name}酒店，价格优惠实时折扣."
-- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+- lang "zh-CN"
+- lang_array = [["zh-CN","http://www.ddzhusu.com/ctrip/brand/#{URI.encode(@brand.name)}/"]]
+- alternate("http://www.ddzhusu.com/ctrip/brand/#{URI.encode(@brand.name)}/", lang_array)
+
+= render partial: '/bk/header'
 
 %section.container
-  .row.hidden-sm.hidden-xs#ctrip_search
-    = render partial: "layouts/ctrip_search_1"
+  .row
+    %nav
+      %ol.breadcrumb
+        %li.breadcrumb-item.active
+          %a{href: "/", title: "特色民宿客栈"} 首页
+        %li.breadcrumb-item
+          %h1.text-muted{style: "font-size: 16px;"} #{@brand.name}酒店预订
   %article.row
-    %h1 #{@brand.title}
-    %img.img-responsive.img-thumbnail{src:"http://7xnj96.com1.z0.glb.clouddn.com/ctrip_brand_#{@brand.id}.jpg", alt:"#{@brand.name}logo"}
-    - unless @brand_detail.description.empty?
-      %p.alert.alert-info #{@brand_detail.description}
+    %h2 #{@brand.title}
+    %hr
+    .col-12
+      %img.img-fluid{src:"http://7xnj96.com1.z0.glb.clouddn.com/ctrip_brand_#{@brand.id}.jpg", alt:"#{@brand.name}logo"}
+      - unless @brand_detail.description.empty?
+        %p.alert.alert-info #{@brand_detail.description}
     - @hotels.each_with_index do |hotel, index|
-      %div
+      .col-12
         %h3 #{hotel.title}
-        %img.img-responsive.img-thumbnail{src:"http://7xnj96.com1.z0.glb.clouddn.com/ctrip_hotel_#{hotel.id}.jpg", alt:"#{@brand.name}图片_#{index}"}
+        %hr
+        %img.img-fluid{src:"http://7xnj96.com1.z0.glb.clouddn.com/ctrip_hotel_#{hotel.id}.jpg", alt:"#{@brand.name}图片_#{index}"}
         %p 全称：#{hotel.hotel_name}
         %p 地址：#{hotel.address}
         %p 价格：#{hotel.price}元起
@@ -23,16 +36,23 @@
           %a{href:"/ctrip/hotel/#{hotel.id}/", title:"#{hotel.title}"} 预订#{hotel.title}
   %aside.row
     - if @brands.size > 0
-      %h2 品牌酒店
-      %div
-        %p
-          - @brands.each do |brand|
-            %a{href: "/ctrip/brand/#{URI.encode(brand.name)}/"} #{brand.title}
+      %h3 品牌酒店
+      %hr
+      - @brands.each do |brand|
+        .col-6{style: "margin: 5px 0;"}
+          %a{href: "/ctrip/brand/#{URI.encode(brand.name)}/"} #{brand.title}
     - if @cities.size > 0
-      %h2 热门城市#{@brand.name}连锁酒店宾馆
-      %div
-        %p
-          - @cities.each do |city|
-            %span
-              %a{href:"/ctrip/brand/#{URI.encode(@brand.name)}/city/#{URI.encode(city[0])}/"} #{@brand.title}#{city[0]}
-              共#{city[2]}家
+      %h3 热门城市#{@brand.name}连锁酒店宾馆
+      %hr
+      - @cities.each do |city|
+        .col-6{style: "margin: 5px 0;"}
+          %a{href:"/ctrip/brand/#{URI.encode(@brand.name)}/city/#{URI.encode(city[0])}/"} #{@brand.title}#{city[0]}
+          共#{city[2]}家
+    %h3 随便看看
+    - @rand_hotels.each do |h|
+      .col-12
+        %hr
+        %a{href: "/hotel-#{h.url_path_md5}"}
+          %h4 #{h.hotel_name}
+        %p #{h.address}
+        %img.img-fluid{src: "#{h.images.split("|||")[0]}", alt: "#{h.hotel_name}图片"}

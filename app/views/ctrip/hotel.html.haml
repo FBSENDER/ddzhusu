@@ -1,36 +1,51 @@
 - title "#{@hotel.title}"
 - keywords "#{@hotel.title},#{@hotel.title}图片,#{@hotel.title}价格,#{@hotel.title}预订,#{@hotel.title}地址"
 - head_desc "#{@hotel.title}：#{@hotel.address}，#{@description[0]}"
-- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+- lang "zh-CN"
+- lang_array = [["zh-CN","http://www.ddzhusu.com/ctrip/hotel/#{@hotel.id}/"]]
+- alternate("http://www.ddzhusu.com/ctrip/hotel/#{@hotel.id}/", lang_array)
+
+= render partial: '/bk/header'
 
 %section.container
+  .row
+    %nav
+      %ol.breadcrumb
+        %li.breadcrumb-item.active
+          %a{href: "/", title: "特色民宿客栈"} 首页
+        %li.breadcrumb-item.active
+          %a{href: "/ctrip/brand/#{URI.encode(@hotel.brand_name)}/"} #{@hotel.brand_name}酒店预订
+        %li.breadcrumb-item
+          %h1.text-muted{style: "font-size: 16px;"} #{@hotel.title}
   %article.row
-    %div.col-md-6.col-sm-12.col-xs-12
-      %h1.page-header #{@hotel.title}
-    %div.col-md-6.col-sm-12.col-xs-12
-      %img.img-responsive.img-thumbnail{alt: "#{@hotel.title}图片", src: "http://7xnj96.com1.z0.glb.clouddn.com/ctrip_hotel_#{@hotel.id}.jpg"}
-    %div.col-md-6.col-sm-12.col-xs-12
-      %h2 #{@hotel.title}简介
+    .col-12
+      %h2 #{@hotel.title}
+      %hr
+    .col-12
+      %img.img-fluid{alt: "#{@hotel.title}图片", src: "http://7xnj96.com1.z0.glb.clouddn.com/ctrip_hotel_#{@hotel.id}.jpg"}
+    .col-12
+      %h3 #{@hotel.title}简介
       - @description.each do |desc|
         %p #{desc}
-    .col-md-12
+    .col-12
       -if @facility.size > 0
-        %h2 #{@hotel.title}设施
+        %h3 #{@hotel.title}设施
         - @facility.each do |f|
           %p #{f[0]}：#{f[1..-1].join("\t")}
 
       -if @traffic.size > 0
-        %h2 #{@hotel.title}附近交通——火车站、机场、景点
+        %h3 #{@hotel.title}附近交通——火车站、机场、景点
         - @traffic.each do |t|
           %p #{t[0]}：#{t[1]}
       
       -if @nearby.size > 0
-        %h2 #{@hotel.title}附近消费娱乐
+        %h3 #{@hotel.title}附近消费娱乐
         - @nearby.each do |n|
           %p #{n[0]}：#{n[1..-1].join("\t")}
 
       -if @review.size > 0
-        %h2 #{@hotel.title}评论
+        %h3 #{@hotel.title}评论
         - @review.each_with_index do |review, index|
           %p 
             %strong 评论
@@ -38,16 +53,24 @@
 
   %aside.row
     -if @hotels.size > 0
-      %div.col-md-6.col-sm-12.col-xs-12
-        %h2 热门酒店宾馆
-      
+      .col-12
+        %h3 热门酒店宾馆
       - @hotels.each do |hotel|
-        .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
+        .col-6{style: "margin: 5px 0"}
           %a{href:"/ctrip/hotel/#{hotel.id}/"} #{hotel.title}
-    %div.col-md-6.col-sm-12.col-xs-12
-      %h3 您可能需要下面的链接
+      .col-12
+        %h3 您可能需要下面的链接
     
-    .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
+    .col-6{style: "margin: 5px 0"}
       %a{href:"/ctrip/brand/#{URI.encode(@hotel.brand_name)}/"} #{@hotel.brand_name}
-    .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
+    .col-6{style: "margin: 5px 0"}
       %a{href:"/ctrip/brand/#{URI.encode(@hotel.brand_name)}/city/#{URI.encode(@hotel.city_name)}/"} #{@hotel.brand_name}#{@hotel.city_name}
+
+    %h3 随便看看
+    - @rand_hotels.each do |h|
+      .col-12
+        %hr
+        %a{href: "/hotel-#{h.url_path_md5}"}
+          %h4 #{h.hotel_name}
+        %p #{h.address}
+        %img.img-fluid{src: "#{h.images.split("|||")[0]}", alt: "#{h.hotel_name}图片"}

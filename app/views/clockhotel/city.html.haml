@@ -1,40 +1,62 @@
 - title "#{@city_name}钟点房_#{@city_name}小时房在预订,价格查询及团购多少钱"
 - keywords "#{@city_name}钟点房,#{@city_name}小时房,#{@city_name}钟点房预订,#{@city_name}钟点房价格"
 - head_desc "#{@city_name}钟点房、小时房在线预订、团购以及多少钱价格查询，#{@city.description}"
-- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+- lang "zh-CN"
+- lang_array = [["zh-CN","http://www.ddzhusu.com/clockhotel/city/#{URI.encode(@city_name)}/"]]
+- alternate("http://www.ddzhusu.com/clockhotel/city/#{URI.encode(@city_name)}/", lang_array)
+
+= render partial: '/bk/header'
 
 %section.container
   .row
-    %article.col-md-12.col-lg-12.col-sm-12
-      %h1.hidden.page-header #{@city_name}钟点房
+    %nav
+      %ol.breadcrumb
+        %li.breadcrumb-item.active
+          %a{href: "/", title: "特色民宿客栈"} 首页
+        %li.breadcrumb-item.active
+          %a{href: "/clockhotel/"} 钟点房小时房预订
+        %li.breadcrumb-item
+          %h1.text-muted{style: "font-size: 16px;"} #{@city_name}钟点房
+  .row
+    %article
+      .col-12
+        %h2 #{@city_name}钟点房
+        %hr
       - @chain_hotels.each do |chain|
-        .col-md-12
-          %h2 #{chain["title"]}
+        .col-12
+          %h3 #{chain["title"]}
           - chain["hotels"].each do |hotel|
-            .col-md-4.col-sm-6.col-xs-6
-              %img.img-responsive.img-thumbnail{alt: "#{hotel.name}-钟点房图片", src: "http://img.yysssr.com/clock_hotel_#{hotel.id}.jpg"}
-              %p
-                %a{href:"/clockhotel/hotel/#{hotel.id}/"}= "#{hotel.name}#{hotel.room_hour}小时房"
-                %br
-                = "价格：#{hotel['price']}元"
-                %br
-                = "可预订时间：#{hotel['shop_time']}"
-
-          .clearfix
-          %a.pull-right{href:"#{chain['url']}", title: "#{chain['title']}"} 查看更多
-      .col-md-12
-        %h2 更多#{@city_name}钟点房与小时房
-        - @hotels.each_with_index do |hotel, index|
-          .col-md-4.col-sm-6.col-xs-6
             %img.img-responsive.img-thumbnail{alt: "#{hotel.name}-钟点房图片", src: "http://img.yysssr.com/clock_hotel_#{hotel.id}.jpg"}
             %p
-              %a{href:"/clockhotel/hotel/#{hotel.id}/"}= "#{hotel.name}#{hotel.room_hour}小时房"
+              %a{href:"/clockhotel/hotel/#{hotel.id}/"} #{hotel.name}#{hotel.room_hour}小时房
               %br
-              = "价格：#{hotel['price']}元"
+              价格：#{hotel['price']}元
               %br
-              = "可预订时间：#{hotel['shop_time']}"
+              可预订时间：#{hotel['shop_time']}
+              %br
+              %a{href:"#{chain['url']}", title: "#{chain['title']}"} 查看更多
+      .col-12
+        %h3 更多#{@city_name}钟点房与小时房
+        - @hotels.each_with_index do |hotel, index|
+          %img.img-fluid{alt: "#{hotel.name}-钟点房图片", src: "http://img.yysssr.com/clock_hotel_#{hotel.id}.jpg"}
+          %p
+            %a{href:"/clockhotel/hotel/#{hotel.id}/"} #{hotel.name}#{hotel.room_hour}小时房
+            %br
+            价格：#{hotel['price']}元
+            %br
+            可预订时间：#{hotel['shop_time']}
     %aside.col-md-12.col-sm-12
-      %p.pull-right 
+      %p
         - @links.each do |link|
           %a{href: "#{link[0]}"} #{link[1]}
           |
+
+    %h3 随便看看
+    - @rand_hotels.each do |h|
+      .col-12
+        %hr
+        %a{href: "/hotel-#{h.url_path_md5}"}
+          %h4 #{h.hotel_name}
+        %p #{h.address}
+        %img.img-fluid{src: "#{h.images.split("|||")[0]}", alt: "#{h.hotel_name}图片"}

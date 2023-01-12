@@ -1,9 +1,10 @@
 require 'db_models'
 class CtripController < ApplicationController
-  layout :set_layout
-  def set_layout
-    "mddzhusu" if request.host == 'm.ddzhusu.com'
-  end
+  layout "bk"
+  #layout :set_layout
+  #def set_layout
+  #  "mddzhusu" if request.host == 'm.ddzhusu.com'
+  #end
 
   @@all_brands = CtBrand.select(:name, :title).to_a
 
@@ -16,6 +17,7 @@ class CtripController < ApplicationController
     @cities = JSON.parse(@brand_detail.cities_json)
     @hotels = CtHotel.where(brand_name: @brand.name).to_a.sample(10)
     @brands = @@all_brands.sample(10)
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
   end
 
   def brand_city
@@ -41,6 +43,7 @@ class CtripController < ApplicationController
     @hotel_details = CtHotelDetail.where(hotel_id: @hotels.map(&:id)).select(:hotel_id,:description,:review).to_a
     @city_names = CtHotel.where("brand_name = ? and city_name <> ?", params[:brand_name], @city_name).pluck(:city_name).uniq
     @brands = @@all_brands.sample(10)
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
   end
 
   def hotel
@@ -58,5 +61,6 @@ class CtripController < ApplicationController
     @nearby = JSON.parse(@hotel_detail.nearby)
     @traffic = JSON.parse(@hotel_detail.traffic)
     @hotels = CtHotel.where("id > ?", @hotel.id).select(:id, :title).take(10)
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
   end
 end

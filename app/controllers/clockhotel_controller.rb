@@ -1,13 +1,18 @@
 require 'db_models'
 class ClockhotelController < ApplicationController
-  layout :set_layout
-  def set_layout
-    "mddzhusu" if request.host == 'm.ddzhusu.com'
-  end
+  layout "bk"
+  #layout :set_layout
+  #def set_layout
+  #  "mddzhusu" if request.host == 'm.ddzhusu.com'
+  #end
+  
   def index
     @city_names = ClockCity.all.pluck(:name)
     @brand_names = ClockBrand.all.pluck(:name)
+    @hotels = ClockHotel.where(id: (1..1000).to_a.sample(18)).select(:id,:name,:shop_time,:price,:room_hour).to_a
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
   end
+
   def hotel
     @hotel_id = params[:id].to_i
     @hotel = ClockHotel.where(id: @hotel_id).take
@@ -22,6 +27,7 @@ class ClockhotelController < ApplicationController
     @same_chain_hotels = ClockHotel.where(chain_name: @hotel.chain_name).select(:id,:img_url,:name,:room_hour).take(4) unless @hotel.chain_name.empty?
     @related_hotels = ClockHotel.where("id > ?",@hotel.id).select(:id,:name,:img_url,:room_hour).take(6)
     @links = JSON.parse(@hotel_detail.links_json)
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
   end
 
   def city
@@ -35,6 +41,7 @@ class ClockhotelController < ApplicationController
     end
     @hotels = ClockHotel.where(id: @city.hotel_ids.split(',').sample(18)).select(:id,:name,:shop_time,:price,:room_hour).to_a
     @links = JSON.parse(@city.links_json)
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
   end
 
   def brand
@@ -48,6 +55,7 @@ class ClockhotelController < ApplicationController
     end
     @hotels = ClockHotel.where(id: @brand.hotel_ids.split(',').sample(18)).select(:id,:name,:shop_time,:price,:room_hour).to_a
     @links = JSON.parse(@brand.links_json)
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
   end
 
   def city_brand
@@ -55,5 +63,6 @@ class ClockhotelController < ApplicationController
     @brand_name = params[:brand_name]
     @hotels = ClockHotel.where(city_name: @city_name, chain_name: @brand_name).select(:id,:name,:shop_time,:price,:room_hour).to_a.sample(20)
     not_found if @hotels.size.zero?
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
   end
 end

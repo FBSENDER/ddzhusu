@@ -1,16 +1,45 @@
 - title "钟点房小时房_滴滴住宿"
 - keywords "钟点房,小时房"
 - head_desc "钟点房、小时房在线预订、团购以及多少钱价格查询——滴滴住宿。"
-- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+- lang "zh-CN"
+- lang_array = [["zh-CN","http://www.ddzhusu.com/clockhotel/"]]
+- alternate("http://www.ddzhusu.com/clockhotel/", lang_array)
+
+= render partial: '/bk/header'
 
 .container
   .row
-    .col-md-12.col-lg-12.col-sm-12
-      %section
-        %h1.page-header 钟点房预订_小时房价格查询 
+    %nav
+      %ol.breadcrumb
+        %li.breadcrumb-item.active
+          %a{href: "/", title: "特色民宿客栈"} 首页
+        %li.breadcrumb-item
+          %h1.text-muted{style: "font-size: 16px;"} 钟点房小时房预订
+  %section.row
+    %h2 钟点房预订_小时房价格查询 
+    %hr
+    - @hotels.each_with_index do |hotel, index|
+      .col-6
+        %img.img-fluid{alt: "#{hotel.name}-钟点房图片", src: "http://img.yysssr.com/clock_hotel_#{hotel.id}.jpg"}
         %p
-          - @city_names.each do |name|
-            %a{href:"/clockhotel/city/#{URI.encode(name)}/"} #{name}钟点房
-        %p
-          - @brand_names.each do |name|
-            %a{href:"/clockhotel/brand/#{URI.encode(name)}/"} #{name}钟点房
+          %a{href:"/clockhotel/hotel/#{hotel.id}/"} #{hotel.name}#{hotel.room_hour}小时房
+          %br
+          价格：#{hotel['price']}元
+          %br
+          可预订时间：#{hotel['shop_time']}
+
+    - @city_names.each do |name|
+      .col-6{style: "margin: 5px 0;"}
+        %a{href:"/clockhotel/city/#{URI.encode(name)}/"} #{name}钟点房
+    - @brand_names.each do |name|
+      .col-6{style: "margin: 5px 0;"}
+        %a{href:"/clockhotel/brand/#{URI.encode(name)}/"} #{name}钟点房
+    %h3 随便看看
+    - @rand_hotels.each do |h|
+      .col-12
+        %hr
+        %a{href: "/hotel-#{h.url_path_md5}"}
+          %h4 #{h.hotel_name}
+        %p #{h.address}
+        %img.img-fluid{src: "#{h.images.split("|||")[0]}", alt: "#{h.hotel_name}图片"}
