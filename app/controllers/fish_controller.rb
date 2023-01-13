@@ -1,9 +1,10 @@
 require 'db_models'
 class FishController < ApplicationController
-  layout :set_layout
-  def set_layout
-    "mddzhusu" if request.host == 'm.ddzhusu.com'
-  end
+  layout "bk"
+  #layout :set_layout
+  #def set_layout
+  #  "mddzhusu" if request.host == 'm.ddzhusu.com'
+  #end
   @@all_places = Place.select(:en_name, :name).to_a
   def place
     en_name = params[:en_name]
@@ -46,6 +47,7 @@ class FishController < ApplicationController
     else
       @hotels = []
     end
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
   end
 
   def sitemap
@@ -66,6 +68,7 @@ class FishController < ApplicationController
     @hotels = Hotel.where("id > ? and status = 1", @hotel.id).select(:id,:name).take(5)
     @place_1 = Place.where(id: @hotel.place_id).take
     @place_2 = Place.where(fish_tag: @hotel.fish_tag).to_a
+    @rand_hotels = BkCnHotel.where("id > ? and status = 2", rand(1940)).limit(10).select(:url_path_md5, :hotel_name, :address, :images)
   end
 
   private

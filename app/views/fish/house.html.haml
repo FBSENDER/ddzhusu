@@ -1,52 +1,78 @@
 - title "#{@hotel.name}"
 - keywords "#{@hotel.name},#{@hotel.name}预订,#{@hotel.name}评论,#{@hotel.name}地址,#{@hotel.name}价格"
 - head_desc "#{@hotel.name}：#{@hotel.info}。滴滴住宿为您提供#{@hotel.name}在线预订服务，您还可以在这里查询到#{@hotel.name}的电话、地址、交通、用户评论、房间价格等详细信息。"
-- path("http://www.ddzhusu.com#{request.path}/")
-- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+- lang "zh-CN"
+- lang_array = [["zh-CN","http://www.ddzhusu.com/fish/house/#{@hotel.id}/"]]
+- alternate("http://www.ddzhusu.com/fish/house/#{@hotel.id}/", lang_array)
+
+= render partial: '/bk/header'
 
 %section.container
+  .row
+    %nav
+      %ol.breadcrumb
+        %li.breadcrumb-item.active
+          %a{href: "/", title: "特色民宿客栈"} 首页
+        %li.breadcrumb-item
+          %h1.text-muted{style: "font-size: 16px;"} #{@hotel.name}
   %article.row
-    %div.col-md-6.col-sm-12.col-xs-12
-      %h1.page-header #{@hotel.name}
-    %div.col-md-6.col-sm-12.col-xs-12
-      %img.img-responsive.img-thumbnail{alt: "#{@hotel.name}图片", src: "http://img.yysssr.com/fish_house_#{@hotel.id}.jpg"}
-    %div.col-md-6.col-sm-12.col-xs-12
-      %p= "简介：#{@hotel.info}"
-      %p 
+    .col-12
+      %h2 #{@hotel.name}
+      %hr
+      %img.img-fluid{alt: "#{@hotel.name}图片", src: "http://img.yysssr.com/fish_house_#{@hotel.id}.jpg", style: "margin-bottom: 10px;"}
+    .col-12
+      %p.alert.alert-info
+        简介：#{@hotel.info}
+        %br
         推荐理由：
-        %ul
-          - @recommands.each do |recommand|
-            %li= recommand
-      %p
+        - @recommands.each do |recommand|
+          %br
+          #{recommand}
+
+    .col-12
+      %p.alert.alert-success
         评论：
         %br
-        %strong= "#{@hotel.name}怎么样？ "
-        %strong= "#{@hotel.name}住宿条件好不好？"
+        %strong #{@hotel.name}怎么样？ 
+        %strong #{@hotel.name}住宿条件好不好？
         听听其他小伙伴怎么评价的。
         - @comments.each do |comment|
           %br
-          = comment
-    %div.col-md-6.col-sm-12.col-xs-12
-      %h2.page-header #{@hotel.name}预订
+          #{comment}
+    .col-12
+      %h2 #{@hotel.name}预订
+      %hr
     - @rooms.each_with_index do |room, index|
-      %div.col-md-4.col-sm-12.col-xs-12
+      .col-6
         - if room["img_url"]
           %img.img-responsive.img-thumbnail{alt: "#{@hotel.name}-房间图片#{index}", src: "http://7xnj96.com1.z0.glb.clouddn.com/fish_house_#{@hotel.id}_room_#{index}.jpg"}
         %p
-          = "房间：#{room['name']}"
+          房间：#{room['name']}
           %br
-          = "价格：#{room['price']}元"
+          价格：#{room['price']}元
           %br
-          = "设施：#{room['device']}"
-  %aside.row
-    %div.col-md-6.col-sm-12.col-xs-12
-      %h3.page-header 相关链接
-    .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
-      %a{href:"http://www.ddzhusu.com/fishnew/#{URI.encode(@place_1.name)}/"} #{@place_1.name}民宿
-    - @place_2.each do |place|
-      .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
+          设施：#{room['device']}
 
-        %a{href:"http://www.ddzhusu.com/fishnew/#{URI.encode(place.name)}/"} #{place.name}民宿
+  %aside.row
+    .col-12
+      %h3 相关链接
+    .col-4{style: "margin: 5px 0"}
+      %a{href:"/fishnew/#{URI.encode(@place_1.name)}/"} #{@place_1.name}民宿
+    - @place_2.each do |place|
+      .col-4{style: "margin: 5px 0"}
+
+        %a{href:"/fishnew/#{URI.encode(place.name)}/"} #{place.name}民宿
     - @hotels.each do |hotel|
-      .col-md-4.col-sm-4.col-xs-4{style: "margin: 5px 0"}
-        %a{href:"http://www.ddzhusu.com/fish/house/#{hotel.id}/"} #{hotel.name}
+      .col-4{style: "margin: 5px 0"}
+        %a{href:"/fish/house/#{hotel.id}/"} #{hotel.name}
+
+    .col-12
+      %h3 随便看看
+    - @rand_hotels.each do |h|
+      .col-12
+        %hr
+        %a{href: "/hotel-#{h.url_path_md5}"}
+          %h4 #{h.hotel_name}
+        %p #{h.address}
+        %img.img-fluid{src: "#{h.images.split("|||")[0]}", alt: "#{h.hotel_name}图片"}
