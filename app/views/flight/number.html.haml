@@ -1,13 +1,18 @@
 - title "航班#{@number.name}时刻表,#{@number.name}航班信息查询_滴滴航班"
 - keywords "#{@number.name},#{@number.name}航班,#{@number.name}航班时刻表,#{@number.name}航班信息,#{@number.name}机票,#{@number.name}航班查询"
 - head_desc "#{@info.size > 0 ? "#{@number}航班将于#{@info[0]["departTime"]}#{@info[0]["departPortName"]}起飞，预计于#{@info[0]["arriveTime"]}抵达#{@info[0]["arrivePortName"]}。": ""}#{@number.name}航班时刻表，#{@number.name}航班机型、时刻、起飞时间、飞抵的机场，滴滴航班交尽力为您提供这些信息。"
-- path("http://flight.ddzhusu.com#{request.path}/")
-- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+- lang @lang
+- lang_array = [["zh-CN","https://flight.ddzhusu.com/ftn-#{@number.name}/"]]
+- alternate("https://flight.ddzhusu.com/ftn-#{@number.name}/", lang_array)
+- ld_json(@ld_json.to_json.html_safe)
+
+= render partial: 'header'
 
 %section.container
   .row
-    %article.col-md-8.col-lg-8.col-sm-12
-      %h1.page-header #{@number.name}航班时刻表
+    %article.col-12.col-md-8
+      %h1 #{@number.name}航班时刻表
       %table.table.table-bordered
         %tr.info
           %th.text-center 起飞/到达
@@ -46,7 +51,7 @@
             %td{style: "vertical-align:middle;"}
               %a.btn.btn-success{href: "#{@ctrip_url}", target: "_blank", rel: "nofollow"} 查看价格
 
-    %aside.col-md-4.col-lg-4.col-sm-12
+    %aside.col-12.col-md-4
       = render partial: "right"
       = render partial: "layouts/links", locals: {links: @links}
       = render partial: "layouts/friend_links", locals: {friend_links: get_friend_links}

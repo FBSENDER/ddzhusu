@@ -1,19 +1,24 @@
 - title "#{@city.name}航班时刻表,#{@city.name}航班信息查询_滴滴航班"
 - keywords "#{@city.name},#{@city.name}航班,#{@city.name}航班时刻表,#{@city.name}航班信息,#{@city.name}机票,#{@city.name}航班查询"
 - head_desc "#{@city.name}航班时刻表，从#{@city.name}出发的国内航班线路共有#{@lines.size}条，其将会飞抵不同的机场，#{@city.name}航班机型、时刻、起飞时间、飞抵的机场，滴滴航班交尽力为您提供这些信息。"
-- path("http://flight.ddzhusu.com#{request.path}/")
-- mobile_url('m.ddzhusu.com',request.path) if request.host != 'm.ddzhusu.com'
+
+- lang @lang
+- lang_array = [["zh-CN","https://flight.ddzhusu.com/ftc-#{URI.encode(@city.name)}/"]]
+- alternate("https://flight.ddzhusu.com/ftc-#{URI.encode(@city.name)}/", lang_array)
+- ld_json(@ld_json.to_json.html_safe)
+
+= render partial: 'header'
 
 %section.container
   .row
-    %article.col-md-8.col-lg-8.col-sm-12
-      %h1.page-header 从#{@city.name}出发的航班列表
+    %article.col-12.col-md-8
+      %h1 从#{@city.name}出发的航班列表
       .alert.alert-info
         - @lines.each do |line|
           %a{href: "/ft-#{URI.encode(line.from_name)}-#{URI.encode(line.to_name)}/"} #{line.from_name}到#{line.to_name}航班
         
       - if @stations.size > 0
-        %h2.page-header #{@city.name}机场地图
+        %h2 #{@city.name}机场地图
         .alert.alert-info
           %p 
             #{@city.name}共有#{@stations.size}个机场，分别是：
@@ -21,7 +26,7 @@
               %a{href: "javascript:;", onclick: "changeMapMark(#{s.lat}, #{s.lng});"} #{s.name}
         #bdmap{style: "height: 300px;margin-bottom: 20px;"}
 
-    %aside.col-md-4.col-lg-4.col-sm-12
+    %aside.col-12.col-md-4
       = render partial: "right"
       = render partial: "layouts/friend_links", locals: {friend_links: get_friend_links}
 
