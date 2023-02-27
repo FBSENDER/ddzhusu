@@ -38,6 +38,17 @@ class FlightController < ApplicationController
       "name"=> "#{@from_to}航班时刻表",
       "item"=> "https://flight.ddzhusu.com/ft-#{URI.encode(@from_name)}-#{URI.encode(@to_name)}/"
     }
+    @gaotie_line = GaotieLine.where("from_name = ? and to_name = ?", params[:from], params[:to]).take
+    @gaotie_list = []
+    if @gaotie_line
+      @gaotie_line_detail = GaotieLineDetail.where(line_id: @gaotie_line.id).take
+      if @gaotie_line_detail
+        @gaotie_info = JSON.parse(@gaotie_line_detail.gaotie_json)
+        if @gaotie_info
+          @gaotie_list = @gaotie_info["train_list"] || []
+        end
+      end
+    end
   end
 
   def number

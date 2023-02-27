@@ -13,6 +13,10 @@
   .row
     %article.col-12.col-md-8
       %h1 #{@from_to}航班时刻表
+      .alert.alert-info
+        %p
+          共查询#{@info.size}个从#{@from_to}航班，返程航班请查看：
+          %a{href: "/ft-#{URI.encode(@to_name)}-#{URI.encode(@from_name)}/"} #{@to_name}到#{@from_name}航班
       %table.table.table-bordered
         %tr.info
           %th.text-center 起飞/到达
@@ -51,6 +55,43 @@
               %span #{shike['arrivePortName']}#{shike['arriveTerminal']}
             %td{style: "vertical-align:middle;"}
               %a.btn.btn-success{href: "#{@ctrip_url}", target: "_blank", rel: "nofollow"} 查看价格
+      %h2 #{@from_name}到#{@to_name}其他出行方式
+      - if @gaotie_list.size > 0
+        .alert.alert-info
+          %p 
+            从#{@from_name}到#{@to_name}可以选择乘坐高铁出行，一共查询到#{@gaotie_list.size}趟高铁，查看全部车次：
+            %a{href: "https://gaotie.ddzhusu.com/gt-#{URI.encode(@from_name)}-#{URI.encode(@to_name)}/"} #{@from_name}到#{@to_name}高铁
+            %br
+            %br
+            以下是发车最早的#{@gaotie_list.size > 5 ? 5 : @gaotie_list.size}趟车次：
+        %table.table.table-bordered
+          %tr.info
+            %th.text-center 车次
+            %th.text-center 时刻
+            %th.text-center 车站
+          - @gaotie_list[0,5].each do |shike|
+            %tr.text-center
+              %td
+                %a{href:"http://www.ddzhusu.com/train/numbers/#{shike['checi']}/"} #{shike['checi']}
+                %br
+                %br
+                %strong #{get_train_type(shike['checi'][0])}
+              %td
+                %span #{shike['depart_time']}
+                %br
+                %span #{shike['arrival_time']}
+                %br
+                %span #{shike['duration']}
+              %td
+                #{shike['start_name']}
+                %br
+                #{'-'}
+                %br
+                #{shike['end_name']}
+      - else 
+        .alert.alert-warning
+          %p 
+            未查询到从#{@from_name}到#{@to_name}可以乘坐的高铁
 
     %aside.col-12.col-md-4
       = render partial: "right"
